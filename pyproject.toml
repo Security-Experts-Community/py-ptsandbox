@@ -17,14 +17,12 @@ dependencies = [
     "aiohttp-socks>=0.10.1",
 ]
 license = "MIT"
-license_files = ["LICENSE"]
+license-files = ["LICENSE"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
-
-[project.urls]
-repository = "https://github.com/Security-Experts-Community/py-ptsandbox"
+keywords = ["ptsandbox", "sandbox"]
 
 # uv settings
 [tool.uv]
@@ -101,9 +99,5 @@ format.indent-style = "space"
 "__init__.py" = ["F401", "F403"]
 
 [dependency-groups]
-dev = [
-    "pytest>=8.3.4",
-    "pytest-asyncio>=0.25.2",
-    "mypy>=1.14.1",
-    "twine>=6.0.1",
-]
+dev = ["pytest>=8.3.4", "pytest-asyncio>=0.25.2", "mypy>=1.14.1"]
+docs = ["mkdocs>=1.6.1", "mkdocs-material>=9.6.7"]
