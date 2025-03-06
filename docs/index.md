@@ -4,8 +4,8 @@
 
 ## Highlights
 
-- Completely asynchronous
 - Fully typed
+- Completely asynchronous
 
 ## Installation
 
