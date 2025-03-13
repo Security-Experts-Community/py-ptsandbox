@@ -1,0 +1,83 @@
+site_name: ptsandbox
+site_url: https://py-ptsandbox.github.io
+theme:
+  name: material
+  language: en
+  icon:
+    repo: fontawesome/brands/github
+  logo: assets/main_logo_no_text.svg
+  favicon: assets/main_logo_no_text.svg
+  palette:
+    - scheme: default
+      primary: white
+      toggle:
+        name: Dark
+        icon: material/toggle-switch
+    - scheme: slate
+      primary: black
+      toggle:
+        name: Light
+        icon: material/toggle-switch-off
+  features:
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - navigation.instant
+    - navigation.expand
+    - navigation.sections
+    - navigation.top
+
+
+# repo information
+repo_url: https://github.com/Security-Experts-Community/py-ptsandbox
+repo_name: py-ptsandbox
+
+# plugins
+plugins:
+  - search:
+      lang:
+        - en
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.blocks.caption
+  - pymdownx.details
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
+nav:
+  - Overview: index.md
+  - Usage:
+    - Proxy: usage/proxy.md
+    - Public API:
+      - Scanning:
+          - Scan: usage/public-api/scanning/scan.md
+          - Rescan: usage/public-api/scanning/rescan.md
+          - Debug Options: usage/public-api/scanning/debug-options.md
+      - Get available images: usage/public-api/image-info.md
+      - Extract email headers: usage/public-api/email.md
+      - Download files: usage/public-api/download-files.md
+      - System info: usage/public-api/system.md
+    - UI API:
+      - Authorization: usage/ui-api/authorization.md
+      - API Tokens: usage/ui-api/api-tokens.md
+      - Antiviruses: usage/ui-api/antiviruses.md
+      - Artifacts: usage/ui-api/artifacts.md
+      - BAqueue: usage/ui-api/baqueue.md
+      - Cluster: usage/ui-api/cluster.md
+      - Components: usage/ui-api/components.md
+      - License: usage/ui-api/license.md
+      - System: usage/ui-api/system.md
+      - Tasks: usage/ui-api/tasks.md

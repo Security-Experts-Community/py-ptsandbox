@@ -1,0 +1,103 @@
+[project]
+name = "ptsandbox"
+version = "5.0.0"
+description = "Async API connector for PT Sandbox instances"
+readme = "README.md"
+requires-python = "<4.0,>=3.11"
+authors = [
+    { name = "Alexey Kolesnikov" },
+    { name = "Dmitry Zotov" },
+    { name = "PT ESC Malware Detection" },
+]
+dependencies = [
+    "loguru>=0.7.3",
+    "pydantic>=2.10.5",
+    "aiohttp>=3.11.11",
+    "orjson>=3.10.15",
+    "aiohttp-socks>=0.10.1",
+]
+license = "MIT"
+license-files = ["LICENSE"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+keywords = ["ptsandbox", "sandbox"]
+
+# uv settings
+[tool.uv]
+package = true
+
+# build system
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+include = ["ptsandbox"]
+
+# tools settings
+[tool.black]
+line-length = 120
+target-version = ['py311']
+include = '\.pyi?$'
+exclude = '''
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+  )/
+)
+'''
+
+[tool.mypy]
+plugins = ["pydantic.mypy"]
+strict = true
+follow_imports = "silent"
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+
+[[tool.mypy.overrides]]
+module = "ptsandbox.models.core.enum"
+disable_error_code = ["misc", "no-redef"]
+
+[tool.pylint]
+max-line-length = 120
+
+[tool.ruff]
+lint.select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "UP", # pyupgrade
+]
+lint.ignore = [
+    "E501", # line too long, handled by black
+    "B008", # do not perform function calls in argument defaults
+    "W191", # indentation contains tabs
+]
+line-length = 120
+target-version = "py311"
+format.quote-style = "double"
+format.indent-style = "space"
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401", "F403"]
+
+[dependency-groups]
+dev = ["pytest>=8.3.4", "pytest-asyncio>=0.25.2", "mypy>=1.14.1"]
+docs = ["mkdocs>=1.6.1", "mkdocs-material>=9.6.7"]

@@ -1,0 +1,23 @@
+default_language_version:
+  python: python3
+
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    # Ruff version.
+    rev: v0.9.10
+    hooks:
+      # Run the linter.
+      - id: ruff
+        # Run the formatter.
+        files: ^ptsandbox/.*\.py$
+      - id: ruff-format
+        files: ^ptsandbox/.*\.py$
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.15.0
+    hooks:
+      - id: mypy
+        args: [--ignore-missing-imports]
+        additional_dependencies: [pydantic, types-aiofiles]
+        files: ^ptsandbox/.*\.py$
+        verbose: true
