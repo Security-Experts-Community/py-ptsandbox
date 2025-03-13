@@ -1,7 +1,5 @@
 In the sandbox, it is possible to re-scan the collected logs without using the sample used (retro tasks). In the interface, they are indicated as the results of the analysis.
 
-<!-- TODO: maybe add image -->
-
 The following files are required for rescan:
 
 - `drakvuf-trace.log.zst` - events collected from the analysis system;

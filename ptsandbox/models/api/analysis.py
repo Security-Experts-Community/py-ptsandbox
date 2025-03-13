@@ -1,7 +1,8 @@
+from typing import NotRequired
 from uuid import UUID
 
 from pydantic import BaseModel, Field
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import TypedDict
 
 from ptsandbox.models.core import (
     Artifact,
@@ -70,7 +71,7 @@ class DebugOptions(TypedDict):
 
     The list is transmitted as an http link to a file with the names of system calls
 
-    Read more about this file in documentation (TODO: link to documentation)
+    Read more about this file in [documentation](https://security-experts-community.github.io/py-ptsandbox/usage/public-api/scanning/debug-options/#custom_syscall_hooks)
     """
 
     custom_dll_hooks: NotRequired[str]
@@ -79,7 +80,7 @@ class DebugOptions(TypedDict):
 
     The list is transmitted as an http link to a file with the names of dll hooks for apimon plugin
 
-    Read more about this file in documentation (TODO: link to documentation)
+    Read more about this file in [documentation](https://security-experts-community.github.io/py-ptsandbox/usage/public-api/scanning/debug-options/#custom_dll_hooks)
     """
 
     disable_retries: NotRequired[bool]
@@ -130,7 +131,7 @@ class DebugOptions(TypedDict):
 
     Each line in the file is a regular expression of the path to the process file on disk.
 
-    Read more about this file in documentation: (TODO: link to documentation)
+    Read more about this file in [documentation](https://security-experts-community.github.io/py-ptsandbox/usage/public-api/scanning/debug-options/#custom_procdump_exclude)
     """
 
     custom_fileextractor_exclude: NotRequired[str]
@@ -139,7 +140,7 @@ class DebugOptions(TypedDict):
 
     Each line in the file is a regular expression of the path to the file on disk.
 
-    Read more about this file in documentation: (TODO: link to documentation)
+    Read more about this file in [documentation](https://security-experts-community.github.io/py-ptsandbox/usage/public-api/scanning/debug-options/#custom_fileextractor_exclude)
     """
 
     validate_plugins: NotRequired[bool]
