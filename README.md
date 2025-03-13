@@ -6,7 +6,7 @@
 
 ---
 
-**Documentation**: <a href="https://security-experts-community.github.io/py-ptsandbox/">https://security-experts-community.github.io/py-ptsandbox/</a>
+**Documentation**: <a href="https://security-experts-community.github.io/py-ptsandbox">https://security-experts-community.github.io/py-ptsandbox</a>
 
 **Source Code**: <a href="https://github.com/Security-Experts-Community/py-ptsandbox">https://github.com/Security-Experts-Community/py-ptsandbox</a>
 
