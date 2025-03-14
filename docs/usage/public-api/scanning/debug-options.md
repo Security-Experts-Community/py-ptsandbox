@@ -67,7 +67,7 @@ When creating any scan task, you can specify `DebugOptions`, which allow you to 
 
         The list is transmitted as an http link to a file with the names of system calls
 
-        Read more about this file in documentation (TODO: link to documentation)
+        Read more about this file in documentation
         """
 
         custom_dll_hooks: NotRequired[str]
@@ -76,7 +76,7 @@ When creating any scan task, you can specify `DebugOptions`, which allow you to 
 
         The list is transmitted as an http link to a file with the names of dll hooks for apimon plugin
 
-        Read more about this file in documentation (TODO: link to documentation)
+        Read more about this file in documentation
         """
 
         disable_retries: NotRequired[bool]
@@ -127,7 +127,7 @@ When creating any scan task, you can specify `DebugOptions`, which allow you to 
 
         Each line in the file is a regular expression of the path to the process file on disk.
 
-        Read more about this file in documentation: (TODO: link to documentation)
+        Read more about this file in documentation
         """
 
         custom_fileextractor_exclude: NotRequired[str]
@@ -136,7 +136,7 @@ When creating any scan task, you can specify `DebugOptions`, which allow you to 
 
         Each line in the file is a regular expression of the path to the file on disk.
 
-        Read more about this file in documentation: (TODO: link to documentation)
+        Read more about this file in documentation
         """
 
         validate_plugins: NotRequired[bool]

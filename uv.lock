@@ -724,7 +724,7 @@ wheels = [
 
 [[package]]
 name = "ptsandbox"
-version = "4.1.16"
+version = "5.0.0"
 source = { editable = "." }
 dependencies = [
     { name = "aiohttp" },
