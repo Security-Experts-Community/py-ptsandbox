@@ -1,4 +1,4 @@
-![Image](./docs/assets/logo_with_text.svg)
+![Image](https://raw.githubusercontent.com/Security-Experts-Community/py-ptsandbox/refs/heads/main/docs/assets/logo_with_text.svg)
 
 <p align="center">
     <em>Async API connector for PT Sandbox instances</em>
@@ -35,7 +35,7 @@ TBA
 ```
 
 <p align="middle">
-    <img width="50%" src="./docs/assets/pic_right.svg">
+    <img width="50%" src="https://raw.githubusercontent.com/Security-Experts-Community/py-ptsandbox/refs/heads/main/docs/assets/pic_right.svg">
 </p>
 
 ## Usage

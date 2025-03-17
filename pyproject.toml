@@ -24,6 +24,12 @@ classifiers = [
 ]
 keywords = ["ptsandbox", "sandbox"]
 
+[project.urls]
+Homepage = "https://github.com/Security-Experts-Community/py-ptsandbox"
+Documentation = "https://security-experts-community.github.io/py-ptsandbox"
+Repository = "https://github.com/Security-Experts-Community/py-ptsandbox"
+Issues = "https://github.com/Security-Experts-Community/py-ptsandbox/issues"
+
 # uv settings
 [tool.uv]
 package = true
