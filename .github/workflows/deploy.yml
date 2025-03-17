@@ -1,27 +1,64 @@
-name: Deploy to github.io 
+name: Publish to PyPI & Deploy to github.io
+
 on:
   push:
-    branches:
-      - develop 
+    tags:
+      - 'v*'
+
 permissions:
   contents: write
+
 jobs:
-  deploy:
+  publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Install uv
         uses: astral-sh/setup-uv@v5
-      - name: "Set up Python"
+  
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version-file: "pyproject.toml"
-      - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
-      - uses: actions/cache@v3
+
+      - name: Install dependencies
+        run: uv pip install twine --system         
+
+      - name: Build Python package
+        run: uv build
+  
+      - name: Check package validity
+        run: twine check dist/*
+
+      - name: Publish to PyPI
+        env:
+          PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
+        run: twine upload --repository pypi dist/* --username __token__ --password "$PYPI_API_TOKEN"
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install MkDocs
+        run: pip install mkdocs mkdocs-material
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          key: mkdocs-material-${{ env.cache_id }}
-          path: .cache
-          restore-keys: |
-            mkdocs-material-
-      - run: uv sync --no-group dev --group docs --active
-      - run: mkdocs gh-deploy --config-file ./mkdocs.yml --force
+          python-version-file: "pyproject.toml"
+
+      - name: Sync docs with uv
+        run: uv sync --no-group dev --group docs --active
+
+      - name: Deploy mkdocs to GitHub Pages
+        run: mkdocs gh-deploy --config-file ./mkdocs.yml --force
