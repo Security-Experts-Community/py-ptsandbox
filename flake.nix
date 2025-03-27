@@ -3,11 +3,17 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    pyproject-nix.url = "github:nix-community/pyproject.nix";
+
+    pyproject-nix = {
+      url = "github:nix-community/pyproject.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     flake-utils.url = "github:numtide/flake-utils";
   };
 
   outputs = {
+    self,
     nixpkgs,
     pyproject-nix,
     flake-utils,
@@ -18,22 +24,20 @@
         pkgs = nixpkgs.legacyPackages.${system};
 
         # python setup
-        python = pkgs.python3.override {
-        };
+        python =
+          pkgs.python3.override {
+          };
 
         pypkgs = python.pkgs;
-        project = pyproject-nix.lib.project.loadPDMPyproject {
+        project = pyproject-nix.lib.project.loadUVPyproject {
           projectRoot = ./.;
         };
-      in rec {
+        projectAttrs = project.renderers.buildPythonPackage {inherit python;};
+      in {
         packages = {
-          py-ptsandbox = let
-            attrs = project.renderers.buildPythonPackage {inherit python;};
-          in
-            python.pkgs.buildPythonPackage attrs;
+          py-ptsandbox = python.pkgs.buildPythonPackage projectAttrs;
+          default = self.packages.${system}.py-ptsandbox;
         };
-
-        defaultPackage = packages.py-ptsandbox;
       }
     );
 }
