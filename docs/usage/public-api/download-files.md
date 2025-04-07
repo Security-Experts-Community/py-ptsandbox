@@ -1,7 +1,7 @@
 You can download files from the sandbox using a `sha256` hash.
 
 ```py title="Code example" hl_lines="6"
-from ptsandbox import Sandbox, SandboxKey, SandboxDownloadArtifactRequst
+from ptsandbox import Sandbox, SandboxKey
 
 async def example() -> None:
     sandbox = Sandbox(key=SandboxKey(...))
@@ -15,7 +15,7 @@ Streaming is also supported if you don't need to download the entire file into m
 
 ```py title="Code example" hl_lines="8"
 import aiofiles
-from ptsandbox import Sandbox, SandboxKey, SandboxDownloadArtifactRequst
+from ptsandbox import Sandbox, SandboxKey
 
 async def example() -> None:
     sandbox = Sandbox(key=SandboxKey(...))

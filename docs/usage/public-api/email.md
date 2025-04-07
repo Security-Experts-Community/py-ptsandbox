@@ -2,7 +2,7 @@ Upload an email and get its headers.
 
 ```py title="Code example" hl_lines="8"
 import aiofiles
-from ptsandbox import Sandbox, SandboxKey, SandboxDownloadArtifactRequst
+from ptsandbox import Sandbox, SandboxKey
 
 async def example() -> None:
     sandbox = Sandbox(key=SandboxKey(...))
