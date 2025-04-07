@@ -20,6 +20,7 @@ from ptsandbox.models.ui.license import (
     SandboxLicenseUpdateResponse,
 )
 from ptsandbox.models.ui.scans import SandboxScansResponse
+from ptsandbox.models.ui.storage import StorageItem
 from ptsandbox.models.ui.system import (
     SandboxSystemSettingsResponse,
     SandboxSystemStatusResponse,
@@ -70,6 +71,7 @@ __all__ = [
     "SandboxUpdateSystemSettingsRequest",
     "Scan",
     "ScanArtifact",
+    "StorageItem",
     "Task",
     "Token",
     "TreeNode",

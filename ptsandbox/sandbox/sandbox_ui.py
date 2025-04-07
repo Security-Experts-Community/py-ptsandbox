@@ -2,6 +2,7 @@ import asyncio
 import datetime
 import functools
 import inspect
+import json
 import random
 from collections.abc import AsyncIterator, Awaitable, Callable
 from http import HTTPStatus
@@ -19,9 +20,13 @@ from ptsandbox.models import (
     SandboxAVEnginesResponse,
     SandboxBaqueueTasksResponse,
     SandboxClusterStatusResponse,
+    SandboxComponentsResponse,
     SandboxCreateTokenResponse,
     SandboxException,
+    SandboxFileNotFoundException,
     SandboxKey,
+    SandboxLicenseResponse,
+    SandboxLicenseUpdateResponse,
     SandboxScansResponse,
     SandboxSystemSettingsResponse,
     SandboxSystemStatusResponse,
@@ -32,12 +37,8 @@ from ptsandbox.models import (
     SandboxTokensResponse,
     SandboxTreeResponse,
     SandboxUpdateSystemSettingsRequest,
+    StorageItem,
     TokenPermissions,
-)
-from ptsandbox.models.ui.components import SandboxComponentsResponse
-from ptsandbox.models.ui.license import (
-    SandboxLicenseResponse,
-    SandboxLicenseUpdateResponse,
 )
 from ptsandbox.utils.async_http_client import AsyncHTTPClient
 
@@ -336,6 +337,46 @@ class SandboxUI:
         return SandboxLicenseUpdateResponse.model_validate(await response.json())
 
     @_token_required
+    async def get_files(self, items: list[StorageItem]) -> AsyncIterator[bytes]:
+        """
+        Download file via UI API
+
+        Args:
+            items: the list of files to download
+
+        Returns:
+            ZIP archive with "infected" password
+
+            Please note that if one of the hashes doesn't exist, and the others do,
+            then the archive will be **only with existing hashes**.
+
+        Raises:
+            SandboxFileNotFoundException: if the requested file is not found on the server
+            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+        """
+
+        query: list[StorageItem] = []
+        for item in items:
+            # if passed just hash without filename, put hash as filename
+            if item.get("name", None) is None:
+                query.append({"sha256": item["sha256"], "name": item["sha256"]})
+                continue
+
+            query.append(item)
+
+        # idk, why json passed as GET param
+        query_string = json.dumps(query, separators=(",", ":"))
+
+        response = await self.http_client.get(f"{self.key.ui_url}/storage/download", params={"items": query_string})
+        if response.status == HTTPStatus.NOT_FOUND:
+            raise SandboxFileNotFoundException(f"Requested items {items} not found")
+
+        response.raise_for_status()
+
+        async for chunk in response.content.iter_chunked(1024 * 1024):
+            yield chunk
+
+    @_token_required
     async def get_tasks(
         self,
         query: str = "",
@@ -357,7 +398,6 @@ class SandboxUI:
             limit: limit on the number of records to be returned
             offset: the offset of the returned records. If the next Cursor is specified, the offset from the cursor is
             utc_offset_seconds: the offset of the user's time from UTC, which will be used for the time in QL queries
-
 
         Returns:
             Information about requested tasks
@@ -763,6 +803,7 @@ class SandboxUI:
 
         return SandboxAVEnginesResponse.model_validate(await response.json())
 
+    @_token_required
     async def get_api_tokens(self) -> SandboxTokensResponse:
         """
         Get listing of current Public API tokens
@@ -777,6 +818,7 @@ class SandboxUI:
 
         return SandboxTokensResponse.model_validate(await response.json())
 
+    @_token_required
     async def create_api_token(
         self,
         name: str,
@@ -808,6 +850,7 @@ class SandboxUI:
 
         return SandboxCreateTokenResponse.model_validate(await response.json())
 
+    @_token_required
     async def delete_api_token(self, token_id: int) -> None:
         """
         Delete the Public API token
