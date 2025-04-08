@@ -375,7 +375,7 @@ class TreeNode(BaseModel):
         The original task ID
         """
 
-        source_node_id: str = Field(alias="sourceNodeId")
+        source_node_id: int = Field(alias="sourceNodeId")
         """
         The source node ID
         """
