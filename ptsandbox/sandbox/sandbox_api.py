@@ -27,6 +27,10 @@ from ptsandbox.models import (
     SandboxScanURLTaskRequest,
     SandboxUploadScanFileResponse,
 )
+from ptsandbox.models.api.scan import (
+    SandboxScanWithSourceFileRequest,
+    SandboxScanWithSourceURLRequest,
+)
 from ptsandbox.utils.async_http_client import AsyncHTTPClient
 
 
@@ -428,7 +432,7 @@ class SandboxApi:
             aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
         """
 
-        response = await self.http_client.get(url=f"{self.key.url}/maintenance/checkHealth")
+        response = await self.http_client.get(f"{self.key.url}/maintenance/checkHealth")
 
         response.raise_for_status()
 
@@ -442,11 +446,125 @@ class SandboxApi:
             aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
         """
 
-        response = await self.http_client.get(url=f"{self.key.url}/maintenance/getVersion")
+        response = await self.http_client.get(f"{self.key.url}/maintenance/getVersion")
 
         response.raise_for_status()
 
         return await GetVersionResponse.build(response)
+
+    async def source_check_file(
+        self,
+        file: str | Path | bytes | BinaryIO,
+        data: SandboxScanWithSourceFileRequest,
+        read_timeout: int = 240,
+    ) -> SandboxBaseTaskResponse:
+        """
+        Send file to the sandbox with source settings
+
+        Args:
+            file:
+                The file to be sent for analysis
+            data:
+                Request parameters in model
+            read_timeout:
+                Response waiting time in seconds
+
+        Raises:
+            SandboxException: if incorrect arguments are passed (usually when ignoring type hints)
+            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+        """
+
+        timeout = attr.evolve(self.default_timeout, total=read_timeout)
+
+        match file:
+            case str() | Path():
+                # we can't use aiofiles here, because aiohttp try use chunked encoding
+                # sandbox (or maybe aiohttp) can't correctly handle chunked encoding (i have no idea why, don't ask me)
+                # so we need this clunky code
+                with open(file, "rb") as fd:
+                    response = await self.http_client.post(
+                        f"{self.key.url}/scan/checkFile",
+                        params=data.dict(),
+                        headers=data.get_headers(),
+                        data=fd,
+                        timeout=timeout,
+                    )
+            case bytes():
+                response = await self.http_client.post(
+                    f"{self.key.url}/scan/checkFile",
+                    params=data.dict(),
+                    headers=data.get_headers(),
+                    data=file,
+                    timeout=timeout,
+                )
+            case BytesIO():
+                response = await self.http_client.post(
+                    f"{self.key.url}/scan/checkFile",
+                    params=data.dict(),
+                    headers=data.get_headers(),
+                    data=self._upload_bytes(file),
+                    timeout=timeout,
+                )
+            case _:
+                raise SandboxException(f"Specified file type doesn't supported {type(file)}")
+
+        response.raise_for_status()
+
+        return await SandboxBaseTaskResponse.build(response)
+
+    async def source_check_url(
+        self,
+        data: SandboxScanWithSourceURLRequest,
+        read_timeout: int = 240,
+    ) -> SandboxBaseTaskResponse:
+        """
+        Send url to the sandbox with source settings
+
+        Args:
+            data:
+                Request parameters in model
+            read_timeout:
+                Response waiting time in seconds
+
+        Raises:
+            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+        """
+
+        timeout = attr.evolve(self.default_timeout, total=read_timeout)
+
+        response = await self.http_client.post(
+            f"{self.key.url}/scan/checkURL",
+            json=data.dict(),
+            headers=data.get_headers(),
+            timeout=timeout,
+        )
+
+        response.raise_for_status()
+
+        return await SandboxBaseTaskResponse.build(response)
+
+    async def source_get_report(self, scan_id: UUID) -> SandboxBaseTaskResponse:
+        """
+        Get the full scan report created using the source settings
+
+        Args:
+            task_id: task id :)
+
+        Returns:
+            The response from the sandbox is either with partial information (when using async_result), or with full information.
+
+        Raises:
+            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+        """
+
+        response = await self.http_client.post(
+            f"{self.key.url}/scan/getFullReport",
+            json={"scan_id": str(scan_id)},
+        )
+
+        response.raise_for_status()
+
+        return await SandboxBaseTaskResponse.build(response)
 
     def __del__(self) -> None:
         if not self.session.closed:

@@ -1,10 +1,9 @@
-from typing import Any
+from typing import Any, Self
 
 import aiohttp
 import aiohttp.client_exceptions
 from loguru import logger
 from pydantic import BaseModel, ConfigDict, ValidationError
-from typing_extensions import Self
 
 
 class BaseRequest(BaseModel):

@@ -66,6 +66,7 @@ nav:
           - Scan: usage/public-api/scanning/scan.md
           - Rescan: usage/public-api/scanning/rescan.md
           - Debug Options: usage/public-api/scanning/debug-options.md
+          - Sources: usage/public-api/scanning/source.md
       - Get available images: usage/public-api/image-info.md
       - Extract email headers: usage/public-api/email.md
       - Download files: usage/public-api/download-files.md

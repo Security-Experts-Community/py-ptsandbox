@@ -364,7 +364,6 @@ class FileInfoProperties(SoftEnum):
     PY_INSTALLER = "PY_INSTALLER"
     SFX = "SFX"
     SFX_7Z = "SFX_7z"
-    SFX_7z = "SFX_7z"
     SFX_ACE = "SFX_ACE"
     SFX_RAR = "SFX_RAR"
     SFX_ZIP = "SFX_ZIP"

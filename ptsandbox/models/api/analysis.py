@@ -619,7 +619,7 @@ class SandboxBaseTaskResponse(BaseResponse):
             * `checkTask`, if the file analysis has not been completed yet
         """
 
-        artifacts: list[Artifact]
+        artifacts: list[Artifact] = []
         """
         A file, email, or other object that was checked during file analysis.
 
