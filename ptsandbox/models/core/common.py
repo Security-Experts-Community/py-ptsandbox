@@ -8,12 +8,23 @@ from ptsandbox.models.core.base import BaseResponse
 from ptsandbox.models.core.enum import (
     ArtifactType,
     EngineSubsystem,
+    FileInfoProperties,
     LogType,
     NetworkObjectType,
     SandboxImageType,
     ScanState,
     Verdict,
 )
+
+
+class FilterProperties(BaseModel):
+    """
+    Filtering a group of files by properties to send to the sandbox for analysis
+    """
+
+    pdf: list[FileInfoProperties] = []
+
+    office: list[FileInfoProperties] = []
 
 
 class SandboxResult(BaseModel):

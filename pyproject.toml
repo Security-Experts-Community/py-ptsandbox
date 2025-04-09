@@ -72,7 +72,7 @@ follow_imports = "silent"
 [tool.pydantic-mypy]
 init_forbid_extra = true
 init_typed = true
-warn_required_dynamic_aliases = true
+warn_required_dynamic_aliases = false
 
 [[tool.mypy.overrides]]
 module = "ptsandbox.models.core.enum"

@@ -21,6 +21,23 @@ from ptsandbox.models.core import (
 from ptsandbox.models.core.enum import ErrorType, QuarantineState, TokenPermissions
 
 
+class EntryPointToken(BaseModel):
+    id: int
+    """
+    ID of the token in the Postgres database
+    """
+
+    name: str
+    """
+    Token name
+    """
+
+    deleted: float | None = Field(default=None)
+    """
+    UNIX time the time of token deletion
+    """
+
+
 class CorrelationInfo(BaseModel):
     """
     Information about correlation

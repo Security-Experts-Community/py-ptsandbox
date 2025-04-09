@@ -296,6 +296,21 @@ class EntryPointType(SoftEnum):
     WEB = "WEB"
 
 
+class EntryPointTypeUI(SoftEnum):
+    checkme = "checkme"
+    files_inbox = "files_inbox"
+    files_monitor = "files_monitor"
+    icap = "icap"
+    mail_bcc = "mail_bcc"
+    mail_gateway = "mail_gateway"
+    mail_gateway_mta = "mail_gateway_mta"
+    pt_cs = "pt_cs"
+    pt_edr = "pt_edr"
+    pt_nad = "pt_nad"
+    scan_api = "scan_api"
+    smtp = "smtp"
+
+
 class EntryPointStatus(SoftEnum):
     UNKNOWN = "UNKNOWN"
     SUCCESS = "SUCCESS"

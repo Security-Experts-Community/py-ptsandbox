@@ -80,6 +80,7 @@ nav:
       - Cluster: usage/ui-api/cluster.md
       - Components: usage/ui-api/components.md
       - Download files: usage/ui-api/download-files.md
+      - Entry Points: usage/ui-api/entry-points.md
       - License: usage/ui-api/license.md
       - System: usage/ui-api/system.md
       - Tasks: usage/ui-api/tasks.md

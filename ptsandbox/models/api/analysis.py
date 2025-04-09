@@ -8,11 +8,11 @@ from ptsandbox.models.core import (
     Artifact,
     BaseRequest,
     BaseResponse,
+    FilterProperties,
     SandboxException,
     SandboxResult,
     VNCMode,
 )
-from ptsandbox.models.core.enum import FileInfoProperties
 
 
 class DebugOptions(TypedDict):
@@ -162,15 +162,6 @@ class SandboxOptions(BaseRequest):
 
     In the absence, the source parameters are used for analysis, which are set in the system by default.
     """
-
-    class FilterProperties(BaseModel):
-        """
-        Filtering a group of files by properties to send to the sandbox for analysis
-        """
-
-        pdf: list[FileInfoProperties] = []
-
-        office: list[FileInfoProperties] = []
 
     enabled: bool = True
     """

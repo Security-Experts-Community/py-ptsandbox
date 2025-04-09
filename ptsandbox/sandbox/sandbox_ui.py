@@ -21,7 +21,11 @@ from ptsandbox.models import (
     SandboxBaqueueTasksResponse,
     SandboxClusterStatusResponse,
     SandboxComponentsResponse,
+    SandboxCreateEntryPointRequest,
     SandboxCreateTokenResponse,
+    SandboxEntryPointResponse,
+    SandboxEntryPointsResponse,
+    SandboxEntryPointsTypesResponse,
     SandboxException,
     SandboxFileNotFoundException,
     SandboxKey,
@@ -377,6 +381,176 @@ class SandboxUI:
             yield chunk
 
     @_token_required
+    async def get_entry_points_types(self) -> SandboxEntryPointsTypesResponse:
+        """
+        Get a list of possible sources to check with their parameters
+
+        Returns:
+            List of possible sources
+
+        Raises:
+            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+        """
+
+        response = await self.http_client.get(f"{self.key.ui_url}/entry-points-types")
+
+        response.raise_for_status()
+
+        return SandboxEntryPointsTypesResponse.model_validate(await response.json())
+
+    @_token_required
+    async def get_entry_points(self) -> SandboxEntryPointsResponse:
+        """
+        Get a list of added sources for analysis
+
+        Returns:
+            EntryPoints model
+
+        Raises:
+            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+        """
+
+        response = await self.http_client.get(f"{self.key.ui_url}/entry-points")
+
+        response.raise_for_status()
+
+        return SandboxEntryPointsResponse.model_validate(await response.json())
+
+    @_token_required
+    async def create_entry_point(self, parameters: SandboxCreateEntryPointRequest) -> None:
+        """
+        Add a new analysis source
+
+        Args:
+            parameters:
+                Parameters for request
+
+        Raises:
+            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+        """
+
+        response = await self.http_client.post(
+            f"{self.key.ui_url}/entry-points",
+            json=parameters.dict(),
+        )
+
+        response.raise_for_status()
+
+    @_token_required
+    async def get_entry_point(self, entry_point_id: str) -> SandboxEntryPointResponse:
+        """
+        Get information about the analysis source
+
+        Args:
+            entry_point_id:
+                ID of entry point
+
+        Returns:
+            EntryPoint model
+
+        Raises:
+            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+        """
+
+        response = await self.http_client.get(f"{self.key.ui_url}/entry-points/{entry_point_id}")
+
+        response.raise_for_status()
+
+        return SandboxEntryPointResponse.model_validate(await response.json())
+
+    @_token_required
+    async def delete_entry_point(self, entry_point_id: str) -> None:
+        """
+        Delete the analysis source
+
+        Args:
+            entry_point_id:
+                ID of entry point
+
+        Raises:
+            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+        """
+
+        response = await self.http_client.delete(f"{self.key.ui_url}/entry-points/{entry_point_id}")
+
+        response.raise_for_status()
+
+    @_token_required
+    async def get_entry_point_tasks(
+        self,
+        entry_point_id: str,
+        query: str = "",
+        limit: int = 20,
+        offset: int = 0,
+        utc_offset_seconds: int = 0,
+        next_cursor: str | None = None,
+    ) -> SandboxTasksResponse:
+        """
+        Listing tasks from the source
+
+        Args:
+            entry_point_id:
+                ID of entry point
+            query:
+                Filtering using the query language. For the syntax, see the user documentation.
+
+                ```
+                age < 30d AND (task.correlated.state != UNKNOWN ) ORDER BY start desc
+                ```
+            limit:
+                Limit on the number of records to be returned
+            offset:
+                The offset of the returned records. If the next Cursor is specified, the offset from the cursor is
+            utc_offset_seconds:
+                The offset of the user's time from UTC, which will be used for the time in QL queries
+
+        Returns:
+            Information about requested tasks
+
+        Raises:
+            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+        """
+
+        data: dict[str, Any] = {
+            "query": query,
+            "limit": limit,
+            "offset": offset,
+            "utcOffsetSeconds": utc_offset_seconds,
+        }
+
+        if next_cursor is not None:
+            data.update({"nextCursor": next_cursor})
+
+        response = await self.http_client.get(f"{self.key.ui_url}/entry-points/{entry_point_id}/tasks", params=data)
+
+        response.raise_for_status()
+
+        return SandboxTasksResponse.model_validate(await response.json())
+
+    @_token_required
+    async def get_entry_point_logs(self, entry_point_id: str) -> AsyncIterator[bytes]:
+        """
+        Download logs of a specific source
+
+        Args:
+            entry_point_id:
+                ID of entry point
+
+        Returns:
+            Archive with logs
+
+        Raises:
+            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+        """
+
+        response = await self.http_client.get(f"{self.key.ui_url}/entry-points/{entry_point_id}/logs")
+
+        response.raise_for_status()
+
+        async for chunk in response.content.iter_chunked(1024 * 1024):
+            yield chunk
+
+    @_token_required
     async def get_tasks(
         self,
         query: str = "",
@@ -401,6 +575,9 @@ class SandboxUI:
 
         Returns:
             Information about requested tasks
+
+        Raises:
+            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
         """
 
         data: dict[str, Any] = {

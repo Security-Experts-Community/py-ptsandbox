@@ -6,6 +6,7 @@ from ptsandbox.models.ui.common import (
     CorrelationInfo,
     DetectionUI,
     EntryPoint,
+    EntryPointToken,
     Error,
     FilterValues,
     HTTPDescription,
@@ -15,6 +16,14 @@ from ptsandbox.models.ui.common import (
     Token,
 )
 from ptsandbox.models.ui.components import SandboxComponentsResponse
+from ptsandbox.models.ui.entry_points import (
+    EntryPointRules,
+    EntryPointSettings,
+    SandboxCreateEntryPointRequest,
+    SandboxEntryPointResponse,
+    SandboxEntryPointsResponse,
+    SandboxEntryPointsTypesResponse,
+)
 from ptsandbox.models.ui.license import (
     SandboxLicenseResponse,
     SandboxLicenseUpdateResponse,
@@ -45,6 +54,9 @@ __all__ = [
     "CorrelationInfo",
     "DetectionUI",
     "EntryPoint",
+    "EntryPointRules",
+    "EntryPointSettings",
+    "EntryPointToken",
     "Error",
     "FilterValues",
     "HTTPDescription",
@@ -55,7 +67,11 @@ __all__ = [
     "SandboxBaqueueTasksResponse",
     "SandboxClusterStatusResponse",
     "SandboxComponentsResponse",
+    "SandboxCreateEntryPointRequest",
     "SandboxCreateTokenResponse",
+    "SandboxEntryPointResponse",
+    "SandboxEntryPointsResponse",
+    "SandboxEntryPointsTypesResponse",
     "SandboxInfo",
     "SandboxLicenseResponse",
     "SandboxLicenseUpdateResponse",
