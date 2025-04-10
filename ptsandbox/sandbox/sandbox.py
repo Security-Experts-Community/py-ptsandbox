@@ -68,7 +68,7 @@ class Sandbox:
         )
 
         if key.ui is not None:
-            self.ui = SandboxUI(key, default_timeout=default_timeout)
+            self.ui = SandboxUI(key, default_timeout=default_timeout, proxy=proxy)
 
     async def create_rescan(
         self,
