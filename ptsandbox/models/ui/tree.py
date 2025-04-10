@@ -370,7 +370,7 @@ class TreeNode(BaseModel):
         result: Result | None = None
 
     class CacheInfo(BaseModel):
-        source_scan_id: str = Field(alias="sourceScanId")
+        source_scan_id: str | int = Field(alias="sourceScanId")
         """
         The original task ID
         """
