@@ -184,7 +184,7 @@ class SandboxOptions(BaseRequest):
     For example: `rundll32.exe {file},#1`
     """
 
-    procdump_new_processes_on_finish: bool = False
+    procdump_new_processes_on_finish: bool = True
     """
     Take dumps for all spawned and non-dead processes
     """
@@ -273,7 +273,7 @@ class SandboxOptionsAdvanced(BaseRequest):
     For example: `rundll32.exe {file},#1`
     """
 
-    procdump_new_processes_on_finish: bool = False
+    procdump_new_processes_on_finish: bool = True
     """
     Take dumps for all spawned and non-dead processes
     """
@@ -422,7 +422,7 @@ class SandboxBaseScanTaskRequest(BaseRequest):
             Protected PDF file
             """
 
-        analysis_depth: int = 0
+        analysis_depth: int = 2
         """
         The depth of the check.
 
