@@ -94,6 +94,10 @@ ipython_config.py
 #   install all needed dependencies.
 #Pipfile.lock
 
+# poetry
+poetry.lock
+
+
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
 __pypackages__/
 
@@ -106,6 +110,7 @@ celerybeat.pid
 
 # Environments
 .env
+*.env
 .venv
 env/
 venv/
@@ -140,6 +145,7 @@ cython_debug/
 report*json
 
 .vscode/
+.idea/
 
 result
 .pdm-python
