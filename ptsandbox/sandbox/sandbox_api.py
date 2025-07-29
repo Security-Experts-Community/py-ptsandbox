@@ -66,7 +66,7 @@ class SandboxApi:
                     resolver=aiohttp.ThreadedResolver(),
                 )
             ),
-            headers={"X-Api-Key": key.key},
+            headers={"X-Api-Key": key.key.get_secret_value()},
         )
         self.http_client = AsyncHTTPClient(self.session, logger=logger)
 

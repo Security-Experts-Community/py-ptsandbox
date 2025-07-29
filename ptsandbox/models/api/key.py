@@ -1,7 +1,7 @@
 from enum import Enum
 from functools import cached_property
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, SecretStr
 
 
 class SandboxKey(BaseModel):
@@ -16,16 +16,16 @@ class SandboxKey(BaseModel):
             default = 0
             ldap = 1
 
-        login: str
-        password: str
+        login: SecretStr
+        password: SecretStr
         auth_type: AuthType = AuthType.default
 
-    name: str
+    name: SecretStr
     """
     Custom key name
     """
 
-    key: str
+    key: SecretStr
     """
     The key received in the sandbox interface
     """
