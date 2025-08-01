@@ -180,8 +180,8 @@ class SandboxUI:
         assert self.key.ui is not None
 
         data: dict[str, str | bool | SandboxKey.UI.AuthType] = {
-            "username": self.key.ui.login,
-            "password": self.key.ui.password,
+            "username": self.key.ui.login.get_secret_value(),
+            "password": self.key.ui.password.get_secret_value(),
             "authType": self.key.ui.auth_type,
             "rememberLogin": True,
         }
