@@ -358,6 +358,9 @@ class FileInfoTypes(SoftEnum):
 
 
 class FileInfoProperties(SoftEnum):
+    ARCH_AMD64 = "ARCH_AMD64"
+    ARCH_ARM64 = "ARCH_ARM64"
+    ARCH_I386 = "ARCH_I386"
     ARCHIVE = "ARCHIVE"
     COMPRESSED = "COMPRESSED"
     CORRUPTED = "CORRUPTED"
@@ -374,6 +377,7 @@ class FileInfoProperties(SoftEnum):
     HAS_REMOTE_DATA = "HAS_REMOTE_DATA"
     HAS_REMOTE_TEMPLATE = "HAS_REMOTE_TEMPLATE"
     MULTI_VOLUME = "MULTI_VOLUME"
+    NESTED_PE = "NESTED_PE"
     OFFICE = "OFFICE"
     PROTECTED = "PROTECTED"
     PY_INSTALLER = "PY_INSTALLER"
@@ -391,6 +395,7 @@ class TreeEngineName(SoftEnum):
     DRWEB = "drweb"
     KASPERSKY = "kaspersky"
     NANO = "nano"
+    PTAV = "ptav"
     PTESC = "ptesc"
     PTIOC = "ptioc"
     PT_CATEGORIZER = "ptcategorizer"
@@ -398,6 +403,7 @@ class TreeEngineName(SoftEnum):
     RULE_ENGINE = "rule_engine"
     VBA = "vba"
     YARA_ENGINE = "yara_engine"
+    YARA_ENGINE_TEST = "yara_engine_test"
 
 
 class TreeNodeType(SoftEnum):
@@ -431,12 +437,14 @@ class BootkitmonStage(SoftEnum):
 
 
 class ErrorType(SoftEnum):
+    ANALYSIS_ERROR = "ANALYSIS_ERROR"
     BOOTKITMON_REBOOT_TIMEOUT = "BOOTKITMON_REBOOT_TIMEOUT"
     CANCELLED_BY_RULES = "CANCELLED_BY_RULES"
     CANCELLED_BY_USER = "CANCELLED_BY_USER"
     COLLISION_ERROR = "COLLISION_ERROR"
     CONNECTION_ERROR = "CONNECTION_ERROR"
     CONNECT_TIMEOUT = "CONNECT_TIMEOUT"
+    CONTAINS_CORRUPTED = "CONTAINS_CORRUPTED"
     CONTAINS_ENCRYPTED = "CONTAINS_ENCRYPTED"
     CORRUPTED = "CORRUPTED"
     ENCRYPTED = "ENCRYPTED"
@@ -459,6 +467,7 @@ class ErrorType(SoftEnum):
     SCAN_MACHINE_ERROR = "SCAN_MACHINE_ERROR"
     TIMEOUT_ERROR = "TIMEOUT_ERROR"
     UNKNOWN = "UNKNOWN"
+    UNPACKING_ERROR = "UNPACKING_ERROR"
 
 
 class HTTPDirection(SoftEnum):
