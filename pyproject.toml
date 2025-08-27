@@ -11,9 +11,9 @@ authors = [
 ]
 dependencies = [
     "loguru>=0.7.3",
-    "pydantic>=2.11.1",
-    "aiohttp>=3.11.15",
-    "orjson>=3.10.16",
+    "pydantic>=2.11.7",
+    "aiohttp>=3.12.15",
+    "orjson>=3.10.18",
     "aiohttp-socks>=0.10.1",
 ]
 license = "MIT"
@@ -106,4 +106,4 @@ format.indent-style = "space"
 
 [dependency-groups]
 dev = ["pytest>=8.3.4", "pytest-asyncio>=0.25.2", "mypy>=1.14.1"]
-docs = ["mkdocs>=1.6.1", "mkdocs-material>=9.6.7"]
+docs = ["mkdocs>=1.6.1", "mkdocs-material>=9.6.17"]
