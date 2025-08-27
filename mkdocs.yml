@@ -71,6 +71,7 @@ nav:
       - Extract email headers: usage/public-api/email.md
       - Download files: usage/public-api/download-files.md
       - System info: usage/public-api/system.md
+      - Tasks: usage/public-api/tasks.md
     - UI API:
       - Authorization: usage/ui-api/authorization.md
       - API Tokens: usage/ui-api/api-tokens.md
