@@ -1,5 +1,6 @@
 """Модели, которые аналогичны и для API, и для UI"""
 
+from collections.abc import Iterable
 from datetime import datetime
 
 from pydantic import AliasChoices, BaseModel, Field
@@ -458,22 +459,43 @@ class Artifact(BaseModel):
     """
 
     def find_sandbox_result(self) -> EngineResult | None:
-        if self.type == ArtifactType.ARCHIVE:
-            if self.artifacts is not None:
-                return self.artifacts[0].find_sandbox_result()
-            return None
-        if self.engine_results is not None:
-            for result in self.engine_results:
-                if result.engine_subsystem == EngineSubsystem.SANDBOX:
-                    return result
-        if self.artifacts is not None:
-            for artifact in self.artifacts:
-                if (sb_result := artifact.find_sandbox_result()) is not None:
-                    return sb_result
+        """
+        Find and return the first result with behavioral logs
+        Remained for backward compatibility
+        """
+
+        search_order = (
+            ("artifacts", "engine_results") if self.type == ArtifactType.ARCHIVE else ("engine_results", "artifacts")
+        )
+
+        for source in search_order:
+            if source == "engine_results" and self.engine_results:
+                for result in self.engine_results:
+                    if result.engine_subsystem == EngineSubsystem.SANDBOX:
+                        return result
+
+            elif source == "artifacts" and self.artifacts:
+                for artifact in self.artifacts:
+                    if (sb_result := artifact.find_sandbox_result()) is not None:
+                        return sb_result
+
         return None
 
+    def get_sandbox_results(self) -> Iterable[EngineResult]:
+        """
+        Get a list of all behavioral logs
+        It is necessary for tasks with multiple sandbox images
+        """
+
+        if self.engine_results:
+            yield from (result for result in self.engine_results if result.engine_subsystem == EngineSubsystem.SANDBOX)
+
+        if self.artifacts:
+            for artifact in self.artifacts:
+                yield from artifact.get_sandbox_results()
+
     def find_static_result(self) -> EngineResult | None:
-        if self.engine_results is not None:
+        if self.engine_results:
             for result in self.engine_results:
                 if result.engine_subsystem == EngineSubsystem.STATIC:
                     return result

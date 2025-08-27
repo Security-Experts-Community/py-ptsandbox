@@ -25,7 +25,7 @@ class Detect:
 
     def __eq__(self, other: object) -> bool:
         if isinstance(other, Detect):
-            return self.__key() == other.__key()  # noqa: W0212
+            return self.__key() == other.__key()
 
         raise NotImplementedError()
 
