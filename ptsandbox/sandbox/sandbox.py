@@ -3,7 +3,7 @@ import math
 from collections.abc import AsyncIterator
 from io import BytesIO
 from pathlib import Path
-from typing import BinaryIO
+from typing import Any, BinaryIO
 from uuid import UUID
 
 import aiohttp
@@ -31,6 +31,7 @@ from ptsandbox.models import (
     SandboxUploadException,
     SandboxWaitTimeoutException,
 )
+from ptsandbox.models.api.analysis import SandboxTasksResponse
 from ptsandbox.models.api.scan import (
     SandboxScanWithSourceFileRequest,
     SandboxScanWithSourceURLRequest,
@@ -785,3 +786,46 @@ class Sandbox:
         )
 
         return await self.api.source_check_url(data, read_timeout)
+
+    async def get_tasks(
+        self,
+        query: str = "",
+        limit: int = 20,
+        offset: int = 0,
+        utc_offset_seconds: int = 0,
+        next_cursor: str | None = None,
+    ) -> SandboxTasksResponse:
+        """
+        Get tasks listing
+
+        Warning: Unstable API (can be changed in future release)
+
+        Args:
+            query:
+                filtering using the query language. For the syntax, see the user documentation.
+
+                ```
+                age < 30d AND (task.correlated.state != UNKNOWN ) ORDER BY start desc
+                ```
+            limit: limit on the number of records to be returned
+            utc_offset_seconds: the offset of the user's time from UTC, which will be used for the time in QL queries
+            next_cursor: the value from the previous request
+
+        Returns:
+            Information about requested tasks
+
+        Raises:
+            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+        """
+
+        data: dict[str, Any] = {
+            "query": query,
+            "limit": limit,
+            "offset": offset,
+            "utc_offset_seconds": utc_offset_seconds,
+        }
+
+        if next_cursor is not None:
+            data.update({"next_cursor": next_cursor})
+
+        return await self.api.get_tasks(data)

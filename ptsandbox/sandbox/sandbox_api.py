@@ -3,7 +3,7 @@ from collections.abc import AsyncIterator
 from http import HTTPStatus
 from io import BytesIO
 from pathlib import Path
-from typing import BinaryIO
+from typing import Any, BinaryIO
 from uuid import UUID
 
 import aiohttp
@@ -27,6 +27,7 @@ from ptsandbox.models import (
     SandboxScanURLTaskRequest,
     SandboxUploadScanFileResponse,
 )
+from ptsandbox.models.api.analysis import SandboxTasksResponse
 from ptsandbox.models.api.scan import (
     SandboxScanWithSourceFileRequest,
     SandboxScanWithSourceURLRequest,
@@ -565,6 +566,20 @@ class SandboxApi:
         response.raise_for_status()
 
         return await SandboxBaseTaskResponse.build(response)
+
+    async def get_tasks(self, data: dict[str, Any]) -> SandboxTasksResponse:
+        """
+        Get tasks listing
+        """
+
+        response = await self.http_client.post(
+            f"{self.key.url}/analysis/listTasks",
+            json=data,
+        )
+
+        response.raise_for_status()
+
+        return SandboxTasksResponse.model_validate(await response.json())
 
     def __del__(self) -> None:
         if not self.session.closed:

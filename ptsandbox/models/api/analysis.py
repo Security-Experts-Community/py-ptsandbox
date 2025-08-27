@@ -13,6 +13,7 @@ from ptsandbox.models.core import (
     SandboxResult,
     VNCMode,
 )
+from ptsandbox.models.core.enum import ScanState, Verdict
 
 
 class DebugOptions(TypedDict):
@@ -684,3 +685,67 @@ class SandboxCheckTaskResponse(BaseResponse):
         """
 
     data: Data
+
+
+class SandboxTasksResponse(BaseModel):
+    class Task(BaseModel):
+        """
+        Brief information on the scan
+        """
+
+        id: str
+        """
+        Scan ID
+        """
+
+        name: str
+        """
+        Name of the scan
+        """
+
+        entry_point_id: str
+        """
+        Name of the entry point
+        """
+
+        entry_point_type: str
+        """
+        Type of the entry point
+        """
+
+        start_time: float
+        """
+        The beginning of the scan
+        """
+
+        scan_state: ScanState
+        """
+        Scan status
+        """
+
+        duration: float | None = None
+        """
+        Duration of the check: total or for each antivirus and component.
+        """
+
+        duration_full: float | None = None
+        """
+        The duration of the check, taking into account the record in the database or the time of the request.
+        """
+
+        verdict: Verdict | None = None
+        """
+        Scan result
+        """
+
+        threat: str | None = None
+        """
+        The type of malware.
+        """
+
+    tasks: list[Task] = []
+
+    next_cursor: str = ""
+    """
+    The cursor is for pagination, if the line is empty, then there is no more data. Indicates the data after the last record
+    """

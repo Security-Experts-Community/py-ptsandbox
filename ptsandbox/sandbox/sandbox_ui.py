@@ -11,7 +11,6 @@ from urllib.parse import urlparse
 from uuid import UUID
 
 import aiohttp
-import aiohttp.client_exceptions
 from aiohttp_socks import ProxyConnector
 from loguru import logger
 
@@ -572,6 +571,7 @@ class SandboxUI:
             limit: limit on the number of records to be returned
             offset: the offset of the returned records. If the next Cursor is specified, the offset from the cursor is
             utc_offset_seconds: the offset of the user's time from UTC, which will be used for the time in QL queries
+            next_cursor: the value from the previous request
 
         Returns:
             Information about requested tasks
