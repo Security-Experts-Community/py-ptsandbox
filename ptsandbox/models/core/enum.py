@@ -236,6 +236,7 @@ class ArtifactType(SoftEnum):
     The type of the analyzed object
     """
 
+    AMSI = "AMSI"
     ARCHIVE = "ARCHIVE"
     COMPRESSED = "COMPRESSED"
     EMAIL = "EMAIL"
