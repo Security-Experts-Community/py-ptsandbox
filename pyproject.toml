@@ -1,6 +1,6 @@
 [project]
 name = "ptsandbox"
-version = "5.0.6"
+version = "5.0.7"
 description = "Async API connector for PT Sandbox instances"
 readme = "README.md"
 requires-python = "<4.0,>=3.11"
