@@ -423,6 +423,16 @@ class SandboxBaseScanTaskRequest(BaseRequest):
             Protected PDF file
             """
 
+        class DangerousFilesOptions(BaseModel):
+            """
+            Settings for marking files as dangerous
+            """
+
+            apk_tampered: bool = True
+            """
+            APK file with the label: "The format is compromised"
+            """
+
         analysis_depth: int = 2
         """
         The depth of the check.
@@ -470,6 +480,13 @@ class SandboxBaseScanTaskRequest(BaseRequest):
         Settings for marking files as suspicious. By default, we do not send, but take the settings from the sandbox.
 
         You can configure it by passing an object with the necessary options.
+        """
+
+        mark_dangerous_files_options: DangerousFilesOptions | None = DangerousFilesOptions()
+        """
+        Settings for marking files as dangerous. By default, we send this information because this labels are important.
+
+        You can configure it by passing an object with the necessary options or pass None to disable it
         """
 
         sandbox: SandboxOptions = SandboxOptions()
