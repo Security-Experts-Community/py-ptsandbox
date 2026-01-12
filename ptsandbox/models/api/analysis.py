@@ -66,6 +66,16 @@ class DebugOptions(TypedDict):
     Read more about these hooks in documentation
     """
 
+    disable_correlation: NotRequired[bool]
+    """
+    Disable the functionality of normalization and correlation of events.
+
+    It is useful if the correlation results are not needed anyway.
+
+    In this case, all collected artifacts (drops, memdumps, procdumps) will be included in the response,
+    without filtering at the level of correlation rules
+    """
+
     custom_syscall_hooks: NotRequired[str]
     """
     Use the specified list of system calls to intercept
@@ -154,6 +164,16 @@ class DebugOptions(TypedDict):
     Run this script in the VM immediately before launching the behavioral analysis.
 
     It is useful, for example, to check the network during analysis.
+    """
+
+    procdump_lightweight_mode: NotRequired[bool]
+    """
+    Use "light" memory dumps or not
+    """
+
+    custom_unimon_hooks: NotRequired[str]
+    """
+    Use a special format for hooks (not stable, will changed in the future)
     """
 
 
