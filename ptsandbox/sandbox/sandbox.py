@@ -3,7 +3,7 @@ import math
 from collections.abc import AsyncIterator
 from io import BytesIO
 from pathlib import Path
-from typing import Any, BinaryIO
+from typing import Any, BinaryIO, TypeAlias
 from uuid import UUID
 
 import aiohttp
@@ -235,6 +235,8 @@ class Sandbox:
 
         return await self.api.create_scan(scan, read_timeout)
 
+    FileName: TypeAlias = str
+
     async def create_advanced_scan(
         self,
         file: str | Path | bytes | BinaryIO,
@@ -242,7 +244,7 @@ class Sandbox:
         *,
         file_name: str | None = None,
         rules: str | Path | bytes | BytesIO | None = None,
-        extra_files: list[Path] | None = None,
+        extra_files: list[Path] | list[tuple[BinaryIO, FileName]] | None = None,
         short_result: bool = False,
         async_result: bool = True,
         read_timeout: int = 300,
@@ -304,7 +306,12 @@ class Sandbox:
                     task_rules = None
 
                 if extra_files is not None:
-                    tasks_extra_files = {str(file): tg.create_task(self.api.upload_file(file)) for file in extra_files}
+                    def _get_filename(item: Path | tuple[BinaryIO, str]):
+                        if isinstance(item, tuple):
+                            return item[1]
+                        return str(item)
+
+                    tasks_extra_files = {_get_filename(file): tg.create_task(self.api.upload_file(file[0] if isinstance(file, tuple) else file)) for file in extra_files}
                 else:
                     tasks_extra_files = None
         except ExceptionGroup as e:
