@@ -235,7 +235,7 @@ class Sandbox:
 
         return await self.api.create_scan(scan, read_timeout)
 
-    InMemoryExtraFiles: TypeAlias = list[tuple[BinaryIO, str]] # type alias for an array of tuples, with extra files in memory with their names
+    FileName: TypeAlias = str
 
     async def create_advanced_scan(
         self,
@@ -244,7 +244,7 @@ class Sandbox:
         *,
         file_name: str | None = None,
         rules: str | Path | bytes | BytesIO | None = None,
-        extra_files: list[Path] | InMemoryExtraFiles | None = None,
+        extra_files: list[Path] | list[tuple[BinaryIO, FileName]] | None = None,
         short_result: bool = False,
         async_result: bool = True,
         read_timeout: int = 300,
