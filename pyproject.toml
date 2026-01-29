@@ -12,7 +12,7 @@ authors = [
 dependencies = [
     "loguru>=0.7.3",
     "pydantic>=2.12.4",
-    "aiohttp>=3.13.2",
+    "aiohttp>=3.13.3",
     "orjson>=3.11.4",
     "aiohttp-socks>=0.11.0",
 ]
