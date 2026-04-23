@@ -176,6 +176,11 @@ class DebugOptions(TypedDict):
     Use a special format for hooks (not stable, will changed in the future)
     """
 
+    file_type_as_ext: NotRequired[bool]
+    """
+    Use a file type as an extension for a file
+    """
+
 
 class SandboxOptions(BaseRequest):
     """
