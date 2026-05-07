@@ -73,7 +73,10 @@ class SandboxUI:
         default_timeout: aiohttp.ClientTimeout,
         proxy: str | None = None,
         token_lifetime: datetime.timedelta = datetime.timedelta(minutes=8),
+        connection_retries: int = 3,
     ) -> None:
+        assert connection_retries > 0, "Connection retries must be greater than 0"
+
         self.key = key
         self.default_timeout = default_timeout
         self.token_lifetime = token_lifetime
@@ -99,7 +102,11 @@ class SandboxUI:
         self.fingerprint = "".join(random.choice("0123456789abcdef") for _ in range(32))
         self.update_token_lock = asyncio.Lock()
 
-        self.http_client = AsyncHTTPClient(self.session, logger=logger)
+        self.http_client = AsyncHTTPClient(
+            self.session,
+            logger=logger,
+            retries=connection_retries,
+        )
 
     @staticmethod
     @overload

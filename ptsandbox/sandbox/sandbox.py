@@ -60,16 +60,25 @@ class Sandbox:
         ),
         upload_semaphore_size: int | None = None,
         proxy: str | None = None,
+        connection_retries: int = 3,
     ) -> None:
+        assert connection_retries > 0, "Connection retries must be greater than 0"
+
         self.api = SandboxApi(
             key,
             default_timeout=default_timeout,
             upload_semaphore_size=upload_semaphore_size,
             proxy=proxy,
+            connection_retries=connection_retries,
         )
 
         if key.ui is not None:
-            self.ui = SandboxUI(key, default_timeout=default_timeout, proxy=proxy)
+            self.ui = SandboxUI(
+                key,
+                default_timeout=default_timeout,
+                proxy=proxy,
+                connection_retries=connection_retries,
+            )
 
     async def create_rescan(
         self,
@@ -306,12 +315,18 @@ class Sandbox:
                     task_rules = None
 
                 if extra_files is not None:
-                    def _get_filename(item: Path | tuple[BinaryIO, str]):
+
+                    def _get_filename(item: Path | tuple[BinaryIO, str]) -> str:
                         if isinstance(item, tuple):
                             return item[1]
                         return str(item)
 
-                    tasks_extra_files = {_get_filename(file): tg.create_task(self.api.upload_file(file[0] if isinstance(file, tuple) else file)) for file in extra_files}
+                    tasks_extra_files = {
+                        _get_filename(file): tg.create_task(
+                            self.api.upload_file(file[0] if isinstance(file, tuple) else file)
+                        )
+                        for file in extra_files
+                    }
                 else:
                     tasks_extra_files = None
         except ExceptionGroup as e:

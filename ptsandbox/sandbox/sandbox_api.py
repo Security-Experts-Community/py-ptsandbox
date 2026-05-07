@@ -52,7 +52,10 @@ class SandboxApi:
         default_timeout: aiohttp.ClientTimeout,
         upload_semaphore_size: int | None = None,
         proxy: str | None = None,
+        connection_retries: int = 3,
     ) -> None:
+        assert connection_retries > 0, "Connection retries must be greater than 0"
+
         self.key = key
         self.default_timeout = default_timeout
         self.session = aiohttp.ClientSession(
@@ -69,7 +72,11 @@ class SandboxApi:
             ),
             headers={"X-Api-Key": key.key.get_secret_value()},
         )
-        self.http_client = AsyncHTTPClient(self.session, logger=logger)
+        self.http_client = AsyncHTTPClient(
+            self.session,
+            logger=logger,
+            retries=connection_retries,
+        )
 
         self.upload_semaphore = asyncio.Semaphore(
             upload_semaphore_size if upload_semaphore_size else self.key.max_workers
