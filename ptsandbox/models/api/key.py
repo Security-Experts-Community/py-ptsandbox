@@ -16,11 +16,11 @@ class SandboxKey(BaseModel):
             default = 0
             ldap = 1
 
-        login: SecretStr
+        login: str
         password: SecretStr
         auth_type: AuthType = AuthType.default
 
-    name: SecretStr
+    name: str
     """
     Custom key name
     """
@@ -84,7 +84,7 @@ class SandboxKey(BaseModel):
         )
 
     def __key(self) -> tuple[str, str, str]:
-        return (self.name, self.key, self.host)
+        return (self.name, self.key.get_secret_value(), self.host)
 
     def __hash__(self) -> int:
         return hash(self.__key())
