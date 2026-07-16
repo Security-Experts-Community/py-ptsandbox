@@ -176,7 +176,7 @@ class SandboxApi:
         response.raise_for_status()
 
         # idk how to fix mypy complains about next line
-        return await response.read()  # type: ignore
+        return await response.read()  # type: ignore[no-any-return]
 
     async def download_artifact_stream(self, file_uri: str, read_timeout: int = 120) -> AsyncIterator[bytes]:
         """
