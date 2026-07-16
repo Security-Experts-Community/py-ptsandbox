@@ -1,9 +1,11 @@
+import logging
 from dataclasses import dataclass
 from enum import Enum
 from typing import Any
 
 import orjson
-from loguru import logger
+
+logger = logging.getLogger(__name__)
 
 
 class DetectionType(str, Enum):
@@ -35,7 +37,7 @@ class Detections:
 
     _real_name: str
 
-    def __init__(self, trace: bytes, ctx: str = "") -> None:
+    def __init__(self, trace: bytes) -> None:
         self.detections = {
             DetectionType.SILENT: set(),
             DetectionType.SUSPICIOUS: set(),
@@ -56,8 +58,8 @@ class Detections:
                             weight=event.get("weight", None),
                         )
                     )
-            except Exception as ex:
-                logger.error(f"Parsing trace exception: {ex!r} ({ctx = })")
+            except Exception:
+                logger.exception("Got error while parsing traces")
 
     def __repr__(self) -> str:
         return repr(self.detections)

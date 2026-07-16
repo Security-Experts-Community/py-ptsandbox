@@ -2,8 +2,9 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
-from ptsandbox.models.core import EntryPointTypeUI, FilterProperties
+from ptsandbox.models.core import FilterProperties
 from ptsandbox.models.core.base import BaseRequest
+from ptsandbox.models.core.enum import EntryPointType
 from ptsandbox.models.ui.common import EntryPointToken, SMTPDefaultRecord
 
 
@@ -348,6 +349,17 @@ class EntryPointSettings(BaseModel):
 
         routes: list[Route] = []
 
+    class ExtraBCCAddresses(BaseModel):
+        enabled: bool
+        """
+        Enable email forwarding to additional recipient addresses
+        """
+
+        addresses: list[str] = []
+        """
+        Additional recipient addresses
+        """
+
     balancer_host: str | None = Field(default=None, alias="balancerHost")
     """
     Balancer Host
@@ -398,18 +410,40 @@ class EntryPointSettings(BaseModel):
     Version of the destination file resource
     """
 
+    destination_auth_type: Literal["NTLM", "KERBEROS"] | None = Field(default=None, alias="destinationAuthType")
+    """
+    The type of authentication when connecting to an SMB-share
+    """
+
+    destination_dc_ip: str | None = Field(default=None, alias="destinationDcIp")
+    """
+    Address of the domain controller
+    """
+
+    destination_use_ssl: bool | None = Field(default=None, alias="destinationUseSsl")
+    """
+    Use SSL when connecting to S3 file source
+    """
+
+    destination_ssl_check: bool | None = Field(default=None, alias="destinationSslChek")
+    """
+    Verifying the authenticity of an SSL certificate when connecting to an S3 file source
+    """
+
+    destination_s3_region: str | None = Field(default=None, alias="destinationS3Region")
+    """
+    S3 Region
+    """
+
     email: str | None = Field(default=None, alias="email")
     """
     Mailing address
     """
 
-    smtp_host: str | None = Field(default=None, alias="smtpHost")
-
-    smtp_port: int | None = Field(default=None, alias="smtpPort")
-
-    smtp_use_ssl: bool | None = Field(default=None, alias="smtpUseSsl")
-
-    smtp_auth_type: str | None = Field(default=None, alias="smtpAuthType")
+    grpc_service_port: int | None = Field(default=None, alias="grpcServicePort")
+    """
+    The port of the Mail Agent MTA management server
+    """
 
     imap_auth_type: str | None = Field(default=None, alias="imapAuthType")
     """
@@ -430,6 +464,28 @@ class EntryPointSettings(BaseModel):
     """
     Use ssl
     """
+
+    smtp_is_enabled: bool | None = Field(default=None, alias="smtpIsEnabled")
+    """
+    Send the result in a reply email
+    """
+
+    smtp_host: str | None = Field(default=None, alias="smtpHost")
+
+    smtp_port: int | None = Field(default=None, alias="smtpPort")
+
+    smtp_use_ssl: bool | None = Field(default=None, alias="smtpUseSsl")
+
+    smtp_auth_type: str | None = Field(default=None, alias="smtpAuthType")
+
+    smtp_tls_method: Literal["NO_TLS", "SMTP_TLS", "SOCKET_TLS"] | None = Field(default=None, alias="smtpTlsMethod")
+    """
+    TLS encryption method
+    """
+
+    smtp_login: str | None = Field(default=None, alias="smtpLogin")
+
+    smtp_pasword: str | None = Field(default=None, alias="smtpPassword")
 
     login: str | None = Field(default=None, alias="login")
     """
@@ -486,6 +542,31 @@ class EntryPointSettings(BaseModel):
     Quarantine version
     """
 
+    quarantine_auth_type: Literal["NTLM", "KERBEROS"] | None = Field(default=None, alias="quarantineAuthType")
+    """
+    The type of authentication when connecting to an SMB-share
+    """
+
+    quarantine_dc_ip: str | None = Field(default=None, alias="quarantineDcIp")
+    """
+    Address of the domain controller
+    """
+
+    quarantine_use_ssl: bool | None = Field(default=None, alias="quarantineUseSsl")
+    """
+    Use SSL when connecting to S3 file source
+    """
+
+    quarantine_ssl_check: bool | None = Field(default=None, alias="quarantineSslChek")
+    """
+    Verifying the authenticity of an SSL certificate when connecting to an S3 file source
+    """
+
+    quarantine_s3_region: str | None = Field(default=None, alias="quarantineS3Region")
+    """
+    S3 Region
+    """
+
     scan_max_file_size: int | None = Field(default=None, alias="scanMaxFileSize")
     """
     Maximum size of the scanned file
@@ -508,14 +589,19 @@ class EntryPointSettings(BaseModel):
     The password of the source file resource
     """
 
+    source_port: int | None = Field(default=None, alias="sourcePort")
+    """
+    The port of the source file resource
+    """
+
     source_server: str | None = Field(default=None, alias="sourceServer")
     """
     The server address of the source file resource
     """
 
-    source_share_path: str | None = Field(default=None, alias="sourceSharePath")
+    source_share_path: list[str] | None = Field(default=None, alias="sourceSharePath")
     """
-    The server port of the source file resource
+    List of paths to the source file resource
     """
 
     source_type: str | None = Field(default=None, alias="sourceType")
@@ -526,6 +612,31 @@ class EntryPointSettings(BaseModel):
     source_version: str | None = Field(default=None, alias="sourceVersion")
     """
     Version of the source file resource
+    """
+
+    source_use_ssl: bool | None = Field(default=None, alias="sourceUseSsl")
+    """
+    Use SSL when connecting to S3 file source
+    """
+
+    source_ssl_check: bool | None = Field(default=None, alias="sourceSslCheck")
+    """
+    Verifying the authenticity of an SSL certificate when connecting to an S3 file source
+    """
+
+    source_s3_region: str | None = Field(default=None, alias="sourceS3Region")
+    """
+    S3 Region
+    """
+
+    source_auth_type: Literal["NTLM", "KERBEROS"] | None = Field(default=None, alias="sourceAuthType")
+    """
+    The type of authentication when connecting to an SMB-share
+    """
+
+    source_dc_ip: str | None = Field(default=None, alias="sourceDcIp")
+    """
+    Address of the domain controller
     """
 
     use_tls: bool | None = Field(default=None, alias="useTls")
@@ -557,6 +668,18 @@ class EntryPointSettings(BaseModel):
     Use the list of allowed IP addresses to connect to the source
     """
 
+    processing_mode: Literal["ASYNC", "SYNC"] | None = Field(default=None, alias="processingMode")
+    """
+    SMTP response mode to the client
+    """
+
+    process_x_original_to: bool | None = Field(default=None, alias="processXOriginalTo")
+    """
+    Process the recipient's address from the X-Original-To header
+    """
+
+    extra_bcc_addresses: ExtraBCCAddresses | None = Field(default=None, alias="extraBccAddresses")
+
 
 class SandboxEntryPointsTypesResponse(BaseModel):
     """
@@ -574,7 +697,7 @@ class SandboxEntryPointsTypesResponse(BaseModel):
         The unique name of the source
         """
 
-        type: EntryPointTypeUI
+        type: EntryPointType
         """
         Type of scan source
         """
@@ -607,7 +730,7 @@ class SandboxEntryPointsResponse(BaseModel):
         Source name
         """
 
-        type: EntryPointTypeUI
+        type: EntryPointType
         """
         Source type
         """
@@ -666,7 +789,7 @@ class SandboxEntryPointResponse(BaseModel):
         Source name
         """
 
-        type: EntryPointTypeUI
+        type: EntryPointType
         """
         Source type
         """
@@ -712,7 +835,7 @@ class SandboxCreateEntryPointRequest(BaseRequest):
     Name of the source
     """
 
-    type: EntryPointTypeUI
+    type: EntryPointType
     """
     Type of the source
     """

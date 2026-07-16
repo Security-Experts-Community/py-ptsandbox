@@ -2,12 +2,14 @@
 All enums are collected in one place, because there are many intersections in the models and it is easy to repeat.
 """
 
+import logging
 from enum import Enum
 from typing import Any
 
-from loguru import logger
 from pydantic import GetCoreSchemaHandler
 from pydantic_core import CoreSchema, core_schema
+
+logger = logging.getLogger(__name__)
 
 
 class SoftEnum(str, Enum):
@@ -28,7 +30,7 @@ class SoftEnum(str, Enum):
     @classmethod
     def _validate(cls, value: str) -> "SoftEnum":
         if value not in cls.__members__.values():
-            logger.warning(f'enum "{cls.__name__}" get unknown {value=}')
+            logger.warning('enum "%s" get unknown value="%s"', cls.__name__, value)
 
             # extended enum class with unknown value
             cls = Enum(
@@ -297,21 +299,6 @@ class EntryPointType(SoftEnum):
     SCAN_API = "SCAN_API"
     UNKNOWN = "UNKNOWN"
     WEB = "WEB"
-
-
-class EntryPointTypeUI(SoftEnum):
-    checkme = "checkme"
-    files_inbox = "files_inbox"
-    files_monitor = "files_monitor"
-    icap = "icap"
-    mail_bcc = "mail_bcc"
-    mail_gateway = "mail_gateway"
-    mail_gateway_mta = "mail_gateway_mta"
-    pt_cs = "pt_cs"
-    pt_edr = "pt_edr"
-    pt_nad = "pt_nad"
-    scan_api = "scan_api"
-    smtp = "smtp"
 
 
 class EntryPointStatus(SoftEnum):
@@ -614,6 +601,7 @@ class LicenseAvEngine(SoftEnum):
     ESET = "eset"
     KASPERSKY = "kaspersky"
     NANO = "nano"
+    PTAV = "ptav"
     SYMANTEC = "symantec"
     VBA = "vba"
 

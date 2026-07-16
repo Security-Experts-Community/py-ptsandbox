@@ -1,23 +1,23 @@
 from __future__ import annotations
 
 import asyncio
+import logging
 from typing import Any, Literal
 
 import aiohttp
-import loguru
 from aiohttp import ClientError
+
+logger = logging.getLogger(__name__)
 
 
 class AsyncHTTPClient:
     def __init__(
         self,
         session: aiohttp.ClientSession,
-        logger: loguru.Logger,
         retries: int = 3,
         backoff_factor: float = 1.0,
     ) -> None:
         self._session = session
-        self._logger = logger
         self.retries = retries
         self.backoff_factor = backoff_factor
 
@@ -36,11 +36,12 @@ class AsyncHTTPClient:
             except ClientError as e:
                 ex = e
                 if attempt < self.retries:
-                    self._logger.debug(f"Try {attempt}, exception during HTTP request - {e}")
+                    logger.debug("Attempt %d, exception during HTTP request - %r", e)
+
                     delay = self.backoff_factor * attempt
                     await asyncio.sleep(delay)
                 else:
-                    self._logger.error(f"Exception during HTTP request - {ex}")
+                    logger.exception("Unknown exception during HTTP request")
                     raise e
         raise ex or Exception("Unknown error during HTTP request")
 

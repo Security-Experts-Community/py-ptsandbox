@@ -1,9 +1,11 @@
+import logging
 from typing import Any, Self
 
 import aiohttp
 import aiohttp.client_exceptions
-from loguru import logger
 from pydantic import BaseModel, ConfigDict, ValidationError
+
+logger = logging.getLogger(__name__)
 
 
 class BaseRequest(BaseModel):
@@ -40,7 +42,7 @@ class BaseResponse(BaseModel):
         try:
             return cls.model_validate(await response.json())
         except (ValidationError, aiohttp.client_exceptions.ContentTypeError) as err:
-            logger.error(f"error: {err}")
+            logger.exception("Can't validate sandbox response")
             raise err
 
 

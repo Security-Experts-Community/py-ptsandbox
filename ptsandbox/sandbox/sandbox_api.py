@@ -1,4 +1,5 @@
 import asyncio
+import logging
 from collections.abc import AsyncIterator
 from http import HTTPStatus
 from io import BytesIO
@@ -9,7 +10,6 @@ from uuid import UUID
 import aiohttp
 import attr
 from aiohttp_socks import ProxyConnector
-from loguru import logger
 
 from ptsandbox.models import (
     CheckHealthResponse,
@@ -33,6 +33,8 @@ from ptsandbox.models.api.scan import (
     SandboxScanWithSourceURLRequest,
 )
 from ptsandbox.utils.async_http_client import AsyncHTTPClient
+
+logger = logging.getLogger(__name__)
 
 
 class SandboxApi:
@@ -74,7 +76,6 @@ class SandboxApi:
         )
         self.http_client = AsyncHTTPClient(
             self.session,
-            logger=logger,
             retries=connection_retries,
         )
 
@@ -176,7 +177,7 @@ class SandboxApi:
         response.raise_for_status()
 
         # idk how to fix mypy complains about next line
-        return await response.read()  # type: ignore[no-any-return]
+        return await response.read()  # type: ignore[no-any-return,unused-ignore]
 
     async def download_artifact_stream(self, file_uri: str, read_timeout: int = 120) -> AsyncIterator[bytes]:
         """

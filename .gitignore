@@ -149,3 +149,4 @@ report*json
 result
 .pdm-python
 .DS_Store
+test.py

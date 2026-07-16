@@ -1,4 +1,5 @@
 import asyncio
+import logging
 import math
 from collections.abc import AsyncIterator
 from io import BytesIO
@@ -9,7 +10,6 @@ from uuid import UUID
 import aiohttp
 import aiohttp.client_exceptions
 from aiohttp import ClientTimeout
-from loguru import logger
 
 from ptsandbox import config
 from ptsandbox.models import (
@@ -38,6 +38,8 @@ from ptsandbox.models.api.scan import (
 )
 from ptsandbox.sandbox.sandbox_api import SandboxApi
 from ptsandbox.sandbox.sandbox_ui import SandboxUI
+
+logger = logging.getLogger(__name__)
 
 
 class Sandbox:
@@ -469,7 +471,7 @@ class Sandbox:
             except Exception as ex:
                 error_counter += 1
 
-                logger.warning(f"Maybe dead sandbox {ex!r}, {self=}, {short_report.scan_id=}")
+                logger.exception("Maybe dead sandbox scan_id=%s", short_report.scan_id)
 
                 if error_counter >= error_limit:
                     raise SandboxTooManyErrorsException("Too many errors while waiting report") from ex

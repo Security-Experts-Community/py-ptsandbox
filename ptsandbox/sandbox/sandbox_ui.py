@@ -3,6 +3,7 @@ import datetime
 import functools
 import inspect
 import json
+import logging
 import random
 from collections.abc import AsyncIterator, Awaitable, Callable
 from http import HTTPStatus
@@ -12,7 +13,6 @@ from uuid import UUID
 
 import aiohttp
 from aiohttp_socks import ProxyConnector
-from loguru import logger
 
 from ptsandbox.models import (
     SandboxArtifactsFilterValuesResponse,
@@ -44,6 +44,8 @@ from ptsandbox.models import (
     TokenPermissions,
 )
 from ptsandbox.utils.async_http_client import AsyncHTTPClient
+
+logger = logging.getLogger(__name__)
 
 P = ParamSpec("P")
 R = TypeVar("R")
@@ -104,7 +106,6 @@ class SandboxUI:
 
         self.http_client = AsyncHTTPClient(
             self.session,
-            logger=logger,
             retries=connection_retries,
         )
 
