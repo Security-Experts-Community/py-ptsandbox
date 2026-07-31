@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 from typing import Literal
 
 from pydantic import BaseModel, Field
 
 from ptsandbox.models.core import FilterProperties
-from ptsandbox.models.core.base import BaseRequest
+from ptsandbox.models.core.base import BaseRequest, BaseResponse
 from ptsandbox.models.core.enum import EntryPointType
 from ptsandbox.models.ui.common import EntryPointToken, SMTPDefaultRecord
 
@@ -150,7 +152,9 @@ class EntryPointRules(BaseModel):
 
             url: URL
 
-        rules: list[FileRule | FileInverseRule | URLRule] = []
+        rules: list[FileRule | FileInverseRule | URLRule] = Field(
+            default_factory=list[FileRule | FileInverseRule | URLRule]
+        )
         """
         List of custom detection rules
         """
@@ -342,12 +346,12 @@ class EntryPointSettings(BaseModel):
         class Resolver(BaseModel):
             type: Literal["static", "dynamic"]
 
-            records: list[SMTPDefaultRecord] = []
+            records: list[SMTPDefaultRecord] = Field(default_factory=list[SMTPDefaultRecord])
             """
             Only available if type is "static"
             """
 
-        routes: list[Route] = []
+        routes: list[Route] = Field(default_factory=list[Route])
 
     class ExtraBCCAddresses(BaseModel):
         enabled: bool
@@ -355,7 +359,7 @@ class EntryPointSettings(BaseModel):
         Enable email forwarding to additional recipient addresses
         """
 
-        addresses: list[str] = []
+        addresses: list[str] = Field(default_factory=list[str])
         """
         Additional recipient addresses
         """
@@ -681,7 +685,7 @@ class EntryPointSettings(BaseModel):
     extra_bcc_addresses: ExtraBCCAddresses | None = Field(default=None, alias="extraBccAddresses")
 
 
-class SandboxEntryPointsTypesResponse(BaseModel):
+class SandboxEntryPointsTypesResponse(BaseResponse):
     """
     List of possible sources to check
     """
@@ -709,7 +713,7 @@ class SandboxEntryPointsTypesResponse(BaseModel):
     data: list[EntryPoint]
 
 
-class SandboxEntryPointsResponse(BaseModel):
+class SandboxEntryPointsResponse(BaseResponse):
     class EntryPoint(BaseModel):
         """
         Information about the verification source
@@ -768,7 +772,7 @@ class SandboxEntryPointsResponse(BaseModel):
     data: list[EntryPoint]
 
 
-class SandboxEntryPointResponse(BaseModel):
+class SandboxEntryPointResponse(BaseResponse):
     class EntryPoint(BaseModel):
         """
         Information about the verification source

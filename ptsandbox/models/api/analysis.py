@@ -1,15 +1,16 @@
-from typing import NotRequired
+from __future__ import annotations
+
+from typing import NotRequired, TypedDict
 from uuid import UUID
 
 from pydantic import BaseModel, Field
-from typing_extensions import TypedDict
 
+from ptsandbox.exceptions import SandboxException
 from ptsandbox.models.core import (
     Artifact,
     BaseRequest,
     BaseResponse,
     FilterProperties,
-    SandboxException,
     SandboxResult,
     VNCMode,
 )
@@ -182,16 +183,9 @@ class DebugOptions(TypedDict):
     """
 
 
-class SandboxOptions(BaseRequest):
+class SandboxBaseOptions(BaseRequest):
     """
-    Parameters of behavioral analysis.
-
-    In the absence, the source parameters are used for analysis, which are set in the system by default.
-    """
-
-    enabled: bool = True
-    """
-    Perform a behavioral analysis
+    Common parameters of behavioral analysis shared by SandboxOptions and SandboxOptionsAdvanced.
     """
 
     image_id: str = "win7-sp1-x64"
@@ -240,6 +234,24 @@ class SandboxOptions(BaseRequest):
     Enable certificates injection with PT Sandbox certificates when decrypting and analyzing secure traffic
     """
 
+    debug_options: DebugOptions = {"save_debug_files": False}
+    """
+    Fine-tuning
+    """
+
+
+class SandboxOptions(SandboxBaseOptions):
+    """
+    Parameters of behavioral analysis.
+
+    In the absence, the source parameters are used for analysis, which are set in the system by default.
+    """
+
+    enabled: bool = True
+    """
+    Perform a behavioral analysis
+    """
+
     file_types: list[str] | None = None
     """
     A list of the final file types or groups of files that will be sent for behavioral analysis
@@ -253,13 +265,8 @@ class SandboxOptions(BaseRequest):
     Filtering a group of files by properties to send to the sandbox for analysis
     """
 
-    debug_options: DebugOptions = {"save_debug_files": False}
-    """
-    Fine-tuning
-    """
 
-
-class SandboxOptionsAdvanced(BaseRequest):
+class SandboxOptionsAdvanced(SandboxBaseOptions):
     """
     Run an advanced analysis of the uploaded file in the VM without unpacking.
 
@@ -283,52 +290,6 @@ class SandboxOptionsAdvanced(BaseRequest):
         Name in the VM
         """
 
-    image_id: str = "win7-sp1-x64"
-    """
-    ID of the VM image.
-
-    You can view it in the sandbox interface.
-    """
-
-    custom_command: str | None = None
-    """
-    The command to run the file.
-
-    The `{file}` marker in the string is replaced with the path to the file.
-
-    For example: `rundll32.exe {file},#1`
-    """
-
-    procdump_new_processes_on_finish: bool = True
-    """
-    Take dumps for all spawned and non-dead processes
-    """
-
-    analysis_duration: int = Field(default=120, ge=10)
-    """
-    The duration of analysis the file in seconds. minimum: 10
-    """
-
-    bootkitmon: bool = False
-    """
-    Perform bootkitmon analysis
-    """
-
-    analysis_duration_bootkitmon: int = Field(default=60, ge=10)
-    """
-    The duration of analysis at the bootkitmon stage in seconds. minimum: 10
-    """
-
-    save_video: bool = True
-    """
-    Save video capture of the screen
-    """
-
-    mitm_enabled: bool = True
-    """
-    Enable certificates injection with PT Sandbox certificates when decrypting and analyzing secure traffic
-    """
-
     disable_clicker: bool = False
     """
     Disable auto-clicker startup
@@ -346,14 +307,9 @@ class SandboxOptionsAdvanced(BaseRequest):
     Manual analysis mode
     """
 
-    extra_files: list[ExtraFile] = []
+    extra_files: list[ExtraFile] = Field(default_factory=list[ExtraFile])
     """
     A list of additional files that are placed in the VM
-    """
-
-    debug_options: DebugOptions = {"save_debug_files": False}
-    """
-    Fine-tuning
     """
 
 
@@ -480,7 +436,7 @@ class SandboxBaseScanTaskRequest(BaseRequest):
         Maximum waiting time for analysis
         """
 
-        passwords_for_unpack: list[str] = []
+        passwords_for_unpack: list[str] = Field(default_factory=list[str])
         """
         List of passwords for unpacking encrypted archives
         """
@@ -653,7 +609,7 @@ class SandboxBaseTaskResponse(BaseResponse):
             * `checkTask`, if the file analysis has not been completed yet
         """
 
-        artifacts: list[Artifact] = []
+        artifacts: list[Artifact] = Field(default_factory=list[Artifact])
         """
         A file, email, or other object that was checked during file analysis.
 
@@ -785,7 +741,7 @@ class SandboxTasksResponse(BaseModel):
         The type of malware.
         """
 
-    tasks: list[Task] = []
+    tasks: list[Task] = Field(default_factory=list[Task])
 
     next_cursor: str = ""
     """

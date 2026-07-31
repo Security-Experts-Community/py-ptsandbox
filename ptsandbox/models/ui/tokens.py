@@ -1,4 +1,6 @@
-from pydantic import BaseModel
+from __future__ import annotations
+
+from pydantic import BaseModel, Field
 
 from ptsandbox.models.ui.common import Token
 
@@ -13,7 +15,7 @@ class SandboxTokensResponse(BaseModel):
     The number of tokens in the system
     """
 
-    entries: list[Token] = []
+    entries: list[Token] = Field(default_factory=list[Token])
     """
     List of tokens
     """

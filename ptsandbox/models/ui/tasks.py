@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from datetime import datetime
 from uuid import UUID
 
@@ -34,7 +36,7 @@ class Task(BaseModel):
     so it is on antiviruses and the result of static analysis.
     """
 
-    sandbox_correlation: CorrelationInfo | None = Field(None, alias="sandboxCorrelation")
+    sandbox_correlation: CorrelationInfo | None = Field(default=None, alias="sandboxCorrelation")
     """
     The verdict is exclusively sandbox
     """

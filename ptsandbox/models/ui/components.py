@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pydantic import BaseModel, Field
 
 from ptsandbox.models import ComponentStatus, ComponentType
@@ -81,9 +83,9 @@ class SandboxComponentsResponse(BaseModel):
         Component type
         """
 
-        pods: list[Pod] = []
+        pods: list[Pod] = Field(default_factory=list[Pod])
         """
-        Список подов
+        List of pods
         """
 
-    components: list[Component] = []
+    components: list[Component] = Field(default_factory=list[Component])

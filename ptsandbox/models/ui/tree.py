@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from datetime import datetime
 
 from pydantic import BaseModel, Field
@@ -7,7 +9,6 @@ from ptsandbox.models.core import (
     BootkitmonStage,
     ContextType,
     EngineName,
-    ErrorType,
     FileInfoProperties,
     FileInfoTypes,
     HashType,
@@ -20,7 +21,13 @@ from ptsandbox.models.core import (
     TreeEngineName,
     TreeNodeType,
 )
-from ptsandbox.models.ui.common import CorrelationInfo, DetectionUI, Scan
+from ptsandbox.models.ui.common import (
+    CorrelationInfo,
+    DetectionUI,
+    Error,
+    ErrorWithLimit,
+    Scan,
+)
 
 
 class ScanArtifact(BaseModel):
@@ -42,14 +49,6 @@ class SandboxInfo(BaseModel):
         The MSDN number of the image initialization error
         """
 
-    class SandboxError(BaseModel):
-        type: ErrorType
-
-        duration: int | None = None
-        """
-        Waiting time
-        """
-
     class Network(BaseModel):
         database_time: int | None = Field(default=None, alias="databaseTime")
 
@@ -57,7 +56,7 @@ class SandboxInfo(BaseModel):
 
         version: str
 
-        detections: list[DetectionUI] = []
+        detections: list[DetectionUI] = Field(default_factory=list[DetectionUI])
 
         suspicious_behaviors: list[SuspiciousBehaviors] = Field(alias="suspiciousBehaviors")
 
@@ -115,7 +114,7 @@ class SandboxInfo(BaseModel):
 
     init_msdn_error: MSDNError | None = Field(default=None, alias="initMsdnError")
 
-    errors: list[SandboxError]
+    errors: list[Error]
 
     bootkitmon: bool
     """
@@ -209,7 +208,7 @@ class TreeNode(BaseModel):
             The value of the HTTP header 'User-Agent'
             """
 
-            x_forwarded_for: str = Field(..., alias="xForwardedFor")
+            x_forwarded_for: str = Field(default=..., alias="xForwardedFor")
             """
             The value of the HTTP header 'X-Forwarded-For' is used to determine the IP of the HTTP client
             """
@@ -238,46 +237,20 @@ class TreeNode(BaseModel):
         response: Response | None = None
 
     class UnpackerInfo(BaseModel):
-        class Error(BaseModel):
-            type: ErrorType
-
-            duration: int | None = None
-            """
-            Waiting time
-            """
-
-            limit_size: int | None = Field(None, alias="limitSize")
-            """
-            The value of the restriction
-            """
-
         state: ScanState
         """
         Unpacking status
         """
 
-        errors: list[Error] = []
+        errors: list[ErrorWithLimit] = Field(default_factory=list[ErrorWithLimit])
 
     class DownloadUrlInfo(BaseModel):
-        class Error(BaseModel):
-            type: ErrorType
-
-            duration: int | None = None
-            """
-            Waiting time
-            """
-
-            limit_size: int | None = Field(None, alias="limitSize")
-            """
-            The value of the restriction
-            """
-
         state: ScanState
         """
         Url loading status
         """
 
-        errors: list[Error] = []
+        errors: list[Error] = Field(default_factory=list[Error])
 
         version: str
         """
@@ -295,14 +268,6 @@ class TreeNode(BaseModel):
         """
 
     class BwListsInfo(BaseModel):
-        class Error(BaseModel):
-            type: ErrorType
-
-            duration: int | None = None
-            """
-            Waiting time
-            """
-
         state: ScanState
         """
         Check status in WB lists
@@ -318,49 +283,33 @@ class TreeNode(BaseModel):
         The type of hash for which a match was found in the WB lists
         """
 
-        errors: list[Error] = []
+        errors: list[Error] = Field(default_factory=list[Error])
         """
         Errors in checking by WB lists
         """
 
     class CategorizerInfo(BaseModel):
         class Engine(BaseModel):
-            class Error(BaseModel):
-                type: ErrorType
-
-                duration: int | None = None
-                """
-                Waiting time
-                """
-
             name: TreeEngineName
 
             database_time: datetime | None = Field(default=None, alias="databaseTime")
 
             version: str
 
-            errors: list[Error] = []
+            errors: list[Error] = Field(default_factory=list[Error])
 
         class Result(BaseModel):
-            class Error(BaseModel):
-                type: ErrorType
-
-                duration: int | None = None
-                """
-                Waiting time
-                """
-
             state: ScanState
             """
             Check status in PTCategorizer
             """
 
-            categories: list[str] = []
+            categories: list[str] = Field(default_factory=list[str])
             """
             PTCategorizer Categories
             """
 
-            errors: list[Error] = []
+            errors: list[Error] = Field(default_factory=list[Error])
             """
             PTCategorizer check errors
             """
@@ -428,14 +377,14 @@ class TreeNode(BaseModel):
     The node ID. It starts from 1
     """
 
-    parent_ids: list[int] | None = Field(None, alias="parentIds")
+    parent_ids: list[int] | None = Field(default=None, alias="parentIds")
     """
     A list of parent node IDs. It starts from the root
 
     The chain! parents. 0 -> 1 -> 2 -> 3 <=> nodeId=3, parentIds=[0,1,2]
     """
 
-    node_type: TreeNodeType = Field(..., alias="nodeType")
+    node_type: TreeNodeType = Field(default=..., alias="nodeType")
     """
     Node Type
     """

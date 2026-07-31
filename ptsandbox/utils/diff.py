@@ -1,6 +1,6 @@
 import logging
 from dataclasses import dataclass
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 import orjson
@@ -8,13 +8,13 @@ import orjson
 logger = logging.getLogger(__name__)
 
 
-class DetectionType(str, Enum):
+class DetectionType(StrEnum):
     SILENT = "silent"
     SUSPICIOUS = "suspicious"
     MALWARE = "malware"
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class Detect:
     name: str
     weight: int | None
@@ -29,13 +29,13 @@ class Detect:
         if isinstance(other, Detect):
             return self.__key() == other.__key()
 
-        raise NotImplementedError()
+        return NotImplemented
 
 
 class Detections:
     detections: dict[DetectionType, set[Detect]]
 
-    _real_name: str
+    _real_name: str = ""
 
     def __init__(self, trace: bytes) -> None:
         self.detections = {
@@ -51,11 +51,11 @@ class Detections:
                     self._real_name = event.get("object.name", "")
 
                 detect_type: str = event.get("detect.type", "").upper()
-                if detect_type in DetectionType._member_names_:
+                if detect_type in DetectionType.__members__:
                     self.detections[DetectionType[detect_type]].add(
                         Detect(
                             name=event.get("detect.name", ""),
-                            weight=event.get("weight", None),
+                            weight=event.get("weight"),
                         )
                     )
             except Exception:
@@ -66,15 +66,15 @@ class Detections:
 
     @property
     def silent(self) -> set[Detect]:
-        """Только silent-детекты"""
+        """Only silent detects"""
         return self.detections[DetectionType.SILENT]
 
     @property
     def suspicious(self) -> set[Detect]:
-        """Только suspicious-детекты"""
+        """Only suspicious detects"""
         return self.detections[DetectionType.SUSPICIOUS]
 
     @property
     def malware(self) -> set[Detect]:
-        """Только malware-детекты"""
+        """Only malware detects"""
         return self.detections[DetectionType.MALWARE]

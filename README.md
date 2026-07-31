@@ -247,7 +247,7 @@ task = await sandbox.create_advanced_scan(
 ### Error Handling
 
 ```python
-from ptsandbox.models import (
+from ptsandbox.exceptions import (
     SandboxUploadException, 
     SandboxWaitTimeoutException,
     SandboxTooManyErrorsException

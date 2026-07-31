@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from datetime import datetime
 from typing import Literal
 
@@ -139,7 +141,7 @@ class EntryPoint(BaseModel):
         Quarantine state
         """
 
-        events: list[QuarantineEvent] = []
+        events: list[QuarantineEvent] = Field(default_factory=list[QuarantineEvent])
         """
         List of quarantine events. Filled in only in API /summary, there is no such field in the listing.
         """
@@ -183,7 +185,7 @@ class EntryPoint(BaseModel):
 
     class DPI(BaseModel):
         class SMTP(BaseModel):
-            message_id: str = Field(..., alias="messageId")
+            message_id: str = Field(default=..., alias="messageId")
             """
             The EML value of the 'Message-Id' header
             """
@@ -208,7 +210,7 @@ class EntryPoint(BaseModel):
         The IP address where the object was sent to
         """
 
-        dst_port: int = Field(..., alias="dstPort")
+        dst_port: int = Field(default=..., alias="dstPort")
         """
         PORT where the object was sent to
         """
@@ -295,12 +297,12 @@ class EntryPoint(BaseModel):
         PORT where the object was sent from
         """
 
-        dst_ip: str = Field(..., alias="dstIp")
+        dst_ip: str = Field(default=..., alias="dstIp")
         """
         The IP address where the object was sent to
         """
 
-        dst_port: int = Field(..., alias="dstPort")
+        dst_port: int = Field(default=..., alias="dstPort")
         """
         PORT where the object was sent to
         """
@@ -427,6 +429,13 @@ class Error(BaseModel):
     """
 
 
+class ErrorWithLimit(Error):
+    limit_size: int | None = Field(default=None, alias="limitSize")
+    """
+    The value of the restriction
+    """
+
+
 class Scan(BaseModel):
     class Engine(BaseModel):
         name: TreeEngineName
@@ -435,9 +444,9 @@ class Scan(BaseModel):
 
         version: str
 
-        detections: list[DetectionUI] = []
+        detections: list[DetectionUI] = Field(default_factory=list[DetectionUI])
 
-        errors: list[Error] = []
+        errors: list[Error] = Field(default_factory=list[Error])
 
     engine: Engine
 
@@ -462,7 +471,7 @@ class FilterValues(BaseModel):
 
     properties: list[str]
     """
-    Возможные значения для фильтров по свойствам файла
+    Possible values for filters by file properties
     """
 
     categories: list[str]
@@ -551,7 +560,7 @@ class SMTPDefaultRecord(BaseModel):
 
         host: str
         port: int
-        use_ssl: bool = Field(alias="useSsl")
+        use_ssl: bool | None = Field(default=None, alias="useSsl")
         auth_type: Literal["any", "plain", "encrypt", "ntlm", "none"] = Field(alias="authType")
         timeout: Timeout | None = None
         credential: Credential | None = None

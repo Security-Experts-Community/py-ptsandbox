@@ -1,6 +1,7 @@
 from ptsandbox.models.api.analysis import (
     DebugOptions,
     SandboxAdvancedScanTaskRequest,
+    SandboxBaseOptions,
     SandboxBaseScanTaskRequest,
     SandboxBaseTaskResponse,
     SandboxCheckTaskRequest,
@@ -14,6 +15,11 @@ from ptsandbox.models.api.analysis import (
 from ptsandbox.models.api.key import SandboxKey
 from ptsandbox.models.api.maintenance import CheckHealthResponse, GetVersionResponse
 from ptsandbox.models.api.sandbox import SandboxGetImagesResponse
+from ptsandbox.models.api.scan import (
+    SandboxScanWithSource,
+    SandboxScanWithSourceFileRequest,
+    SandboxScanWithSourceURLRequest,
+)
 from ptsandbox.models.api.storage import SandboxUploadScanFileResponse
 
 __all__ = [
@@ -21,6 +27,7 @@ __all__ = [
     "DebugOptions",
     "GetVersionResponse",
     "SandboxAdvancedScanTaskRequest",
+    "SandboxBaseOptions",
     "SandboxBaseScanTaskRequest",
     "SandboxBaseTaskResponse",
     "SandboxCheckTaskRequest",
@@ -32,5 +39,8 @@ __all__ = [
     "SandboxRescanTaskRequest",
     "SandboxScanTaskRequest",
     "SandboxScanURLTaskRequest",
+    "SandboxScanWithSource",
+    "SandboxScanWithSourceFileRequest",
+    "SandboxScanWithSourceURLRequest",
     "SandboxUploadScanFileResponse",
 ]
