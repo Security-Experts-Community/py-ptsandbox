@@ -500,9 +500,9 @@ class Token(BaseModel):
 
     name: str
     """
-    Name of the PublicAPI token
+    Name of the PublicAPI token.
 
-    pattern: ^[a-zA-Z][a-zA-Z0-9-]{3,28}[a-zA-Z]$
+    Pattern: `^[a-zA-Z][a-zA-Z0-9-]{3,28}[a-zA-Z]$`
     """
 
     comment: str | None = None

@@ -1,7 +1,7 @@
 from ptsandbox.models import (
-    CheckHealthResponse,
-    GetVersionResponse,
+    SandboxGetHealthStatusResponse,
     SandboxGetImagesResponse,
+    SandboxGetVersionResponse,
 )
 from ptsandbox.sandbox.base import BaseSandboxClient
 
@@ -23,7 +23,7 @@ class MaintenanceMixin(BaseSandboxClient):
             response_model=SandboxGetImagesResponse,
         )
 
-    async def check_health(self) -> CheckHealthResponse:
+    async def get_health_status(self) -> SandboxGetHealthStatusResponse:
         """
         Checking the API status
 
@@ -36,10 +36,10 @@ class MaintenanceMixin(BaseSandboxClient):
         return await self._request(
             "GET",
             f"{self.key.url}/maintenance/checkHealth",
-            response_model=CheckHealthResponse,
+            response_model=SandboxGetHealthStatusResponse,
         )
 
-    async def get_version(self) -> GetVersionResponse:
+    async def get_version(self) -> SandboxGetVersionResponse:
         """
         Get information about product
 
@@ -52,5 +52,5 @@ class MaintenanceMixin(BaseSandboxClient):
         return await self._request(
             "GET",
             f"{self.key.url}/maintenance/getVersion",
-            response_model=GetVersionResponse,
+            response_model=SandboxGetVersionResponse,
         )

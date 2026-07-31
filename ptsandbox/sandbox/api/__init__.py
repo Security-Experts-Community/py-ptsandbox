@@ -8,7 +8,6 @@ from ptsandbox.sandbox.api._analysis import AnalysisMixin
 from ptsandbox.sandbox.api._maintenance import MaintenanceMixin
 from ptsandbox.sandbox.api._scan import ScanMixin
 from ptsandbox.sandbox.api._storage import StorageMixin
-from ptsandbox.sandbox.base import BaseSandboxClient
 
 logger = logging.getLogger(__name__)
 

@@ -19,8 +19,6 @@ from ptsandbox.exceptions import (
     SandboxWaitTimeoutException,
 )
 from ptsandbox.models import (
-    CheckHealthResponse,
-    GetVersionResponse,
     SandboxAdvancedScanTaskRequest,
     SandboxBaseScanTaskRequest,
     SandboxBaseTaskResponse,
@@ -476,7 +474,7 @@ class Sandbox:
         Waiting for a full response from the sandbox if the request was with the `async_result=True` flag
 
         Args:
-            base_time:
+            wait_time:
                 how many seconds should I wait?
 
                 Example of a formula for calculating a parameter:
@@ -639,7 +637,6 @@ class Sandbox:
 
         Args:
             hash: sha256 hash of the file
-            stream: download the entire file or give the result in chunks
 
         Returns:
             file data
@@ -659,7 +656,6 @@ class Sandbox:
 
         Args:
             hash: sha256 hash of the file
-            stream: download the entire file or give the result in chunks
 
         Returns:
             streaming file data
@@ -722,30 +718,6 @@ class Sandbox:
 
         async for chunk in iterator:
             yield chunk
-
-    async def check_health(self) -> CheckHealthResponse:
-        """
-        Checking the API status
-
-        Raises:
-            aiohttp.client_exceptions.ClientResponseError: if the server returns an error status
-            aiohttp.client_exceptions.ClientError: on connection or transport errors
-            pydantic.ValidationError: if the response body does not match the expected model
-        """
-
-        return await self.api.check_health()
-
-    async def get_version(self) -> GetVersionResponse:
-        """
-        Get information about product
-
-        Raises:
-            aiohttp.client_exceptions.ClientResponseError: if the server returns an error status
-            aiohttp.client_exceptions.ClientError: on connection or transport errors
-            pydantic.ValidationError: if the response body does not match the expected model
-        """
-
-        return await self.api.get_version()
 
     async def source_check_file(
         self,

@@ -9,7 +9,6 @@ import aiohttp
 
 from ptsandbox.exceptions import SandboxException
 from ptsandbox.models import SandboxKey
-from ptsandbox.sandbox.base import BaseSandboxClient
 from ptsandbox.sandbox.ui._artifacts import ArtifactsMixin
 from ptsandbox.sandbox.ui._entry_points import EntryPointsMixin
 from ptsandbox.sandbox.ui._system import SystemMixin
@@ -31,7 +30,7 @@ class SandboxUI(
     """
 
     const_headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",  # noqa
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 Unique/96.7.6401.61",  # noqa
         "Content-Type": "application/json",
     }
 

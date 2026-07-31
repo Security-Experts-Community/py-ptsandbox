@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from ptsandbox.models.core.base import BaseResponse
 
 
-class CheckHealthResponse(BaseResponse):
+class SandboxGetHealthStatusResponse(BaseResponse):
     """
     Healthcheck results
     """
@@ -19,7 +19,7 @@ class CheckHealthResponse(BaseResponse):
     data: Data
 
 
-class GetVersionResponse(BaseResponse):
+class SandboxGetVersionResponse(BaseResponse):
     """
     Get information about product
     """
