@@ -1,9 +1,11 @@
-As noted in [Download files (Public API)](../public-api/download-files.md), the sandbox has restrictions on downloading files from the task.
+As noted in [Download files (Public API)](../public-api/download-files.md), the sandbox has restrictions on downloading files from a task.
 
-In order to circumvent this limitation, you can download files using the UI API.
+To work around this limitation, download files using the UI API.
 
 ```py title="Code example"
 import asyncio
+
+import aiofiles
 
 from ptsandbox import Sandbox
 from ptsandbox.models import SandboxKey, StorageItem
@@ -14,7 +16,6 @@ async def main():
 
     await sandbox.ui.authorize()
 
-    data = await sandbox.ui.get_system_components_status()
     items: list[StorageItem] = [
         {"sha256": "..."},
         {"sha256": "...", "name": "..."}
@@ -27,9 +28,11 @@ async def main():
 
 !!! note
 
-    A zip archive with the password "infected" is returned, so you need to process the archive yourself.
+    The response is a zip archive protected with the password "infected". You need to extract it yourself.
 
     For example, using `pyzipper`.
+
+::: ptsandbox.sandbox.ui._artifacts.ArtifactsMixin.get_files
 
 !!! example "Download logs from recent tasks"
 

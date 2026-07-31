@@ -7,26 +7,11 @@ async def example() -> None:
     key = SandboxKey(...)
     sandbox = Sandbox(key)
 
-    status = await sandbox.check_health()
+    status = await sandbox.api.get_health_status()
     print(status)
 ```
 
-??? quote "Response model in `ptsandbox/models/api/maintenance.py`"
-
-    ```py
-    class CheckHealthResponse(BaseResponse):
-        """
-        Healthcheck results
-        """
-
-        class Data(BaseModel):
-            status: str
-            """
-            Health status
-            """
-
-        data: Data
-    ```
+::: ptsandbox.sandbox.api._maintenance.MaintenanceMixin.get_health_status
 
 ## Get product version
 
@@ -37,28 +22,29 @@ async def example() -> None:
     key = SandboxKey(...)
     sandbox = Sandbox(key)
 
-    version = await sandbox.get_version()
+    version = await sandbox.api.get_version()
     print(version)
 ```
 
-??? quote "Response model in `ptsandbox/models/api/maintenance.py`"
+::: ptsandbox.sandbox.api._maintenance.MaintenanceMixin.get_version
 
-    ```py
-    class GetVersionResponse(BaseResponse):
-        """
-        Get information about product
-        """
+## Lifecycle
 
-        class Data(BaseModel):
-            version: str
-            """
-            Product version, for example '5.11.0.12345'
-            """
+The `Sandbox` class manages HTTP sessions for both the Public API and UI API. Always close the sessions when you're done, either explicitly or via the async context manager:
 
-            edition: str
-            """
-            Filled in for test builds or certification builds.
-            """
+```py title="Code example"
+from ptsandbox import Sandbox, SandboxKey
 
-        data: Data
-    ```
+# Using the async context manager (recommended)
+async with Sandbox(SandboxKey(...)) as sandbox:
+    status = await sandbox.api.get_health_status()
+
+# Or explicitly
+sandbox = Sandbox(SandboxKey(...))
+try:
+    status = await sandbox.api.get_health_status()
+finally:
+    await sandbox.close()
+```
+
+::: ptsandbox.sandbox.sandbox.Sandbox.close

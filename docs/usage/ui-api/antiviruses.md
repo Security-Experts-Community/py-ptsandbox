@@ -1,3 +1,5 @@
+Get information about antivirus engines and distribution packs configured in the sandbox.
+
 ```py title="Code example" hl_lines="8"
 import asyncio
 from ptsandbox import Sandbox, SandboxKey
@@ -12,21 +14,40 @@ async def main():
 asyncio.run(main())
 ```
 
-??? quote "Source code in `ptsandbox/sandbox/sandbox_ui.py`"
+::: ptsandbox.sandbox.ui._system.SystemMixin.get_av_engines
 
-    ```py
-    @_token_required
-    async def get_av_engines(self) -> SandboxAVEnginesResponse:
-        """
-        Get information about antivirus scanners
+### Get settings of a specific engine
 
-        Returns:
-            A model with information about all antiviruses
-        """
+```py title="Code example"
+import asyncio
+from ptsandbox import Sandbox, SandboxKey
 
-        response = await self.http_client.get(f"{self.key.ui_url}/av-engines")
+async def main():
+    sandbox = Sandbox(...)
+    await sandbox.ui.authorize()
 
-        response.raise_for_status()
+    engine = await sandbox.ui.get_av_engine("clamav")
+    print(engine)
 
-        return SandboxAVEnginesResponse.model_validate(await response.json())
-    ```
+asyncio.run(main())
+```
+
+::: ptsandbox.sandbox.ui._system.SystemMixin.get_av_engine
+
+### Get distribution packs
+
+```py title="Code example"
+import asyncio
+from ptsandbox import Sandbox, SandboxKey
+
+async def main():
+    sandbox = Sandbox(...)
+    await sandbox.ui.authorize()
+
+    packs = await sandbox.ui.get_av_distribution_packs()
+    print(packs)
+
+asyncio.run(main())
+```
+
+::: ptsandbox.sandbox.ui._system.SystemMixin.get_av_distribution_packs

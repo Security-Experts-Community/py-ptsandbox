@@ -2,10 +2,9 @@
 
 !!! warning "Warning"
 
-    So far, this method may not be available on all instances of the sandbox.
-    It will appear in future releases.
+    This method may not be available on all sandbox instances. It will be available in future releases.
 
-This method is needed to get a list of tasks without using the UI API.
+Use this method to list tasks without the UI API.
 
 ```py title="Example of getting the last 20 scans (default value)" hl_lines="7"
 from ptsandbox import Sandbox, SandboxKey
@@ -18,3 +17,7 @@ async def example() -> None:
     for task in result.tasks:
         print(task.id, task.name)
 ```
+
+::: ptsandbox.sandbox.sandbox.Sandbox.get_tasks
+
+::: ptsandbox.sandbox.api._analysis.AnalysisMixin.get_tasks
