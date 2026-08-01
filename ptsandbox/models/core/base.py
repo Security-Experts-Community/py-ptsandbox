@@ -1,13 +1,8 @@
 from __future__ import annotations
 
-import logging
-from typing import Any, Self
+from typing import Any
 
-import aiohttp
-import aiohttp.client_exceptions
-from pydantic import BaseModel, ConfigDict, Field, ValidationError
-
-logger = logging.getLogger(__name__)
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class BaseRequest(BaseModel):
@@ -57,11 +52,3 @@ class BaseResponse(BaseModel):
 
     data: Any
     errors: list[Error] = Field(default_factory=list[Error])
-
-    @classmethod
-    async def build(cls, response: aiohttp.ClientResponse) -> Self:
-        try:
-            return cls.model_validate(await response.json())
-        except (ValidationError, aiohttp.client_exceptions.ContentTypeError):
-            logger.exception("Can't validate sandbox response")
-            raise

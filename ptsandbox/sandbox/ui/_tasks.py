@@ -116,16 +116,12 @@ class TasksMixin(BaseSandboxClient):
             "utcOffsetSeconds": utc_offset_seconds,
         }
 
-        response = await self._request(
-            "GET",
+        async with self.http_client.get(
             f"{self.key.ui_url}/v2/tasks/export",
             params=data,
-        )
-
-        response.raise_for_status()
-
-        async for chunk in self._iter_chunks(response):
-            yield chunk
+        ) as response:
+            async for chunk in self._iter_chunks(response):
+                yield chunk
 
     @token_required
     async def get_tasks_filter_values(

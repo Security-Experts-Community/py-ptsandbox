@@ -70,12 +70,11 @@ class SandboxUI(
                 await self._update_token()
 
     async def _update_token(self) -> None:
-        response = await self.http_client.post(
+        async with self.http_client.post(
             f"{self.key.ui_url}/auth/token",
             json={"fingerprint": self.fingerprint},
-        )
-
-        token = await response.json()
+        ) as response:
+            token = await response.json()
 
         try:
             self.session.headers["Authorization"] = "Bearer " + token["data"]["accessToken"]
@@ -96,11 +95,14 @@ class SandboxUI(
 
         parameters = {"fingerprint": self.fingerprint}
 
-        response = await self.http_client.get(f"{self.key.ui_url}/auth/authorize", params=parameters)
-        try:
-            location: str = (await response.json())["data"]["location"]
-        except KeyError as e:
-            raise SandboxException("Can't get location from authorization url") from e
+        async with self.http_client.get(
+            f"{self.key.ui_url}/auth/authorize",
+            params=parameters,
+        ) as response:
+            try:
+                location: str = (await response.json())["data"]["location"]
+            except KeyError as e:
+                raise SandboxException("Can't get location from authorization url") from e
 
         url = urlparse(location)
 
@@ -113,13 +115,18 @@ class SandboxUI(
             "rememberLogin": True,
         }
 
-        response = await self.http_client.post(f"{url.scheme}://{url.netloc}/ui/login", json=data)
-        if response.status != HTTPStatus.OK:
-            await self.close()
-            response.raise_for_status()
+        async with self.http_client.post(
+            f"{url.scheme}://{url.netloc}/ui/login",
+            json=data,
+            raise_for_status=False,
+        ) as response:
+            if response.status != HTTPStatus.OK:
+                await self.close()
+                response.raise_for_status()
 
         # get refresh token
-        await self.http_client.get(location)
+        async with self.http_client.get(location) as response:
+            pass
 
         self.is_authorized = True
 

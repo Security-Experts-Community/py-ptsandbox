@@ -79,8 +79,7 @@ class TokensMixin(BaseSandboxClient):
             aiohttp.client_exceptions.ClientError: on connection or transport errors
         """
 
-        response = await self._request(
-            "DELETE",
+        async with self.http_client.delete(
             f"{self.key.ui_url}/public-api/tokens/{token_id}",
-        )
-        response.raise_for_status()
+        ):
+            pass

@@ -115,7 +115,7 @@ class ScanMixin(BaseSandboxClient):
         Get the full scan report created using the source settings
 
         Args:
-            task_id: task id :)
+            scan_id: task id
 
         Returns:
             The response from the sandbox is either with partial information (when using async_result), or with full information.

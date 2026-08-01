@@ -49,7 +49,7 @@ class Sandbox:
     """
 
     api: SandboxApi
-    ui: SandboxUI | None
+    _ui: SandboxUI | None
 
     def __init__(
         self,
@@ -73,7 +73,7 @@ class Sandbox:
             connection_retries=connection_retries,
         )
 
-        self.ui = (
+        self._ui = (
             SandboxUI(
                 key,
                 default_timeout=default_timeout,
@@ -84,12 +84,24 @@ class Sandbox:
             else None
         )
 
+    @property
+    def ui(self) -> SandboxUI:
+        """The UI API client. Raises if no UI credentials were provided in SandboxKey."""
+        if self._ui is None:
+            raise SandboxException("UI is not available. Provide UI credentials in SandboxKey.")
+        return self._ui
+
+    @property
+    def has_ui(self) -> bool:
+        """Whether UI credentials were provided in SandboxKey."""
+        return self._ui is not None
+
     async def close(self) -> None:
         """Close all underlying HTTP sessions (api and ui)."""
 
         await self.api.close()
-        if self.ui is not None:
-            await self.ui.close()
+        if self._ui is not None:
+            await self._ui.close()
 
     async def __aenter__(self) -> Self:
         return self

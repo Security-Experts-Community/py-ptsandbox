@@ -74,12 +74,11 @@ class SystemMixin(BaseSandboxClient):
             aiohttp.client_exceptions.ClientError: on connection or transport errors
         """
 
-        response = await self._request(
-            "PUT",
+        async with self.http_client.put(
             f"{self.key.ui_url}/system/settings",
             json=settings.dict(),
-        )
-        response.raise_for_status()
+        ):
+            pass
 
     @token_required
     async def get_system_version(self) -> SandboxSystemVersionResponse:
@@ -128,16 +127,12 @@ class SystemMixin(BaseSandboxClient):
         if since is not None:
             data["since"] = since
 
-        response = await self._request(
-            "GET",
+        async with self.http_client.get(
             f"{self.key.ui_url}/system/logs",
             params=data,
-        )
-
-        response.raise_for_status()
-
-        async for chunk in self._iter_chunks(response):
-            yield chunk
+        ) as response:
+            async for chunk in self._iter_chunks(response):
+                yield chunk
 
     @token_required
     async def get_system_cluster_status(self) -> SandboxClusterStatusResponse:

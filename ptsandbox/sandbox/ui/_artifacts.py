@@ -44,15 +44,12 @@ class ArtifactsMixin(BaseSandboxClient):
         # idk, why json passed as GET param
         query_string = orjson.dumps(query).decode()
 
-        response = await self._request(
-            "GET",
+        async with self.http_client.get(
             f"{self.key.ui_url}/storage/download",
             params={"items": query_string},
-        )
-        response.raise_for_status()
-
-        async for chunk in self._iter_chunks(response):
-            yield chunk
+        ) as response:
+            async for chunk in self._iter_chunks(response):
+                yield chunk
 
     @token_required
     async def get_artifacts_csv(
@@ -155,16 +152,12 @@ class ArtifactsMixin(BaseSandboxClient):
             "utcOffsetSeconds": utc_offset_seconds,
         }
 
-        response = await self._request(
-            "GET",
+        async with self.http_client.get(
             f"{self.key.ui_url}/v2/artifacts/export",
             params=data,
-        )
-
-        response.raise_for_status()
-
-        async for chunk in self._iter_chunks(response):
-            yield chunk
+        ) as response:
+            async for chunk in self._iter_chunks(response):
+                yield chunk
 
     @token_required
     async def get_artifacts_filter_values(
@@ -289,16 +282,12 @@ class ArtifactsMixin(BaseSandboxClient):
             "skipDataFiles": skip_data_files,
         }
 
-        response = await self._request(
-            "GET",
+        async with self.http_client.get(
             f"{self.key.ui_url}/v2/tasks/{scan_id}/tree/download",
             params=data,
-        )
-
-        response.raise_for_status()
-
-        async for chunk in self._iter_chunks(response):
-            yield chunk
+        ) as response:
+            async for chunk in self._iter_chunks(response):
+                yield chunk
 
     @token_required
     async def get_task_artifact_scans(self, scan_id: UUID, node_id: int) -> SandboxScansResponse:

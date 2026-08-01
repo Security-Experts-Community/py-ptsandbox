@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import asyncio
 import logging
+from collections.abc import AsyncGenerator
+from contextlib import AbstractAsyncContextManager, asynccontextmanager
 from typing import Any, Literal
 
 import aiohttp
@@ -55,22 +57,31 @@ class AsyncHTTPClient:
             raise last_exc
         raise RuntimeError("HTTP request failed with no response or exception")
 
-    async def get(self, url: str, **kwargs: Any) -> aiohttp.ClientResponse:
-        return await self._retry_request("GET", url, **kwargs)
-
-    async def post(self, url: str, data: Any | None = None, **kwargs: Any) -> aiohttp.ClientResponse:
-        return await self._retry_request("POST", url, data=data, **kwargs)
-
-    async def put(self, url: str, data: Any | None = None, **kwargs: Any) -> aiohttp.ClientResponse:
-        return await self._retry_request("PUT", url, data=data, **kwargs)
-
-    async def delete(self, url: str, **kwargs: Any) -> aiohttp.ClientResponse:
-        return await self._retry_request("DELETE", url, **kwargs)
-
+    @asynccontextmanager
     async def request(
         self,
         method: Literal["GET", "POST", "PUT", "DELETE", "PATCH"],
         url: str,
+        *,
+        raise_for_status: bool = True,
         **kwargs: Any,
-    ) -> aiohttp.ClientResponse:
-        return await self._retry_request(method, url, **kwargs)
+    ) -> AsyncGenerator[aiohttp.ClientResponse]:
+        response = await self._retry_request(method, url, **kwargs)
+        try:
+            if raise_for_status:
+                response.raise_for_status()
+            yield response
+        finally:
+            response.release()
+
+    def get(self, url: str, **kwargs: Any) -> AbstractAsyncContextManager[aiohttp.ClientResponse]:
+        return self.request("GET", url, **kwargs)
+
+    def post(self, url: str, **kwargs: Any) -> AbstractAsyncContextManager[aiohttp.ClientResponse]:
+        return self.request("POST", url, **kwargs)
+
+    def put(self, url: str, **kwargs: Any) -> AbstractAsyncContextManager[aiohttp.ClientResponse]:
+        return self.request("PUT", url, **kwargs)
+
+    def delete(self, url: str, **kwargs: Any) -> AbstractAsyncContextManager[aiohttp.ClientResponse]:
+        return self.request("DELETE", url, **kwargs)

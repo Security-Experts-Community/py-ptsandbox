@@ -70,12 +70,11 @@ class EntryPointsMixin(BaseSandboxClient):
             aiohttp.client_exceptions.ClientError: on connection or transport errors
         """
 
-        response = await self._request(
-            "POST",
+        async with self.http_client.post(
             f"{self.key.ui_url}/entry-points",
             json=parameters.dict(),
-        )
-        response.raise_for_status()
+        ):
+            pass
 
     @token_required
     async def get_entry_point(self, entry_point_id: str) -> SandboxEntryPointResponse:
@@ -117,11 +116,10 @@ class EntryPointsMixin(BaseSandboxClient):
             aiohttp.client_exceptions.ClientError: on connection or transport errors
         """
 
-        response = await self._request(
-            "DELETE",
+        async with self.http_client.delete(
             f"{self.key.ui_url}/entry-points/{entry_point_id}",
-        )
-        response.raise_for_status()
+        ):
+            pass
 
     @token_required
     async def get_entry_point_tasks(
@@ -197,12 +195,8 @@ class EntryPointsMixin(BaseSandboxClient):
             aiohttp.client_exceptions.ClientError: on connection or transport errors
         """
 
-        response = await self._request(
-            "GET",
+        async with self.http_client.get(
             f"{self.key.ui_url}/entry-points/{entry_point_id}/logs",
-        )
-
-        response.raise_for_status()
-
-        async for chunk in self._iter_chunks(response):
-            yield chunk
+        ) as response:
+            async for chunk in self._iter_chunks(response):
+                yield chunk

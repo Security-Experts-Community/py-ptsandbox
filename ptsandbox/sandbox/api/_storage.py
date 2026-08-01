@@ -5,7 +5,6 @@ from io import BytesIO
 from pathlib import Path
 from typing import Any, BinaryIO
 
-import aiohttp
 import attr
 
 from ptsandbox.exceptions import SandboxException
@@ -42,16 +41,6 @@ class StorageMixin(BaseSandboxClient):
                 yield self._upload_bytes(file)
             case _:
                 raise SandboxException(f"Specified file type doesn't supported {type(file)}!")
-
-    async def _download_artifact(self, file_uri: str, read_timeout: int) -> aiohttp.ClientResponse:
-        timeout = attr.evolve(self.default_timeout, sock_read=read_timeout)
-
-        return await self._request(
-            "POST",
-            f"{self.key.url}/storage/downloadArtifact",
-            json={"file_uri": file_uri},
-            timeout=timeout,
-        )
 
     async def upload_file(
         self,
@@ -106,11 +95,14 @@ class StorageMixin(BaseSandboxClient):
             aiohttp.client_exceptions.ClientError: on connection or transport errors
         """
 
-        response = await self._download_artifact(file_uri, read_timeout)
-        response.raise_for_status()
+        timeout = attr.evolve(self.default_timeout, sock_read=read_timeout)
 
-        # idk how to fix mypy complains about next line
-        return await response.read()  # type: ignore[no-any-return,unused-ignore]
+        async with self.http_client.post(
+            f"{self.key.url}/storage/downloadArtifact",
+            json={"file_uri": file_uri},
+            timeout=timeout,
+        ) as response:
+            return await response.read()  # type: ignore
 
     async def download_artifact_stream(self, file_uri: str, read_timeout: int = 120) -> AsyncIterator[bytes]:
         """
@@ -128,8 +120,12 @@ class StorageMixin(BaseSandboxClient):
             aiohttp.client_exceptions.ClientError: on connection or transport errors
         """
 
-        response = await self._download_artifact(file_uri, read_timeout)
-        response.raise_for_status()
+        timeout = attr.evolve(self.default_timeout, sock_read=read_timeout)
 
-        async for chunk in self._iter_chunks(response):
-            yield chunk
+        async with self.http_client.post(
+            f"{self.key.url}/storage/downloadArtifact",
+            json={"file_uri": file_uri},
+            timeout=timeout,
+        ) as response:
+            async for chunk in self._iter_chunks(response):
+                yield chunk

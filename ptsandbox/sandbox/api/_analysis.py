@@ -224,16 +224,9 @@ class AnalysisMixin(BaseSandboxClient):
 
         payload = self._upload_bytes(data)  # type: ignore[attr-defined]
 
-        response = await self._request(
-            "POST",
-            f"{self.key.debug_url}/analysis/getHeaders",
-            data=payload,
-        )
-
-        response.raise_for_status()
-
-        async for chunk in self._iter_chunks(response):
-            yield chunk
+        async with self.http_client.post(f"{self.key.debug_url}/analysis/getHeaders", data=payload) as response:
+            async for chunk in self._iter_chunks(response):
+                yield chunk
 
     async def get_tasks(self, data: dict[str, Any]) -> SandboxTasksResponse:
         """

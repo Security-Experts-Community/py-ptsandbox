@@ -1,5 +1,5 @@
 from collections.abc import AsyncIterator
-from typing import Any, Literal, Self, TypeVar, overload
+from typing import Any, Literal, Self, TypeVar
 
 import aiohttp
 from aiohttp_socks import ProxyConnector
@@ -66,7 +66,6 @@ class BaseSandboxClient:
         if not self.session.closed:
             await self.session.close()
 
-    @overload
     async def _request(
         self,
         method: Literal["GET", "POST", "PUT", "DELETE", "PATCH"],
@@ -74,40 +73,15 @@ class BaseSandboxClient:
         *,
         response_model: type[T],
         **kwargs: Any,
-    ) -> T: ...
-
-    @overload
-    async def _request(
-        self,
-        method: Literal["GET", "POST", "PUT", "DELETE", "PATCH"],
-        url: str,
-        *,
-        response_model: None = None,
-        **kwargs: Any,
-    ) -> aiohttp.ClientResponse: ...
-
-    async def _request(
-        self,
-        method: Literal["GET", "POST", "PUT", "DELETE", "PATCH"],
-        url: str,
-        *,
-        response_model: type[T] | None = None,
-        **kwargs: Any,
-    ) -> T | aiohttp.ClientResponse:
+    ) -> T:
         """
-        Send an HTTP request, raise on error, and optionally parse the response.
+        Send an HTTP request, raise on error, and parse the response.
 
-        When *response_model* is provided: calls ``raise_for_status()`` and
-        parses the JSON body into the given model.
-
-        When *response_model* is ``None``: returns the raw response without
-        ``raise_for_status()`` — the caller handles error checking.
+        Calls ``raise_for_status()`` and parses the JSON body into the given
+        ``response_model``. The underlying response is released automatically.
         """
-        response = await self.http_client.request(method, url, **kwargs)
-        if response_model is not None:
-            response.raise_for_status()
+        async with self.http_client.request(method, url, **kwargs) as response:
             return response_model.model_validate(await response.json())
-        return response
 
     @staticmethod
     async def _iter_chunks(response: aiohttp.ClientResponse) -> AsyncIterator[bytes]:
