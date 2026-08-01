@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pydantic import BaseModel
 
 from ptsandbox.models.core.base import BaseResponse

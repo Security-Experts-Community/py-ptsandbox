@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Literal
 
 from pydantic import AwareDatetime, BaseModel, Field
@@ -9,9 +11,10 @@ from ptsandbox.models import (
     LicenseStatus,
     LicenseUpdateError,
 )
+from ptsandbox.models.core.base import BaseResponse
 
 
-class SandboxLicenseResponse(BaseModel):
+class SandboxLicenseResponse(BaseResponse):
     """
     License status and details
     """
@@ -129,7 +132,7 @@ class SandboxLicenseResponse(BaseModel):
             License number issued
             """
 
-            performance: list[Performance] = []
+            performance: list[Performance] = Field(default_factory=list[Performance])
             """
             Bandwidth by traffic type
             """
@@ -155,7 +158,7 @@ class SandboxLicenseResponse(BaseModel):
     data: Data
 
 
-class SandboxLicenseUpdateResponse(BaseModel):
+class SandboxLicenseUpdateResponse(BaseResponse):
     """
     License update attempt status
     """

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pydantic import BaseModel, Field
 
 
@@ -145,7 +147,7 @@ class SandboxClusterStatusResponse(BaseModel):
     Number of available VMs
     """
 
-    nodes: list[Node] = []
+    nodes: list[Node] = Field(default_factory=list[Node])
     """
     List of nodes
     """

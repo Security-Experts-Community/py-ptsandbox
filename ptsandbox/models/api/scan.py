@@ -1,4 +1,6 @@
-from typing import Any
+from __future__ import annotations
+
+import json
 
 from pydantic import Field, field_serializer
 
@@ -14,7 +16,7 @@ class SandboxScanWithSource(BaseRequest):
 
     async_result: bool = False
 
-    priority: int = Field(3, ge=1, le=4)
+    priority: int = Field(default=3, ge=1, le=4)
 
     passwords_for_unpack: list[str] | None = None
 
@@ -22,14 +24,14 @@ class SandboxScanWithSource(BaseRequest):
 
     metadata: dict[str, str] | None = Field(default=None, exclude=True)
 
-    def get_headers(self) -> dict[str, str | dict[str, Any]]:
-        headers: dict[str, str | dict[str, Any]] = {}
+    def get_headers(self) -> dict[str, str]:
+        headers: dict[str, str] = {}
 
         if self.product is not None:
-            headers.update({"X-Source-Product": self.product})
+            headers["X-Source-Product"] = self.product
 
         if self.metadata is not None:
-            headers.update({"X-Source-Metadata": ",".join(f"{k},{v}" for k, v in self.metadata.items())})
+            headers["X-Source-Metadata"] = ",".join(f"{k},{v}" for k, v in self.metadata.items())
 
         return headers
 
@@ -44,6 +46,14 @@ class SandboxScanWithSourceFileRequest(SandboxScanWithSource):
     @field_serializer("short_result", "async_result")
     def serialize_boolean(self, v: bool) -> str:
         return str(v).lower()
+
+    @field_serializer("passwords_for_unpack")
+    def serialize_passwords(self, v: list[str] | None) -> str | None:
+        # /scan/checkFile sends passwords_for_unpack as a query parameter
+        # where the API expects a JSON-encoded string, e.g. '["pass1", "pass2"]'
+        if v is None:
+            return None
+        return json.dumps(v)
 
 
 class SandboxScanWithSourceURLRequest(SandboxScanWithSource):

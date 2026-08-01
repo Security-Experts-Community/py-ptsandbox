@@ -1,5 +1,6 @@
 site_name: ptsandbox
-site_url: https://py-ptsandbox.github.io
+site_url: https://security-experts-community.github.io/py-ptsandbox
+
 theme:
   name: material
   language: en
@@ -11,13 +12,13 @@ theme:
     - scheme: default
       primary: white
       toggle:
-        name: Dark
-        icon: material/toggle-switch
+        name: Light
+        icon: material/toggle-switch-off
     - scheme: slate
       primary: black
       toggle:
-        name: Light
-        icon: material/toggle-switch-off
+        name: Dark
+        icon: material/toggle-switch
   features:
     - content.code.copy
     - content.code.annotate
@@ -27,16 +28,42 @@ theme:
     - navigation.sections
     - navigation.top
 
-
 # repo information
 repo_url: https://github.com/Security-Experts-Community/py-ptsandbox
 repo_name: py-ptsandbox
+
+# versioning via mike
+extra:
+  version:
+    provider: mike
+    default: latest
 
 # plugins
 plugins:
   - search:
       lang:
         - en
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [.]
+          options:
+            show_source: false
+            show_root_heading: true
+            show_signature_annotations: true
+            separate_signature: true
+            show_bases: true
+            members_order: source
+            heading_level: 2
+            docstring_section_style: list
+  - redirects:
+      redirect_maps:
+        usage/ui-api/cluster.md: usage/ui-api/system.md
+        usage/ui-api/components.md: usage/ui-api/system.md
+
+# watch .py files for live reload during `mkdocs serve`
+watch:
+  - ptsandbox/
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -54,7 +81,8 @@ markdown_extensions:
   - pymdownx.blocks.caption
   - pymdownx.details
   - pymdownx.inlinehilite
-  - pymdownx.snippets
+  - pymdownx.snippets:
+      base_path: [!relative $config_dir, .]
   - pymdownx.superfences
 
 nav:
@@ -78,10 +106,14 @@ nav:
       - Antiviruses: usage/ui-api/antiviruses.md
       - Artifacts: usage/ui-api/artifacts.md
       - BAqueue: usage/ui-api/baqueue.md
-      - Cluster: usage/ui-api/cluster.md
-      - Components: usage/ui-api/components.md
       - Download files: usage/ui-api/download-files.md
       - Entry Points: usage/ui-api/entry-points.md
       - License: usage/ui-api/license.md
       - System: usage/ui-api/system.md
       - Tasks: usage/ui-api/tasks.md
+  - API Reference:
+      - ptsandbox: api-reference/ptsandbox.md
+      - ptsandbox.exceptions: api-reference/exceptions.md
+      - ptsandbox.models: api-reference/models.md
+      - ptsandbox.sandbox: api-reference/sandbox.md
+      - ptsandbox.utils: api-reference/utils.md

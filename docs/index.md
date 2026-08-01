@@ -9,11 +9,11 @@
 
 - Fully typed
 - Completely asynchronous
-- Just a modern python
+- Just a modern Python
 
 ## Installation
 
-=== "PyPi"
+=== "PyPI"
 
     ```sh
     pip install ptsandbox
@@ -27,13 +27,13 @@
 
 === "nix"
 
-    ```
-    TBA
+    ```nix
+    inputs.py-ptsandbox.url = "github:Security-Experts-Community/py-ptsandbox";
     ```
 
 ## Examples
 
-Getting a list of all installed images using the API:
+`Sandbox` supports the async context manager protocol, so you don't need to manually close HTTP sessions:
 
 ```py
 import asyncio
@@ -46,10 +46,24 @@ async def main() -> None:
         host="10.10.10.10",
     )
 
-    sandbox = Sandbox(key)
-    print(await sandbox.api.get_images())
+    async with Sandbox(key) as sandbox:
+        print(await sandbox.api.get_images())
 
 asyncio.run(main())
+```
+
+!!! warning "Resource management"
+
+    You are responsible for calling `close()` when you're done with the `Sandbox` instance. Failing to do so leaks HTTP connections and may exhaust the connection pool. The async context manager (`async with`) handles this automatically.
+
+You can also use `Sandbox` without the context manager — just call `close()` when you're done:
+
+```py
+sandbox = Sandbox(key)
+try:
+    print(await sandbox.api.get_images())
+finally:
+    await sandbox.close()
 ```
 
 Getting system settings using the UI API:
@@ -69,11 +83,10 @@ async def main():
         ),
     )
 
-    sandbox = Sandbox(key)
-    # You must log in before using the UI API
-    await sandbox.ui.authorize()
-
-    print(await sandbox.ui.get_system_settings())
+    async with Sandbox(key) as sandbox:
+        # You must log in before using the UI API
+        await sandbox.ui.authorize()
+        print(await sandbox.ui.get_system_settings())
 
 asyncio.run(main())
 ```

@@ -1,11 +1,6 @@
 from ptsandbox.models.core.base import (
     BaseRequest,
     BaseResponse,
-    SandboxException,
-    SandboxFileNotFoundException,
-    SandboxTooManyErrorsException,
-    SandboxUploadException,
-    SandboxWaitTimeoutException,
 )
 from ptsandbox.models.core.common import (
     Artifact,
@@ -103,14 +98,9 @@ __all__ = [
     "NetworkObjectType",
     "QuarantineEventType",
     "QuarantineState",
-    "SandboxException",
-    "SandboxFileNotFoundException",
     "SandboxImageInfo",
     "SandboxImageType",
     "SandboxResult",
-    "SandboxTooManyErrorsException",
-    "SandboxUploadException",
-    "SandboxWaitTimeoutException",
     "ScanArtifactType",
     "ScanState",
     "SuspiciousBehaviors",

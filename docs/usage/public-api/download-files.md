@@ -11,7 +11,7 @@ async def example() -> None:
         fd.write(data)
 ```
 
-Streaming is also supported if you don't need to download the entire file into memory:
+Use streaming if you don't want to load the entire file into memory:
 
 ```py title="Code example" hl_lines="8"
 import aiofiles
@@ -25,6 +25,31 @@ async def example() -> None:
             await fd.write(chunk)
 
 ```
+
+::: ptsandbox.sandbox.sandbox.Sandbox.get_file
+
+::: ptsandbox.sandbox.sandbox.Sandbox.get_file_stream
+
+### Low-level API
+
+Under the hood, `Sandbox.get_file` uses `download_artifact` with a `sha256:<hash>` file URI. You can use these methods directly to download by any file URI (e.g. from a task report):
+
+```py title="Direct API usage"
+from ptsandbox import Sandbox, SandboxKey
+
+sandbox = Sandbox(SandboxKey(...))
+
+# Download as bytes
+data = await sandbox.api.download_artifact("sha256:abc123...")
+
+# Or stream to avoid loading into memory
+async for chunk in sandbox.api.download_artifact_stream("sha256:abc123..."):
+    ...
+```
+
+::: ptsandbox.sandbox.api._storage.StorageMixin.download_artifact
+
+::: ptsandbox.sandbox.api._storage.StorageMixin.download_artifact_stream
 
 ??? example "Download all files from a task"
 
@@ -106,4 +131,22 @@ async def example() -> None:
 
 !!! warning "Restrictions"
 
-    The sandbox currently has a restriction that **doesn't allow** you to view the task report if it was created with **another token**, so you can download only your own files.
+    The sandbox doesn't let you view a task report created with a different token, so you can only download your own files.
+
+## Get task report
+
+To download all files from a task, you first need the full report which contains the list of artifacts:
+
+```py title="Code example"
+from uuid import UUID
+from ptsandbox import Sandbox, SandboxKey
+
+sandbox = Sandbox(SandboxKey(...))
+
+report = await sandbox.get_report(UUID("..."))
+if (long_report := report.get_long_report()) is not None:
+    for artifact in long_report.artifacts:
+        print(artifact)
+```
+
+::: ptsandbox.sandbox.sandbox.Sandbox.get_report

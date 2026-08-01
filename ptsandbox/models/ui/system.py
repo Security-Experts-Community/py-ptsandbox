@@ -1,8 +1,10 @@
+from __future__ import annotations
+
 from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
-from ptsandbox.models.core.base import BaseRequest
+from ptsandbox.models.core.base import BaseRequest, BaseResponse
 from ptsandbox.models.core.enum import (
     EOSStatus,
     SystemCode,
@@ -134,7 +136,7 @@ class SandboxSystemStatusResponse(BaseModel):
         Event update Time
         """
 
-        params: dict[Any, Any] = {}
+        params: dict[str, Any] = {}
         """
         Additional event parameters
         """
@@ -142,7 +144,7 @@ class SandboxSystemStatusResponse(BaseModel):
     events: list[Event]
 
 
-class SandboxSystemSettingsResponse(BaseModel):
+class SandboxSystemSettingsResponse(BaseResponse):
     """
     System Settings
     """
@@ -529,7 +531,7 @@ class SandboxUpdateSystemSettingsRequest(BaseRequest):
     email_notifier: EmailNotifier | None = Field(default=None, serialization_alias="emailNotifier")
 
 
-class SandboxSystemVersionResponse(BaseModel):
+class SandboxSystemVersionResponse(BaseResponse):
     class Data(BaseModel):
         version: str
 

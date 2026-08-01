@@ -1,5 +1,6 @@
-from enum import Enum
-from functools import cached_property
+from __future__ import annotations
+
+from enum import IntEnum
 
 from pydantic import BaseModel, ConfigDict, Field, SecretStr
 
@@ -9,10 +10,12 @@ class SandboxKey(BaseModel):
     Abstraction over the key that is used to send to the sandbox
     """
 
-    class UI(BaseModel):
-        model_config = ConfigDict(use_enum_values=True)
+    model_config = ConfigDict(frozen=True)
 
-        class AuthType(int, Enum):
+    class UI(BaseModel):
+        model_config = ConfigDict(use_enum_values=True, frozen=True)
+
+        class AuthType(IntEnum):
             default = 0
             ldap = 1
 
@@ -54,7 +57,7 @@ class SandboxKey(BaseModel):
     If necessary, you can also access the sandbox via the UI API
     """
 
-    @cached_property
+    @property
     def url(self) -> str:
         """
         https address for connecting via API
@@ -62,7 +65,7 @@ class SandboxKey(BaseModel):
 
         return f"https://{self.host}/api/v1"
 
-    @cached_property
+    @property
     def debug_url(self) -> str:
         """
         https address for connecting via debug API
@@ -70,7 +73,7 @@ class SandboxKey(BaseModel):
 
         return f"https://{self.host}/api/debug"
 
-    @cached_property
+    @property
     def ui_url(self) -> str:
         """
         https address for connecting via UI API

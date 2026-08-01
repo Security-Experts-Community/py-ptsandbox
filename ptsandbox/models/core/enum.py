@@ -1,10 +1,10 @@
 """
-All enums are collected in one place, because there are many intersections in the models and it is easy to repeat.
+All enums are collected in one place, because there are many intersections in the models and it is easy to repeat
 """
 
 import logging
-from enum import Enum
-from typing import Any
+from enum import StrEnum
+from typing import Any, Self
 
 from pydantic import GetCoreSchemaHandler
 from pydantic_core import CoreSchema, core_schema
@@ -12,33 +12,40 @@ from pydantic_core import CoreSchema, core_schema
 logger = logging.getLogger(__name__)
 
 
-class SoftEnum(str, Enum):
+class SoftEnum(StrEnum):
     """
-    A soft enum in order not to throw exceptions in production
+    A soft enum that does not throw exceptions on unknown values.
 
-    It is necessary because the library does not always keep up with api updates
+    When the sandbox API adds a new enum value that the library doesn't know about yet,
+    a synthetic member is created on-the-fly so that parsing never fails in production.
+
+    The synthetic member is a proper instance of the original enum class, so
+    ``isinstance(result, MyEnum)`` always returns ``True``.
     """
 
     @classmethod
-    def __get_pydantic_core_schema__(
-        cls,
-        source_type: Any,
-        handler: GetCoreSchemaHandler,  # pylint: disable=unused-argument
-    ) -> CoreSchema:
+    def __get_pydantic_core_schema__(cls, source_type: Any, handler: GetCoreSchemaHandler) -> CoreSchema:
         return core_schema.no_info_plain_validator_function(function=cls._validate)
 
     @classmethod
-    def _validate(cls, value: str) -> "SoftEnum":
-        if value not in cls.__members__.values():
-            logger.warning('enum "%s" get unknown value="%s"', cls.__name__, value)
+    def _validate(cls, value: Any) -> Self:
+        if isinstance(value, cls):
+            return value
+        return cls(value)
 
-            # extended enum class with unknown value
-            cls = Enum(
-                cls.__name__,
-                cls._member_map_ | {value.lower(): value},  # pylint: disable=self-cls-assignment,no-member
-            )
+    @classmethod
+    def _missing_(cls, value: object) -> Self | None:
+        if not isinstance(value, str):
+            return None
 
-        return cls(value)  # pyright: ignore[reportCallIssue, reportUnknownVariableType]
+        logger.warning('enum "%s" got unknown value="%s"', cls.__name__, value)
+
+        new_member = str.__new__(cls, value)
+        new_member._name_ = value.lower()
+        new_member._value_ = value
+        cls._member_map_[value.lower()] = new_member
+        cls._value2member_map_[value] = new_member
+        return new_member
 
 
 class HashType(SoftEnum):
@@ -115,6 +122,7 @@ class ThreatClassification(SoftEnum):
     ADWARE = "ADWARE"
     BACKDOOR = "BACKDOOR"
     BOOTKIT = "BOOTKIT"
+    BOT = "BOT"
     CLIENT_IRC = "CLIENT_IRC"
     CLIENT_P2P = "CLIENT_P2P"
     CLIENT_SMTP = "CLIENT_SMTP"
@@ -150,6 +158,7 @@ class ThreatClassification(SoftEnum):
     SPOOFER = "SPOOFER"
     TROJAN = "TROJAN"
     TROJAN_ARCBOMB = "TROJAN_ARCBOMB"
+    TROJAN_ATM = "TROJAN_ATM"
     TROJAN_BANKER = "TROJAN_BANKER"
     TROJAN_CLICKER = "TROJAN_CLICKER"
     TROJAN_DDOS = "TROJAN_DDOS"
@@ -159,12 +168,15 @@ class ThreatClassification(SoftEnum):
     TROJAN_GAMETHIEF = "TROJAN_GAMETHIEF"
     TROJAN_IM = "TROJAN_IM"
     TROJAN_MAILFINDER = "TROJAN_MAILFINDER"
+    TROJAN_MINER = "TROJAN_MINER"
     TROJAN_NOTIFIER = "TROJAN_NOTIFIER"
+    TROJAN_POS = "TROJAN_POS"
     TROJAN_PROXY = "TROJAN_PROXY"
     TROJAN_PSW = "TROJAN_PSW"
     TROJAN_RANSOM = "TROJAN_RANSOM"
     TROJAN_SMS = "TROJAN_SMS"
     TROJAN_SPY = "TROJAN_SPY"
+    TROJAN_WIPER = "TROJAN_WIPER"
     UNKNOWN = "UNKNOWN"
     UNKNOWN_THREAT = "UNKNOWN_THREAT"
     VIRTOOL = "VIRTOOL"
@@ -244,6 +256,7 @@ class ArtifactType(SoftEnum):
     DEX_DUMP = "DEX_DUMP"
     EMAIL = "EMAIL"
     FILE = "FILE"
+    NETWORK_DROP = "NETWORK_DROP"
     PROCESS_DUMP = "PROCESS_DUMP"
     URL = "URL"
 
@@ -296,6 +309,7 @@ class EntryPointType(SoftEnum):
     PT_CS = "PT_CS"
     PT_EDR = "PT_EDR"
     PUBLIC_API = "PUBLIC_API"
+    RETRO = "RETRO"
     SCAN_API = "SCAN_API"
     UNKNOWN = "UNKNOWN"
     WEB = "WEB"
@@ -341,17 +355,21 @@ class FileInfoTypes(SoftEnum):
     FILE = "FILE"
     FOLDER = "FOLDER"
     HTTP = "HTTP"
+    SANDBOX_AMSI = "SANDBOX_AMSI"
+    SANDBOX_DEX_DUMP = "SANDBOX_DEX_DUMP"
     SANDBOX_DROP = "SANDBOX_DROP"
     SANDBOX_MEMORY_DUMP = "SANDBOX_MEMORY_DUMP"
+    SANDBOX_NETWORK_DROP = "SANDBOX_NETWORK_DROP"
     SANDBOX_PROCESS_MEMORY_DUMP = "SANDBOX_PROCESS_MEMORY_DUMP"
     URL = "URL"
 
 
 class FileInfoProperties(SoftEnum):
+    ARCHIVE = "ARCHIVE"
     ARCH_AMD64 = "ARCH_AMD64"
+    ARCH_ARM = "ARCH_ARM"
     ARCH_ARM64 = "ARCH_ARM64"
     ARCH_I386 = "ARCH_I386"
-    ARCHIVE = "ARCHIVE"
     COMPRESSED = "COMPRESSED"
     CORRUPTED = "CORRUPTED"
     EMAIL = "EMAIL"
@@ -368,15 +386,20 @@ class FileInfoProperties(SoftEnum):
     HAS_REMOTE_TEMPLATE = "HAS_REMOTE_TEMPLATE"
     MULTI_VOLUME = "MULTI_VOLUME"
     NESTED_PE = "NESTED_PE"
+    NSIS = "NSIS"
     OFFICE = "OFFICE"
     PROTECTED = "PROTECTED"
     PY_INSTALLER = "PY_INSTALLER"
     SFX = "SFX"
     SFX_7Z = "SFX_7z"
     SFX_ACE = "SFX_ACE"
+    SFX_ARJ = "SFX_ARJ"
+    SFX_LZH = "SFX_LZH"
     SFX_RAR = "SFX_RAR"
     SFX_ZIP = "SFX_ZIP"
+    TAMPERED = "TAMPERED"
     UPX = "UPX"
+    ZIP_BOMB = "ZIP_BOMB"
 
 
 class TreeEngineName(SoftEnum):
@@ -452,6 +475,7 @@ class ErrorType(SoftEnum):
     NOT_FILE = "NOT_FILE"
     NOT_UNPACKABLE_FILE = "NOT_UNPACKABLE_FILE"
     NO_SUITABLE_UNPACKER = "NO_SUITABLE_UNPACKER"
+    PROXY_CONNECTION_ERROR = "PROXY_CONNECTION_ERROR"
     READ_TIMEOUT = "READ_TIMEOUT"
     RESPONSE_ERROR = "RESPONSE_ERROR"
     SCAN_MACHINE_ERROR = "SCAN_MACHINE_ERROR"
@@ -493,14 +517,17 @@ class BaqueueState(SoftEnum):
 class TokenPermissions(SoftEnum):
     SCAN_WITH_EXTENDED_SETTINGS = "SCAN_WITH_EXTENDED_SETTINGS"
     SCAN_WITH_PREDEFINED_SETTINGS = "SCAN_WITH_PREDEFINED_SETTINGS"
+    TASKS_VIEW_ALL = "TASKS_VIEW_ALL"
 
 
 class SystemGroup(SoftEnum):
     AUTO_UPDATE = "AUTO_UPDATE"
+    CLUSTER_STATE = "CLUSTER_STATE"
     DATA_DB = "DATA_DB"
     ENGINE = "ENGINE"
     ENTRY_POINT = "ENTRY_POINT"
     EOS = "EOS"
+    ESPA_AGENT = "ESPA_AGENT"
     EVENTS_DB = "EVENTS_DB"
     FILES_STORAGE = "FILES_STORAGE"
     NODE = "NODE"
@@ -516,6 +543,9 @@ class SystemCode(SoftEnum):
     COMPONENT_PARTIALLY_AVAILABLE = "COMPONENT_PARTIALLY_AVAILABLE"
     END_OF_SUPPORT = "END_OF_SUPPORT"
     END_OF_SUPPORT_SOON = "END_OF_SUPPORT_SOON"
+    ESPA_AGENT_DISCONNECTED = "ESPA_AGENT_DISCONNECTED"
+    ESPA_AGENT_EMAIL_OVERFLOW = "ESPA_AGENT_EMAIL_OVERFLOW"
+    ESPA_AGENT_EMAIL_STALE = "ESPA_AGENT_EMAIL_STALE"
     IMAGE_INSTALL_ERROR = "IMAGE_INSTALL_ERROR"
     NEW_VERSION_AVAILABLE = "NEW_VERSION_AVAILABLE"
     NEW_VERSION_INSTALLATION_SCHEDULED = "NEW_VERSION_INSTALLATION_SCHEDULED"
@@ -524,6 +554,7 @@ class SystemCode(SoftEnum):
     SANDBOX_RECONFIGURING = "SANDBOX_RECONFIGURING"
     STORAGE_CAPACITY_EXCEEDED_COMPONENTS_MAX_SIZE_BYTES = "STORAGE_CAPACITY_EXCEEDED_COMPONENTS_MAX_SIZE_BYTES"
     STORAGE_CAPACITY_EXCEEDED_MINIMUM = "STORAGE_CAPACITY_EXCEEDED_MINIMUM"
+    XEN_PREREQUISITES = "XEN_PREREQUISITES"
 
 
 class UploadStrategy(SoftEnum):
@@ -582,6 +613,7 @@ class LicenseEntryPoint(SoftEnum):
     FILES_INBOX = "files-inbox"
     FILES_MONITOR = "files-monitor"
     ICAP = "icap"
+    MAIL_AGENT_MTA = "mail-agent-mta"
     MAIL_BCC = "mail-bcc"
     MAIL_GATEWAY = "mail-gateway"
     MAIL_GATEWAY_MTA = "mail-gateway-mta"

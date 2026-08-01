@@ -1,4 +1,6 @@
-"""Модели, которые аналогичны и для API, и для UI"""
+"""Models shared between the API and UI."""
+
+from __future__ import annotations
 
 from collections.abc import Iterable
 from datetime import datetime
@@ -23,9 +25,9 @@ class FilterProperties(BaseModel):
     Filtering a group of files by properties to send to the sandbox for analysis
     """
 
-    pdf: list[FileInfoProperties] = []
+    pdf: list[FileInfoProperties] = Field(default_factory=list[FileInfoProperties])
 
-    office: list[FileInfoProperties] = []
+    office: list[FileInfoProperties] = Field(default_factory=list[FileInfoProperties])
 
 
 class SandboxResult(BaseModel):
@@ -60,7 +62,7 @@ class SandboxResult(BaseModel):
     Type of malware
     """
 
-    errors: list[BaseResponse.Error] = []
+    errors: list[BaseResponse.Error] = Field(default_factory=list[BaseResponse.Error])
     """
     Errors that occurred during analysis.
     """
@@ -319,17 +321,17 @@ class Artifact(BaseModel):
                     The overall result of the check
                     """
 
-                    detections: list[Detection] = []
+                    detections: list[Detection] = Field(default_factory=list[Detection])
                     """
                     A list of BA detections at this stage
                     """
 
-                    logs: list[Log] = []
+                    logs: list[Log] = Field(default_factory=list[Log])
                     """
                     A copy of network traffic, video recording, event logs, graph, debug files, mail headers
                     """
 
-                    artifacts: list["Artifact"] = []
+                    artifacts: list[Artifact] = Field(default_factory=list["Artifact"])
                     """
                     Virtual machine artifacts are files created during behavioral analysis.
                     """
@@ -339,7 +341,7 @@ class Artifact(BaseModel):
                     The actual duration of the behavioral analysis in seconds
                     """
 
-                    suspicious_behaviors: list[SuspiciousBehaviors] = []
+                    suspicious_behaviors: list[SuspiciousBehaviors] = Field(default_factory=list[SuspiciousBehaviors])
                     """
                     List of triggered correlation rules
                     """
@@ -354,12 +356,12 @@ class Artifact(BaseModel):
                 A copy of network traffic, video recording, event logs, graph, debug files, mail headers.
                 """
 
-                artifacts: list["Artifact"] | None = None
+                artifacts: list[Artifact] | None = None
                 """
                 Virtual machine artifacts are files created during behavioral analysis.
                 """
 
-                stages: list[Stage] = []
+                stages: list[Stage] = Field(default_factory=list[Stage])
                 """
                 The stages of bootkit analysis.
                 """
@@ -374,12 +376,12 @@ class Artifact(BaseModel):
                 Was the bootkitmon analysis performed during BA
                 """
 
-                network_objects: list[NetworkObject] = []
+                network_objects: list[NetworkObject] = Field(default_factory=list[NetworkObject])
                 """
                 Network objects (url, ip, domain)
                 """
 
-                suspicious_behaviors: list[SuspiciousBehaviors] = []
+                suspicious_behaviors: list[SuspiciousBehaviors] = Field(default_factory=list[SuspiciousBehaviors])
                 """
                 List of triggered correlation rules
                 """
@@ -419,7 +421,7 @@ class Artifact(BaseModel):
         The result of an antivirus or other component check
         """
 
-        detections: list[Detection] = []
+        detections: list[Detection] = Field(default_factory=list[Detection])
         """
         An array with a description of the detected malware
         """
@@ -446,7 +448,7 @@ class Artifact(BaseModel):
     The results of checking the file with specific antiviruses or other components
     """
 
-    artifacts: list["Artifact"] | None = None
+    artifacts: list[Artifact] | None = None
     """
     Files that are archived.
 

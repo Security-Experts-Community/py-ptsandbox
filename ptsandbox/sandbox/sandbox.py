@@ -4,7 +4,7 @@ import math
 from collections.abc import AsyncIterator
 from io import BytesIO
 from pathlib import Path
-from typing import Any, BinaryIO, TypeAlias
+from typing import Any, BinaryIO, Self, TypeAlias
 from uuid import UUID
 
 import aiohttp
@@ -12,32 +12,33 @@ import aiohttp.client_exceptions
 from aiohttp import ClientTimeout
 
 from ptsandbox import config
+from ptsandbox.exceptions import (
+    SandboxException,
+    SandboxTooManyErrorsException,
+    SandboxUploadException,
+    SandboxWaitTimeoutException,
+)
 from ptsandbox.models import (
-    CheckHealthResponse,
-    GetVersionResponse,
     SandboxAdvancedScanTaskRequest,
     SandboxBaseScanTaskRequest,
     SandboxBaseTaskResponse,
     SandboxCheckTaskRequest,
     SandboxCheckTaskResponse,
-    SandboxException,
     SandboxImageInfo,
     SandboxKey,
     SandboxOptionsAdvanced,
     SandboxRescanTaskRequest,
     SandboxScanTaskRequest,
     SandboxScanURLTaskRequest,
-    SandboxTooManyErrorsException,
-    SandboxUploadException,
-    SandboxWaitTimeoutException,
+    SandboxUploadScanFileResponse,
 )
 from ptsandbox.models.api.analysis import SandboxTasksResponse
 from ptsandbox.models.api.scan import (
     SandboxScanWithSourceFileRequest,
     SandboxScanWithSourceURLRequest,
 )
-from ptsandbox.sandbox.sandbox_api import SandboxApi
-from ptsandbox.sandbox.sandbox_ui import SandboxUI
+from ptsandbox.sandbox.api import SandboxApi
+from ptsandbox.sandbox.ui import SandboxUI
 
 logger = logging.getLogger(__name__)
 
@@ -48,7 +49,7 @@ class Sandbox:
     """
 
     api: SandboxApi
-    ui: SandboxUI
+    _ui: SandboxUI | None
 
     def __init__(
         self,
@@ -64,8 +65,6 @@ class Sandbox:
         proxy: str | None = None,
         connection_retries: int = 3,
     ) -> None:
-        assert connection_retries > 0, "Connection retries must be greater than 0"
-
         self.api = SandboxApi(
             key,
             default_timeout=default_timeout,
@@ -74,13 +73,84 @@ class Sandbox:
             connection_retries=connection_retries,
         )
 
-        if key.ui is not None:
-            self.ui = SandboxUI(
+        self._ui = (
+            SandboxUI(
                 key,
                 default_timeout=default_timeout,
                 proxy=proxy,
                 connection_retries=connection_retries,
             )
+            if key.ui is not None
+            else None
+        )
+
+    @property
+    def ui(self) -> SandboxUI:
+        """The UI API client. Raises if no UI credentials were provided in SandboxKey."""
+        if self._ui is None:
+            raise SandboxException("UI is not available. Provide UI credentials in SandboxKey.")
+        return self._ui
+
+    @property
+    def has_ui(self) -> bool:
+        """Whether UI credentials were provided in SandboxKey."""
+        return self._ui is not None
+
+    async def close(self) -> None:
+        """Close all underlying HTTP sessions (api and ui)."""
+
+        await self.api.close()
+        if self._ui is not None:
+            await self._ui.close()
+
+    async def __aenter__(self) -> Self:
+        return self
+
+    async def __aexit__(self, *exc_info: object) -> None:
+        await self.close()
+
+    @staticmethod
+    def _resolve_upload_name(
+        file: str | Path | bytes | BinaryIO,
+        file_name: str | None,
+    ) -> str | None:
+        """Determine the upload file name, falling back to the path for str/Path inputs."""
+        if file_name:
+            return file_name
+        match file:
+            case str() | Path():
+                return str(file)
+            case _:
+                return None
+
+    @staticmethod
+    def _parse_scan_id(task_id: str | UUID) -> UUID:
+        """Convert a str/UUID task_id into a UUID, raising SandboxException on bad input."""
+        try:
+            return UUID(task_id) if isinstance(task_id, str) else task_id
+        except ValueError as e:
+            raise SandboxException(f"Incorrect value={task_id} for task_id, expected UUID") from e
+
+    async def _upload_file_and_rules(
+        self,
+        file: str | Path | bytes | BinaryIO,
+        rules: str | Path | bytes | BytesIO | None = None,
+        *,
+        upload_timeout: float = 300,
+    ) -> tuple[SandboxUploadScanFileResponse, SandboxUploadScanFileResponse | None]:
+        """Upload the main file and optional rules in parallel."""
+        try:
+            async with asyncio.TaskGroup() as tg:
+                task_file = tg.create_task(self.api.upload_file(file=file, upload_timeout=upload_timeout))
+                task_rules = (
+                    tg.create_task(self.api.upload_file(file=rules, upload_timeout=upload_timeout))
+                    if rules is not None
+                    else None
+                )
+        except ExceptionGroup as e:
+            raise SandboxUploadException("Can't upload files to server") from e
+
+        return task_file.result(), (task_rules.result() if task_rules is not None else None)
 
     async def create_rescan(
         self,
@@ -125,7 +195,9 @@ class Sandbox:
 
         Raises:
             SandboxUploadException: if an error occurred when uploading files to the server
-            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+            aiohttp.client_exceptions.ClientResponseError: if the server returns an error status
+            aiohttp.client_exceptions.ClientError: on connection or transport errors
+            pydantic.ValidationError: if the response body does not match the expected model
         """
 
         try:
@@ -208,31 +280,20 @@ class Sandbox:
 
         Raises:
             SandboxUploadException: if an error occurred when uploading files to the server
-            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+            aiohttp.client_exceptions.ClientResponseError: if the server returns an error status
+            aiohttp.client_exceptions.ClientError: on connection or transport errors
+            pydantic.ValidationError: if the response body does not match the expected model
         """
 
-        upload_name: str | None = file_name
-        if not upload_name:
-            match file:
-                case str() | Path():
-                    upload_name = str(file)
-                case _:
-                    upload_name = None
+        upload_name = self._resolve_upload_name(file, file_name)
 
-        try:
-            async with asyncio.TaskGroup() as tg:
-                task_file = tg.create_task(self.api.upload_file(file=file, upload_timeout=upload_timeout))
-                if rules is not None:
-                    task_rules = tg.create_task(self.api.upload_file(file=rules, upload_timeout=upload_timeout))
-                else:
-                    task_rules = None
-        except ExceptionGroup as e:
-            raise SandboxUploadException("Can't upload files to server") from e
+        uploaded_file, uploaded_rules = await self._upload_file_and_rules(
+            file,
+            rules,
+            upload_timeout=upload_timeout,
+        )
 
-        uploaded_file = task_file.result()
-
-        if task_rules is not None:
-            uploaded_rules = task_rules.result()
+        if uploaded_rules is not None:
             options.sandbox.debug_options["rules_url"] = uploaded_rules.data.file_uri
 
         scan = SandboxScanTaskRequest(
@@ -297,16 +358,12 @@ class Sandbox:
 
         Raises:
             SandboxUploadException: if an error occurred when uploading files to the server
-            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+            aiohttp.client_exceptions.ClientResponseError: if the server returns an error status
+            aiohttp.client_exceptions.ClientError: on connection or transport errors
+            pydantic.ValidationError: if the response body does not match the expected model
         """
 
-        upload_name: str | None = file_name
-        if not upload_name:
-            match file:
-                case str() | Path():
-                    upload_name = str(file)
-                case _:
-                    upload_name = None
+        upload_name = self._resolve_upload_name(file, file_name)
 
         try:
             async with asyncio.TaskGroup() as tg:
@@ -392,8 +449,10 @@ class Sandbox:
             The response from the sandbox is either with partial information (when using async_result), or with full information.
 
         Raises:
-            SandboxUploadException: if an error occurred when uploading files to the server
-            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+            SandboxUploadException: if an error occurred when uploading rules to the server
+            aiohttp.client_exceptions.ClientResponseError: if the server returns an error status
+            aiohttp.client_exceptions.ClientError: on connection or transport errors
+            pydantic.ValidationError: if the response body does not match the expected model
         """
 
         if rules is not None:
@@ -413,7 +472,7 @@ class Sandbox:
             options=options,
         )
 
-        return await self.api.creat_url_scan(scan, read_timeout)
+        return await self.api.create_url_scan(scan, read_timeout)
 
     async def wait_for_report(
         self,
@@ -427,7 +486,7 @@ class Sandbox:
         Waiting for a full response from the sandbox if the request was with the `async_result=True` flag
 
         Args:
-            base_time:
+            wait_time:
                 how many seconds should I wait?
 
                 Example of a formula for calculating a parameter:
@@ -503,15 +562,45 @@ class Sandbox:
 
         Raises:
             SandboxException: if the passed task_id is not in UUID format
-            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+            aiohttp.client_exceptions.ClientResponseError: if the server returns an error status
+            aiohttp.client_exceptions.ClientError: on connection or transport errors
+            pydantic.ValidationError: if the response body does not match the expected model
         """
 
-        try:
-            scan_id = UUID(task_id) if isinstance(task_id, str) else task_id
-        except ValueError as e:
-            raise SandboxException(f"Incorrect value={task_id} for task_id, expected UUID") from e
+        scan_id = self._parse_scan_id(task_id)
 
         return await self.api.check_task(
+            SandboxCheckTaskRequest(
+                scan_id=scan_id,
+                allow_preflight=allow_preflight,
+            )
+        )
+
+    async def source_get_status(self, task_id: str | UUID, allow_preflight: bool = True) -> SandboxCheckTaskResponse:
+        """
+        Check the status of a scan started via the source API (source_check_file / source_check_url).
+
+        Returns only the status without the full report. For the full report, use ``source_get_report``.
+
+        Args:
+            task_id: task id :)
+            allow_preflight:
+                If this flag is set, an intermediate result with the `is_preflight` attribute
+                will be returned for scanning with multiple stages (for example, static + BA).
+
+        Returns:
+            Information about the analysis status
+
+        Raises:
+            SandboxException: if the passed task_id is not in UUID format
+            aiohttp.client_exceptions.ClientResponseError: if the server returns an error status
+            aiohttp.client_exceptions.ClientError: on connection or transport errors
+            pydantic.ValidationError: if the response body does not match the expected model
+        """
+
+        scan_id = self._parse_scan_id(task_id)
+
+        return await self.api.source_get_status(
             SandboxCheckTaskRequest(
                 scan_id=scan_id,
                 allow_preflight=allow_preflight,
@@ -534,13 +623,12 @@ class Sandbox:
 
         Raises:
             SandboxException: if the passed task_id is not in UUID format
-            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+            aiohttp.client_exceptions.ClientResponseError: if the server returns an error status
+            aiohttp.client_exceptions.ClientError: on connection or transport errors
+            pydantic.ValidationError: if the response body does not match the expected model
         """
 
-        try:
-            scan_id = UUID(task_id) if isinstance(task_id, str) else task_id
-        except ValueError as e:
-            raise SandboxException(f"Incorrect value={task_id} for task_id, expected UUID") from e
+        scan_id = self._parse_scan_id(task_id)
 
         return await self.api.get_report(scan_id=scan_id)
 
@@ -561,13 +649,14 @@ class Sandbox:
 
         Args:
             hash: sha256 hash of the file
-            stream: download the entire file or give the result in chunks
 
         Returns:
-            file data or throw exception SandboxFileNotFoundException
+            file data
 
         Raises:
-            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+            SandboxException: if the hash type cannot be determined
+            aiohttp.client_exceptions.ClientResponseError: if the server returns an error status (404 if the file is not found)
+            aiohttp.client_exceptions.ClientError: on connection or transport errors
         """
 
         file_uri = f"{self._get_hash_type(hash)}:{hash}"
@@ -579,13 +668,14 @@ class Sandbox:
 
         Args:
             hash: sha256 hash of the file
-            stream: download the entire file or give the result in chunks
 
         Returns:
-            file data or throw exception SandboxFileNotFoundException
+            streaming file data
 
         Raises:
-            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+            SandboxException: if the hash type cannot be determined
+            aiohttp.client_exceptions.ClientResponseError: if the server returns an error status (404 if the file is not found)
+            aiohttp.client_exceptions.ClientError: on connection or transport errors
         """
 
         file_uri = f"{self._get_hash_type(hash)}:{hash}"
@@ -598,7 +688,9 @@ class Sandbox:
         Get a list of available images in the sandbox
 
         Raises:
-            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+            aiohttp.client_exceptions.ClientResponseError: if the server returns an error status
+            aiohttp.client_exceptions.ClientError: on connection or transport errors
+            pydantic.ValidationError: if the response body does not match the expected model
         """
 
         data = await self.api.get_images()
@@ -615,14 +707,20 @@ class Sandbox:
             The header file
 
         Raises:
-            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+            SandboxException: if the file type is not supported
+            aiohttp.client_exceptions.ClientResponseError: if the server returns an error status
+            aiohttp.client_exceptions.ClientError: on connection or transport errors
         """
 
         match file:
             case str() | Path():
+                # Pass the file descriptor directly instead of reading the entire
+                # file into memory (BytesIO(fd.read())) which blocks the event loop.
+                # The file is read in chunks by _upload_bytes during the upload.
                 with open(file, "rb") as fd:
-                    data = BytesIO(fd.read())
-                iterator = self.api.get_email_headers(data)
+                    async for chunk in self.api.get_email_headers(fd):
+                        yield chunk
+                return
             case bytes():
                 iterator = self.api.get_email_headers(BytesIO(file))
             case BinaryIO():
@@ -632,26 +730,6 @@ class Sandbox:
 
         async for chunk in iterator:
             yield chunk
-
-    async def check_health(self) -> CheckHealthResponse:
-        """
-        Checking the API status
-
-        Raises:
-            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
-        """
-
-        return await self.api.check_health()
-
-    async def get_version(self) -> GetVersionResponse:
-        """
-        Get information about product
-
-        Raises:
-            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
-        """
-
-        return await self.api.get_version()
 
     async def source_check_file(
         self,
@@ -714,19 +792,16 @@ class Sandbox:
 
         Raises:
             ValueError: if passed values incorrect
-            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+            SandboxException: if incorrect file type is passed (usually when ignoring type hints)
+            aiohttp.client_exceptions.ClientResponseError: if the server returns an error status
+            aiohttp.client_exceptions.ClientError: on connection or transport errors
+            pydantic.ValidationError: if the response body does not match the expected model
         """
 
         if priority < 1 or priority > 4:
             raise ValueError(f"Incorrect value for priority: {priority}")
 
-        upload_name = file_name
-        if not upload_name:
-            match file:
-                case str() | Path():
-                    upload_name = str(file)
-                case _:
-                    upload_name = None
+        upload_name = self._resolve_upload_name(file, file_name)
 
         data = SandboxScanWithSourceFileRequest(
             file_name=upload_name,
@@ -793,7 +868,9 @@ class Sandbox:
 
         Raises:
             ValueError: if passed values incorrect
-            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+            aiohttp.client_exceptions.ClientResponseError: if the server returns an error status
+            aiohttp.client_exceptions.ClientError: on connection or transport errors
+            pydantic.ValidationError: if the response body does not match the expected model
         """
 
         if priority < 1 or priority > 4:
@@ -839,7 +916,9 @@ class Sandbox:
             Information about requested tasks
 
         Raises:
-            aiohttp.client_exceptions.ClientResponseError: if the response from the server is not ok
+            aiohttp.client_exceptions.ClientResponseError: if the server returns an error status
+            aiohttp.client_exceptions.ClientError: on connection or transport errors
+            pydantic.ValidationError: if the response body does not match the expected model
         """
 
         data: dict[str, Any] = {
@@ -850,6 +929,6 @@ class Sandbox:
         }
 
         if next_cursor is not None:
-            data.update({"next_cursor": next_cursor})
+            data["next_cursor"] = next_cursor
 
         return await self.api.get_tasks(data)

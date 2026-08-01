@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+from pydantic import Field
+
 from ptsandbox.models.core.base import BaseResponse
 from ptsandbox.models.core.common import SandboxImageInfo
 
@@ -9,4 +13,4 @@ class SandboxGetImagesResponse(BaseResponse):
     `<URL>/engines/sandbox/getImages`
     """
 
-    data: list[SandboxImageInfo] = []
+    data: list[SandboxImageInfo] = Field(default_factory=list[SandboxImageInfo])

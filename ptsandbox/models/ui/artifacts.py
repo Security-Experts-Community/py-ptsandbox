@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from ptsandbox.models.ui.common import FilterValues
 
 

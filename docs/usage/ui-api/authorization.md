@@ -1,4 +1,4 @@
-Due to the specific API, not all useful functions are available directly through the `Public API`. Therefore, a connector to the UI API was written for this purpose.
+The Public API doesn't expose all useful functions. The UI API connector fills this gap.
 
 ```py title="Code example" hl_lines="16"
 import asyncio
@@ -23,8 +23,7 @@ asyncio.run(main())
 
 1. You must log in before using the API.
 
-Sometimes it becomes necessary to use the UI API without access to the Public API.
-To do this, you can initialize the key in this way:
+Sometimes you need to use the UI API without Public API access. Initialize the key like this:
 
 ```py title="Code example" hl_lines="7"
 import asyncio
@@ -46,3 +45,5 @@ async def main():
 ```
 
 1. Just pass an empty `key` field
+
+::: ptsandbox.sandbox.ui.SandboxUI.authorize
