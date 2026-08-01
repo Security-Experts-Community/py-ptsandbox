@@ -8,31 +8,31 @@
       
       
       
-        <link rel="canonical" href="https://security-experts-community.github.io/py-ptsandbox/usage/public-api/email/">
+        <link rel="canonical" href="https://security-experts-community.github.io/py-ptsandbox/api-reference/exceptions/">
       
       
-        <link rel="prev" href="../image-info/">
+        <link rel="prev" href="../ptsandbox/">
       
       
-        <link rel="next" href="../download-files/">
+        <link rel="next" href="../models/">
       
       
         
       
       
-      <link rel="icon" href="../../../assets/main_logo_no_text.svg">
+      <link rel="icon" href="../../assets/main_logo_no_text.svg">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>Extract email headers - ptsandbox</title>
+        <title>ptsandbox.exceptions - ptsandbox</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,9 +51,9 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ptsandbox.sandbox.sandbox.Sandbox.get_email_headers" class="md-skip">
+        <a href="#ptsandboxexceptions" class="md-skip">
           Skip to content
         </a>
       
@@ -98,9 +98,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="ptsandbox" class="md-header__button md-logo" aria-label="ptsandbox" data-md-component="logo">
+    <a href="../.." title="ptsandbox" class="md-header__button md-logo" aria-label="ptsandbox" data-md-component="logo">
       
-  <img src="../../../assets/main_logo_no_text.svg" alt="logo">
+  <img src="../../assets/main_logo_no_text.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -117,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Extract email headers
+              ptsandbox.exceptions
             
           </span>
         </div>
@@ -233,9 +233,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="ptsandbox" class="md-nav__button md-logo" aria-label="ptsandbox" data-md-component="logo">
+    <a href="../.." title="ptsandbox" class="md-nav__button md-logo" aria-label="ptsandbox" data-md-component="logo">
       
-  <img src="../../../assets/main_logo_no_text.svg" alt="logo">
+  <img src="../../assets/main_logo_no_text.svg" alt="logo">
 
     </a>
     ptsandbox
@@ -262,7 +262,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -286,8 +286,6 @@
       
   
   
-    
-  
   
   
     
@@ -300,11 +298,13 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
@@ -325,7 +325,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -343,7 +343,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../proxy/" class="md-nav__link">
+      <a href="../../usage/proxy/" class="md-nav__link">
         
   
   
@@ -368,8 +368,6 @@
                 
   
   
-    
-  
   
   
     
@@ -379,11 +377,13 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
         
           
           <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
@@ -404,7 +404,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -473,7 +473,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scanning/scan/" class="md-nav__link">
+      <a href="../../usage/public-api/scanning/scan/" class="md-nav__link">
         
   
   
@@ -501,7 +501,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scanning/rescan/" class="md-nav__link">
+      <a href="../../usage/public-api/scanning/rescan/" class="md-nav__link">
         
   
   
@@ -529,7 +529,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scanning/debug-options/" class="md-nav__link">
+      <a href="../../usage/public-api/scanning/debug-options/" class="md-nav__link">
         
   
   
@@ -557,7 +557,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scanning/source/" class="md-nav__link">
+      <a href="../../usage/public-api/scanning/source/" class="md-nav__link">
         
   
   
@@ -593,7 +593,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../image-info/" class="md-nav__link">
+      <a href="../../usage/public-api/image-info/" class="md-nav__link">
         
   
   
@@ -618,35 +618,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Extract email headers
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../usage/public-api/email/" class="md-nav__link">
         
   
   
@@ -662,46 +637,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#ptsandbox.sandbox.sandbox.Sandbox.get_email_headers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        get_email_headers
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ptsandbox.sandbox.api._analysis.AnalysisMixin.get_email_headers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        get_email_headers
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -714,7 +649,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../download-files/" class="md-nav__link">
+      <a href="../../usage/public-api/download-files/" class="md-nav__link">
         
   
   
@@ -742,7 +677,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../system/" class="md-nav__link">
+      <a href="../../usage/public-api/system/" class="md-nav__link">
         
   
   
@@ -770,7 +705,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tasks/" class="md-nav__link">
+      <a href="../../usage/public-api/tasks/" class="md-nav__link">
         
   
   
@@ -857,7 +792,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ui-api/authorization/" class="md-nav__link">
+      <a href="../../usage/ui-api/authorization/" class="md-nav__link">
         
   
   
@@ -885,7 +820,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ui-api/api-tokens/" class="md-nav__link">
+      <a href="../../usage/ui-api/api-tokens/" class="md-nav__link">
         
   
   
@@ -913,7 +848,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ui-api/antiviruses/" class="md-nav__link">
+      <a href="../../usage/ui-api/antiviruses/" class="md-nav__link">
         
   
   
@@ -941,7 +876,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ui-api/artifacts/" class="md-nav__link">
+      <a href="../../usage/ui-api/artifacts/" class="md-nav__link">
         
   
   
@@ -969,7 +904,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ui-api/baqueue/" class="md-nav__link">
+      <a href="../../usage/ui-api/baqueue/" class="md-nav__link">
         
   
   
@@ -997,7 +932,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ui-api/download-files/" class="md-nav__link">
+      <a href="../../usage/ui-api/download-files/" class="md-nav__link">
         
   
   
@@ -1025,7 +960,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ui-api/entry-points/" class="md-nav__link">
+      <a href="../../usage/ui-api/entry-points/" class="md-nav__link">
         
   
   
@@ -1053,7 +988,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ui-api/license/" class="md-nav__link">
+      <a href="../../usage/ui-api/license/" class="md-nav__link">
         
   
   
@@ -1081,7 +1016,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ui-api/system/" class="md-nav__link">
+      <a href="../../usage/ui-api/system/" class="md-nav__link">
         
   
   
@@ -1109,7 +1044,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ui-api/tasks/" class="md-nav__link">
+      <a href="../../usage/ui-api/tasks/" class="md-nav__link">
         
   
   
@@ -1149,8 +1084,10 @@
       
   
   
+    
   
   
+  
     
     
     
@@ -1161,13 +1098,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
@@ -1188,7 +1123,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1206,7 +1141,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/ptsandbox/" class="md-nav__link">
+      <a href="../ptsandbox/" class="md-nav__link">
         
   
   
@@ -1231,10 +1166,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../api-reference/exceptions/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ptsandbox.exceptions
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1250,6 +1212,87 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ptsandbox.exceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        exceptions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="exceptions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.exceptions.SandboxException" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SandboxException
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.exceptions.SandboxUploadException" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SandboxUploadException
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.exceptions.SandboxTooManyErrorsException" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SandboxTooManyErrorsException
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.exceptions.SandboxWaitTimeoutException" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SandboxWaitTimeoutException
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1262,7 +1305,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/models/" class="md-nav__link">
+      <a href="../models/" class="md-nav__link">
         
   
   
@@ -1290,7 +1333,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/sandbox/" class="md-nav__link">
+      <a href="../sandbox/" class="md-nav__link">
         
   
   
@@ -1318,7 +1361,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/utils/" class="md-nav__link">
+      <a href="../utils/" class="md-nav__link">
         
   
   
@@ -1363,6 +1406,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1371,24 +1416,63 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#ptsandbox.sandbox.sandbox.Sandbox.get_email_headers" class="md-nav__link">
+  <a href="#ptsandbox.exceptions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        get_email_headers
+        exceptions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="exceptions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.exceptions.SandboxException" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SandboxException
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#ptsandbox.sandbox.api._analysis.AnalysisMixin.get_email_headers" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.exceptions.SandboxUploadException" class="md-nav__link">
     <span class="md-ellipsis">
       
-        get_email_headers
+        SandboxUploadException
       
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.exceptions.SandboxTooManyErrorsException" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SandboxTooManyErrorsException
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.exceptions.SandboxWaitTimeoutException" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SandboxWaitTimeoutException
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1412,162 +1496,160 @@
   
 
 
-  <h1>Extract email headers</h1>
-
-<p>Upload an email and get its headers.</p>
-<div class="language-py highlight"><span class="filename">Code example</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">aiofiles</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ptsandbox</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sandbox</span><span class="p">,</span> <span class="n">SandboxKey</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">example</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">sandbox</span> <span class="o">=</span> <span class="n">Sandbox</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">SandboxKey</span><span class="p">(</span><span class="o">...</span><span class="p">))</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="hll">    <span class="k">async</span> <span class="k">with</span> <span class="n">aiofiles</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;./email-headers&quot;</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
-</span></span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        <span class="k">async</span> <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">sandbox</span><span class="o">.</span><span class="n">get_email_headers</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;./email.bin&quot;</span><span class="p">)):</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>            <span class="k">await</span> <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
-</span></code></pre></div>
+<h1 id="ptsandboxexceptions">ptsandbox.exceptions</h1>
 
 
-<div class="doc doc-object doc-function">
+<div class="doc doc-object doc-module">
 
 
-<h2 id="ptsandbox.sandbox.sandbox.Sandbox.get_email_headers" class="doc doc-heading">
-            <span class="doc doc-object-name doc-function-name">ptsandbox.sandbox.sandbox.Sandbox.get_email_headers</span>
 
+<h2 id="ptsandbox.exceptions" class="doc doc-heading">
+            <span class="doc doc-object-name doc-module-name">ptsandbox.exceptions</span>
 
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-async"><code>async</code></small>
-  </span>
 
 </h2>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">get_email_headers</span><span class="p">(</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="n">file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="n">BinaryIO</span><span class="p">,</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span>
-</span></code></pre></div>
 
     <div class="doc doc-contents first">
 
-        <p>Upload an email to receive headers</p>
 
 
-<p><span class="doc-section-title">Parameters:</span></p>
-    <ul>
-        <li class="doc-section-item field-body">
-            <b><code>file</code></b>
-              (<code><span title="str">str</span> | <span title="pathlib.Path">Path</span> | <span title="bytes">bytes</span> | <span title="typing.BinaryIO">BinaryIO</span></code>)
-          –
-          <div class="doc-md-description">
-            <p>path to .eml file or just binary data</p>
-          </div>
-        </li>
-    </ul>
 
 
-<p><span class="doc-section-title">Returns:</span></p>
-    <ul>
-        <li class="doc-section-item field-body">
-              <code><span title="collections.abc.AsyncIterator">AsyncIterator</span>[<span title="bytes">bytes</span>]</code>
-          –
-          <div class="doc-md-description">
-            <p>The header file</p>
-          </div>
-        </li>
-    </ul>
 
 
-<p><span class="doc-section-title">Raises:</span></p>
-    <ul>
-        <li class="doc-section-item field-body">
-              <code><a class="autorefs autorefs-internal" title="SandboxException (ptsandbox.exceptions.SandboxException)" href="../../../api-reference/exceptions/#ptsandbox.exceptions.SandboxException">SandboxException</a></code>
-            –
-          <div class="doc-md-description">
-            <p>if the file type is not supported</p>
-          </div>
-        </li>
-        <li class="doc-section-item field-body">
-              <code><span title="aiohttp.client_exceptions.ClientResponseError">ClientResponseError</span></code>
-            –
-          <div class="doc-md-description">
-            <p>if the server returns an error status</p>
-          </div>
-        </li>
-        <li class="doc-section-item field-body">
-              <code><span title="aiohttp.client_exceptions.ClientError">ClientError</span></code>
-            –
-          <div class="doc-md-description">
-            <p>on connection or transport errors</p>
-          </div>
-        </li>
-    </ul>
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ptsandbox.exceptions.SandboxException" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">SandboxException</span>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="Exception">Exception</span></code></p>
+
+
+        <p>Base exception for all custom errors raised by the library.</p>
+
+
+
+
+
+
 
 
     </div>
 
 </div>
 
-<div class="doc doc-object doc-function">
+<div class="doc doc-object doc-class">
 
 
-<h2 id="ptsandbox.sandbox.api._analysis.AnalysisMixin.get_email_headers" class="doc doc-heading">
-            <span class="doc doc-object-name doc-function-name">ptsandbox.sandbox.api._analysis.AnalysisMixin.get_email_headers</span>
+
+<h3 id="ptsandbox.exceptions.SandboxUploadException" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">SandboxUploadException</span>
 
 
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-async"><code>async</code></small>
-  </span>
-
-</h2>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">get_email_headers</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">BinaryIO</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span>
-</span></code></pre></div>
-
-    <div class="doc doc-contents first">
-
-        <p>Upload an email to receive headers</p>
+</h3>
 
 
-<p><span class="doc-section-title">Parameters:</span></p>
-    <ul>
-        <li class="doc-section-item field-body">
-            <b><code>data</code></b>
-              (<code><span title="typing.BinaryIO">BinaryIO</span></code>)
-          –
-          <div class="doc-md-description">
-            <p>file data</p>
-          </div>
-        </li>
-    </ul>
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxException (ptsandbox.exceptions.SandboxException)" href="#ptsandbox.exceptions.SandboxException">SandboxException</a></code></p>
 
 
-<p><span class="doc-section-title">Returns:</span></p>
-    <ul>
-        <li class="doc-section-item field-body">
-              <code><span title="collections.abc.AsyncIterator">AsyncIterator</span>[<span title="bytes">bytes</span>]</code>
-          –
-          <div class="doc-md-description">
-            <p>The header file</p>
-          </div>
-        </li>
-    </ul>
+        <p>Raised when uploading one or more files to the sandbox fails.</p>
 
 
-<p><span class="doc-section-title">Raises:</span></p>
-    <ul>
-        <li class="doc-section-item field-body">
-              <code><span title="aiohttp.client_exceptions.ClientResponseError">ClientResponseError</span></code>
-            –
-          <div class="doc-md-description">
-            <p>if the server returns an error status</p>
-          </div>
-        </li>
-        <li class="doc-section-item field-body">
-              <code><span title="aiohttp.client_exceptions.ClientError">ClientError</span></code>
-            –
-          <div class="doc-md-description">
-            <p>on connection or transport errors</p>
-          </div>
-        </li>
-    </ul>
 
+
+
+
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ptsandbox.exceptions.SandboxTooManyErrorsException" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">SandboxTooManyErrorsException</span>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxException (ptsandbox.exceptions.SandboxException)" href="#ptsandbox.exceptions.SandboxException">SandboxException</a></code></p>
+
+
+        <p>Raised by <code>wait_for_report</code> when the number of consecutive errors
+while polling for a scan result exceeds the configured <code>error_limit</code>.</p>
+
+
+
+
+
+
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ptsandbox.exceptions.SandboxWaitTimeoutException" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">SandboxWaitTimeoutException</span>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxException (ptsandbox.exceptions.SandboxException)" href="#ptsandbox.exceptions.SandboxException">SandboxException</a></code></p>
+
+
+        <p>Raised by <code>wait_for_report</code> when the scan result is not ready
+within the specified <code>wait_time</code>.</p>
+
+
+
+
+
+
+
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
 
     </div>
 
@@ -1629,10 +1711,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "content.code.annotate", "content.tabs.link", "navigation.instant", "navigation.expand", "navigation.sections", "navigation.top"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "content.code.annotate", "content.tabs.link", "navigation.instant", "navigation.expand", "navigation.sections", "navigation.top"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>
