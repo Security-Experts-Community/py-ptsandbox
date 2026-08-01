@@ -43,8 +43,8 @@ from ptsandbox.models.ui.system import (
 )
 from ptsandbox.models.ui.tasks import (
     SandboxTasksFilterValuesResponse,
-    SandboxTasksResponse,
     SandboxTasksSummaryResponse,
+    SandboxUITasksResponse,
     Task,
 )
 from ptsandbox.models.ui.tokens import SandboxCreateTokenResponse, SandboxTokensResponse
@@ -88,8 +88,8 @@ __all__ = [
     "SandboxSystemStatusResponse",
     "SandboxSystemVersionResponse",
     "SandboxTasksFilterValuesResponse",
-    "SandboxTasksResponse",
     "SandboxTasksSummaryResponse",
+    "SandboxUITasksResponse",
     "SandboxTokensResponse",
     "SandboxTreeResponse",
     "SandboxUpdateSystemSettingsRequest",

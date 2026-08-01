@@ -62,7 +62,7 @@ class Task(BaseModel):
     """
 
 
-class SandboxTasksResponse(BaseModel):
+class SandboxUITasksResponse(BaseModel):
     """
     Tasks listing
 

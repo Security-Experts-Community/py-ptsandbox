@@ -6,7 +6,7 @@ from ptsandbox.models import (
     SandboxEntryPointResponse,
     SandboxEntryPointsResponse,
     SandboxEntryPointsTypesResponse,
-    SandboxTasksResponse,
+    SandboxUITasksResponse,
 )
 from ptsandbox.sandbox.base import BaseSandboxClient
 from ptsandbox.sandbox.ui._token import token_required
@@ -130,7 +130,7 @@ class EntryPointsMixin(BaseSandboxClient):
         offset: int = 0,
         utc_offset_seconds: int = 0,
         next_cursor: str | None = None,
-    ) -> SandboxTasksResponse:
+    ) -> SandboxUITasksResponse:
         """
         Listing tasks from the source
 
@@ -173,7 +173,7 @@ class EntryPointsMixin(BaseSandboxClient):
         return await self._request(
             "GET",
             f"{self.key.ui_url}/entry-points/{entry_point_id}/tasks",
-            response_model=SandboxTasksResponse,
+            response_model=SandboxUITasksResponse,
             params=data,
         )
 

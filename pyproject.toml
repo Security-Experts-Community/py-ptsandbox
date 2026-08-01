@@ -107,7 +107,7 @@ format.indent-style = "space"
 dev = [
     "pytest==9.1.1",
     "pytest-asyncio==1.4.0",
-    "mypy==2.1.0",
+    "mypy==2.3.0",
     "pyyaml==6.0.3",
     "memray>=1.19.3",
     "psutil>=7.2.2",

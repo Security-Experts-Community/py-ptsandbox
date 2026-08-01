@@ -677,7 +677,7 @@ class SandboxCheckTaskResponse(BaseResponse):
             * `checkTask`, if the file analysis has not been completed yet
         """
 
-        is_preflight: bool
+        is_preflight: bool | None = None
         """
         Is the result preliminary, for example, only static has completed
         """

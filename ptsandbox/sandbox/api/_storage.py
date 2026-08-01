@@ -84,7 +84,12 @@ class StorageMixin(BaseSandboxClient):
         Download file from the sandbox by hash
 
         Args:
-            file_uri: id of the file in the sandbox
+            file_uri:
+                Permanent file identifier in the ``sha256:<sha256_hex>`` format.
+
+                This is not the same as the temporary ``file_uri`` returned by
+                :meth:`upload_file` (``sfm:stream_v1...``), which is only valid
+                for use with scan creation endpoints.
             read_timeout: how long should I wait for the file to download?
 
         Returns:
@@ -102,14 +107,19 @@ class StorageMixin(BaseSandboxClient):
             json={"file_uri": file_uri},
             timeout=timeout,
         ) as response:
-            return await response.read()  # type: ignore
+            return await response.read()
 
     async def download_artifact_stream(self, file_uri: str, read_timeout: int = 120) -> AsyncIterator[bytes]:
         """
         Download file from the sandbox by hash
 
         Args:
-            file_uri: id of the file in the sandbox
+            file_uri:
+                Permanent file identifier in the ``sha256:<sha256_hex>`` format.
+
+                This is not the same as the temporary ``file_uri`` returned by
+                :meth:`upload_file` (``sfm:stream_v1...``), which is only valid
+                for use with scan creation endpoints.
             read_timeout: how long should I wait for the file to download?
 
         Returns:
