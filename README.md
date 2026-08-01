@@ -56,10 +56,11 @@ uv add ptsandbox
 
 ## 🔧 Requirements
 
-- Python 3.11+
-- aiohttp 3.11.15+
-- pydantic 2.11.1+
-- loguru 0.7.3+
+- python 3.11+
+- aiohttp 3.14.1+
+- pydantic 2.13.4+
+- orjson 3.11.9+
+- aiohttp-socks 0.11.0+
 
 ## 🚀 Quick Start
 
@@ -77,16 +78,16 @@ async def main():
         key="<TOKEN_FROM_SANDBOX>",
         host="10.10.10.10",
     )
-    
+
     # Initialize client
     sandbox = Sandbox(key)
-    
+
     # Submit file for analysis
     task = await sandbox.create_scan(Path("suspicious_file.exe"))
-    
+
     # Wait for analysis completion
     result = await sandbox.wait_for_report(task)
-    
+
     if (report := result.get_long_report()) is not None:
         print(report.result.verdict)
 
@@ -101,17 +102,17 @@ from ptsandbox import Sandbox, SandboxKey
 
 async def main():
     key = SandboxKey(
-        name="test-key-1", 
+        name="test-key-1",
         key="<TOKEN_FROM_SANDBOX>",
         host="10.10.10.10"
     )
-    
+
     sandbox = Sandbox(key)
-    
+
     # Scan suspicious URL
     task = await sandbox.create_url_scan("http://malware.com/malicious-file")
     result = await sandbox.wait_for_report(task)
-    
+
     if (report := result.get_long_report()) is not None:
         print(report.result.verdict)
 
@@ -127,23 +128,23 @@ from ptsandbox import Sandbox, SandboxKey
 async def main():
     key = SandboxKey(
         name="test-key-1",
-        key="<TOKEN_FROM_SANDBOX>", 
+        key="<TOKEN_FROM_SANDBOX>",
         host="10.10.10.10",
         ui=SandboxKey.UI(
             login="login",
             password="password"
         )
     )
-    
+
     sandbox = Sandbox(key)
-    
+
     # Authorize in UI API
     await sandbox.ui.authorize()
-    
+
     # Get system information
     system_info = await sandbox.ui.get_system_settings()
     print(f"System version: {system_info.data}")
-    
+
     # Get tasks status
     tasks = await sandbox.ui.get_tasks()
     print(f"Active tasks: {len(tasks.tasks)}")
@@ -156,7 +157,7 @@ asyncio.run(main())
 ### Public API
 
 - **[File Scanning](https://security-experts-community.github.io/py-ptsandbox/usage/public-api/scanning/default-scan/)** — submit files of any type for analysis
-- **[URL Scanning](https://security-experts-community.github.io/py-ptsandbox/usage/public-api/scanning/scan/#url)** — check web links for threats  
+- **[URL Scanning](https://security-experts-community.github.io/py-ptsandbox/usage/public-api/scanning/scan/#url)** — check web links for threats
 - **[Advanced Scanning](https://security-experts-community.github.io/py-ptsandbox/usage/public-api/scanning/scan/#advanced-scan)** — configure analysis parameters (VM image, duration, commands)
 - **[Rescan Analysis](https://security-experts-community.github.io/py-ptsandbox/usage/public-api/scanning/rescan/)** — analyze saved traces without re-execution
 - **[File Downloads](https://security-experts-community.github.io/py-ptsandbox/usage/public-api/download-files/)** — retrieve original files and artifacts by hash
@@ -169,10 +170,8 @@ asyncio.run(main())
 - **[Token Management](https://security-experts-community.github.io/py-ptsandbox/usage/ui-api/api-tokens/)** — create and manage API keys
 - **[Entry Points](https://security-experts-community.github.io/py-ptsandbox/usage/ui-api/entry-points/)** — configure automatic processing rules
 - **[Task Management](https://security-experts-community.github.io/py-ptsandbox/usage/ui-api/tasks/)** — view and manage scan queue
-- **[System Settings](https://security-experts-community.github.io/py-ptsandbox/usage/ui-api/system/)** — configure sandbox parameters
+- **[System Settings](https://security-experts-community.github.io/py-ptsandbox/usage/ui-api/system/)** — configure sandbox parameters, monitor cluster and component status
 - **[License Management](https://security-experts-community.github.io/py-ptsandbox/usage/ui-api/license/)** — manage licenses and restrictions
-- **[Cluster Monitoring](https://security-experts-community.github.io/py-ptsandbox/usage/ui-api/cluster/)** — monitor cluster node status
-- **[Component Management](https://security-experts-community.github.io/py-ptsandbox/usage/ui-api/components/)** — manage system modules
 - **[Download Files](https://security-experts-community.github.io/py-ptsandbox/usage/ui-api/download-files/)** — download files and artifacts via UI API
 - **[Artifacts](https://security-experts-community.github.io/py-ptsandbox/usage/ui-api/artifacts/)** — work with scan results and artifacts
 - **[Antivirus Engines](https://security-experts-community.github.io/py-ptsandbox/usage/ui-api/antiviruses/)** — manage AV engine integrations
@@ -190,19 +189,19 @@ from ptsandbox import Sandbox, SandboxKey
 
 async def scan_multiple_files(files: list[Path]):
     sandbox = Sandbox(SandboxKey(...))
-    
+
     # Submit all files in parallel
     tasks = []
     for file in files:
         task = await sandbox.create_scan(file, async_result=True)
         tasks.append(task)
-    
+
     # Wait for all tasks to complete
     results = []
     for task in tasks:
         result = await sandbox.wait_for_report(task)
         results.append(result)
-    
+
     return results
 ```
 
@@ -248,7 +247,7 @@ task = await sandbox.create_advanced_scan(
 
 ```python
 from ptsandbox.exceptions import (
-    SandboxUploadException, 
+    SandboxUploadException,
     SandboxWaitTimeoutException,
     SandboxTooManyErrorsException
 )
@@ -283,7 +282,7 @@ async for header_chunk in sandbox.get_email_headers(email_file):
 
 ```python
 sandbox = Sandbox(
-    key, 
+    key,
     proxy="http://proxy.company.com:8080"
 )
 ```
