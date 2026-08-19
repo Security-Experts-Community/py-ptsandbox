@@ -205,6 +205,18 @@ if (report := result.get_long_report()) is not None:
     print(report.result.verdict)
 ```
 
+!!! note "A scan may finish without a full report"
+
+    `wait_for_report` stops polling as soon as the scan reaches a terminal state
+    (`FULL`, `PARTIAL`, `UNSCANNED` or `UNKNOWN`), and it polls more often nearer
+    the deadline so a just-finished scan is noticed quickly.
+
+    If the scan finished but produced no full report (a terminal `PARTIAL`,
+    `UNSCANNED` or `UNKNOWN` result), waiting any longer is pointless: instead of
+    burning the whole `wait_time`, `wait_for_report` raises
+    `SandboxScanNotFullException` with the terminal `scan_state` and any scan
+    errors for you to react to.
+
 !!! tip "Calculating wait_time"
 
     A good formula for `wait_time`:

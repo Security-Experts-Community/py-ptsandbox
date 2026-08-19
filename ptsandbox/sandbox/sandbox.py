@@ -1,6 +1,6 @@
+from __future__ import annotations
+
 import asyncio
-import logging
-import math
 from collections.abc import AsyncIterator
 from io import BytesIO
 from pathlib import Path
@@ -14,7 +14,7 @@ from aiohttp import ClientTimeout
 from ptsandbox import config
 from ptsandbox.exceptions import (
     SandboxException,
-    SandboxTooManyErrorsException,
+    SandboxScanNotFullException,
     SandboxUploadException,
     SandboxWaitTimeoutException,
 )
@@ -31,16 +31,19 @@ from ptsandbox.models import (
     SandboxScanTaskRequest,
     SandboxScanURLTaskRequest,
     SandboxUploadScanFileResponse,
+    ScanState,
 )
 from ptsandbox.models.api.analysis import SandboxTasksResponse
 from ptsandbox.models.api.scan import (
     SandboxScanWithSourceFileRequest,
     SandboxScanWithSourceURLRequest,
 )
+from ptsandbox.sandbox._report_poller import (
+    NON_FULL_TERMINAL_SCAN_STATES,
+    ReportPoller,
+)
 from ptsandbox.sandbox.api import SandboxApi
 from ptsandbox.sandbox.ui import SandboxUI
-
-logger = logging.getLogger(__name__)
 
 
 class Sandbox:
@@ -503,6 +506,8 @@ class Sandbox:
         Raises:
             SandboxException: there is nothing to wait, because there is not even a short report
             SandboxTooManyErrorsException: if there are too many errors while waiting for the report
+            SandboxScanNotFullException: if the scan reaches a terminal state (PARTIAL/UNSCANNED/UNKNOWN)
+                without a full report — waiting any longer is pointless
             SandboxWaitTimeoutException: if the time is exceeded, the specified waiting time is
         """
 
@@ -514,36 +519,52 @@ class Sandbox:
         if base_report.get_long_report() is not None:
             return base_report
 
-        elapsed_time: float = 0
-
-        # calculate the sleep time, because for tasks with a long waiting time,
-        # it makes no sense to poll the sandbox frequently
-        sleep_time = math.ceil(wait_time / 64)
-
+        scan_id = short_report.scan_id
+        poller = ReportPoller(self, scan_with_source)
         error_counter = 0
-        while elapsed_time <= wait_time:
+
+        for interval in ReportPoller.poll_schedule(wait_time):
             try:
-                if scan_with_source:
-                    check = await self.api.source_get_report(short_report.scan_id)
-                else:
-                    check = await self.get_report(short_report.scan_id)
+                status = await poller.status(scan_id)
             except Exception as ex:
-                error_counter += 1
-
-                logger.exception("Maybe dead sandbox scan_id=%s", short_report.scan_id)
-
-                if error_counter >= error_limit:
-                    raise SandboxTooManyErrorsException("Too many errors while waiting report") from ex
-
+                error_counter = ReportPoller.count_poll_error(error_counter, error_limit, scan_id, ex)
+                await asyncio.sleep(interval)
                 continue
 
-            # full report is available?
-            if check.get_long_report():
-                return check
+            # intermediate results of multi-stage scans are not the final state
+            if status.data.is_preflight:
+                await asyncio.sleep(interval)
+                continue
 
-            await asyncio.sleep(sleep_time)
+            terminal = status.data.result
+            state = terminal.scan_state if terminal is not None else None
 
-            elapsed_time += sleep_time
+            if state is None or state not in NON_FULL_TERMINAL_SCAN_STATES | {ScanState.FULL}:
+                # still running, or a state we don't recognise yet
+                await asyncio.sleep(interval)
+                continue
+
+            if state == ScanState.FULL:
+                # a full result is expected; it may propagate a moment late
+                try:
+                    check = await poller.report(scan_id)
+                except Exception as ex:
+                    error_counter = ReportPoller.count_poll_error(error_counter, error_limit, scan_id, ex)
+                    await asyncio.sleep(interval)
+                    continue
+
+                if check.get_long_report():
+                    return check
+
+                await asyncio.sleep(interval)
+                continue
+
+            # terminal and finished, but no full report will ever arrive
+            raise SandboxScanNotFullException(
+                scan_id=scan_id,
+                scan_state=state,
+                errors=terminal.errors if terminal is not None else [],
+            )
 
         raise SandboxWaitTimeoutException("Waiting time exceeded")
 
