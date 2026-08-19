@@ -43,7 +43,7 @@ class ReportPoller:
     @staticmethod
     def poll_schedule(wait_time: float) -> Iterator[float]:
         elapsed = 0.0
-        while elapsed <= wait_time:
+        while elapsed < wait_time:
             interval = min(ReportPoller.poll_interval(elapsed, wait_time), wait_time - elapsed)
             yield interval
             elapsed += interval
