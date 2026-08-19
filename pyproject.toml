@@ -1,6 +1,6 @@
 [project]
 name = "ptsandbox"
-version = "5.1.0"
+version = "5.1.1"
 description = "Async API connector for PT Sandbox instances"
 readme = "README.md"
 requires-python = "<4.0,>=3.11"
@@ -11,9 +11,9 @@ authors = [
 ]
 dependencies = [
     "pydantic>=2.13.4",
-    "aiohttp>=3.14.1",
+    "aiohttp>=3.14.3",
     "orjson>=3.11.9",
-    "aiohttp-socks>=0.11.0",
+    "aiohttp-socks>=0.12.0",
 ]
 license = "MIT"
 license-files = ["LICENSE"]
