@@ -3377,6 +3377,17 @@
 </span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="k">if</span> <span class="p">(</span><span class="n">report</span> <span class="o">:=</span> <span class="n">result</span><span class="o">.</span><span class="n">get_long_report</span><span class="p">())</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">report</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">verdict</span><span class="p">)</span>
 </span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">A scan may finish without a full report</p>
+<p><code>wait_for_report</code> stops polling as soon as the scan reaches a terminal state
+(<code>FULL</code>, <code>PARTIAL</code>, <code>UNSCANNED</code> or <code>UNKNOWN</code>), and it polls more often nearer
+the deadline so a just-finished scan is noticed quickly.</p>
+<p>If the scan finished but produced no full report (a terminal <code>PARTIAL</code>,
+<code>UNSCANNED</code> or <code>UNKNOWN</code> result), waiting any longer is pointless: instead of
+burning the whole <code>wait_time</code>, <code>wait_for_report</code> raises
+<code>SandboxScanNotFullException</code> with the terminal <code>scan_state</code> and any scan
+errors for you to react to.</p>
+</div>
 <div class="admonition tip">
 <p class="admonition-title">Calculating wait_time</p>
 <p>A good formula for <code>wait_time</code>:</p>
@@ -3455,10 +3466,18 @@
           </div>
         </li>
         <li class="doc-section-item field-body">
-              <code><a class="autorefs autorefs-internal" title="SandboxTooManyErrorsException (ptsandbox.exceptions.SandboxTooManyErrorsException)" href="../../../../api-reference/exceptions/#ptsandbox.exceptions.SandboxTooManyErrorsException">SandboxTooManyErrorsException</a></code>
+              <code><span title="SandboxTooManyErrorsException">SandboxTooManyErrorsException</span></code>
             –
           <div class="doc-md-description">
             <p>if there are too many errors while waiting for the report</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-internal" title="SandboxScanNotFullException (ptsandbox.exceptions.SandboxScanNotFullException)" href="../../../../api-reference/exceptions/#ptsandbox.exceptions.SandboxScanNotFullException">SandboxScanNotFullException</a></code>
+            –
+          <div class="doc-md-description">
+            <p>if the scan reaches a terminal state (PARTIAL/UNSCANNED/UNKNOWN)
+without a full report — waiting any longer is pointless</p>
           </div>
         </li>
         <li class="doc-section-item field-body">
