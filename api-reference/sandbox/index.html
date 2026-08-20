@@ -2738,10 +2738,9 @@
               <code><a class="autorefs autorefs-internal" title="SandboxScanNotFullException (ptsandbox.exceptions.SandboxScanNotFullException)" href="../exceptions/#ptsandbox.exceptions.SandboxScanNotFullException">SandboxScanNotFullException</a></code>
             –
           <div class="doc-md-description">
-            <p>if the scan reached a terminal state but behavioral analysis
-did not complete (SANDBOX engine UNSCANNED/UNKNOWN or no full report) and waiting
-any longer is pointless. Detached error codes (e.g. <code>sandbox_run_sample</code>) are
-attached to the exception when available.</p>
+            <p>the scan reached a terminal state (per the status
+endpoint) but no full report arrived within <code>wait_time</code>. Error codes
+(e.g. <code>sandbox_run_sample</code>) are attached when available.</p>
           </div>
         </li>
         <li class="doc-section-item field-body">

@@ -3378,28 +3378,13 @@
 </span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">report</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">verdict</span><span class="p">)</span>
 </span></code></pre></div>
 <div class="admonition note">
-<p class="admonition-title">A scan may finish without a full report</p>
-<p><code>wait_for_report</code> polls the sandbox until a full (long) report is available. A
-<code>PARTIAL</code> result is still returned as long as behavioral analysis ran (the SANDBOX
-engine finished with <code>FULL</code> or <code>PARTIAL</code>), or when behavioral analysis was never
-requested (a static-only scan) — the partial state usually comes from unpack depth
-or static checks being exceeded.</p>
-<p>The terminal scan state reported by the status endpoint is <strong>not</strong> treated as a
-hard stop, because it is not always reliable:</p>
-<ul>
-<li>tasks started via <code>create_rescan</code> (retro scans) never report a terminal status
-  through the status endpoint — they keep returning no state, and the full report
-  appears through the report endpoint later;</li>
-<li>a live scan can transiently report <code>UNKNOWN</code> while its report is still being
-  produced.</li>
-</ul>
-<p>So the full report is the authoritative signal: if it contains a completed
-behavioral analysis (or no behavioral analysis was requested), <code>wait_for_report</code>
-returns it. If the scan is over but behavioral analysis did not complete (the
-SANDBOX engine ended <code>UNSCANNED</code>/<code>UNKNOWN</code>, or no full report exists at all),
-waiting any longer is pointless and <code>wait_for_report</code> raises
-<code>SandboxScanNotFullException</code> with the terminal <code>scan_state</code> and the scan/BA error
-codes attached for you to react to.</p>
+<p class="admonition-title">Waiting for the report</p>
+<p><code>wait_for_report</code> polls the sandbox until a full (long) report is available and
+returns it as-is — including for retro scans (<code>create_rescan</code>), whose SANDBOX
+engine state may be <code>UNKNOWN</code>/<code>UNSCANNED</code> since no fresh behavioral analysis runs.</p>
+<p>If the scan reached a terminal state but no full report ever arrives within
+<code>wait_time</code>, <code>wait_for_report</code> raises <code>SandboxScanNotFullException</code>; otherwise it
+waits the full <code>wait_time</code> and raises <code>SandboxWaitTimeoutException</code>.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Calculating wait_time</p>
@@ -3489,10 +3474,9 @@ codes attached for you to react to.</p>
               <code><a class="autorefs autorefs-internal" title="SandboxScanNotFullException (ptsandbox.exceptions.SandboxScanNotFullException)" href="../../../../api-reference/exceptions/#ptsandbox.exceptions.SandboxScanNotFullException">SandboxScanNotFullException</a></code>
             –
           <div class="doc-md-description">
-            <p>if the scan reached a terminal state but behavioral analysis
-did not complete (SANDBOX engine UNSCANNED/UNKNOWN or no full report) and waiting
-any longer is pointless. Detached error codes (e.g. <code>sandbox_run_sample</code>) are
-attached to the exception when available.</p>
+            <p>the scan reached a terminal state (per the status
+endpoint) but no full report arrived within <code>wait_time</code>. Error codes
+(e.g. <code>sandbox_run_sample</code>) are attached when available.</p>
           </div>
         </li>
         <li class="doc-section-item field-body">
