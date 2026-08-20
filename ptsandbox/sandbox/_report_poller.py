@@ -11,6 +11,7 @@ from ptsandbox.models import (
     SandboxCheckTaskResponse,
     ScanState,
 )
+from ptsandbox.models.core.base import BaseResponse
 
 if TYPE_CHECKING:
     from ptsandbox.sandbox.sandbox import Sandbox
@@ -27,6 +28,33 @@ NON_FULL_TERMINAL_SCAN_STATES = frozenset(
         ScanState.UNKNOWN,
     }
 )
+
+UNAVAILABLE_SCAN_STATES = frozenset({ScanState.UNSCANNED, ScanState.UNKNOWN})
+TERMINAL_SCAN_STATES = NON_FULL_TERMINAL_SCAN_STATES | {ScanState.FULL}
+BA_SUCCEEDED_SCAN_STATES = frozenset({ScanState.FULL, ScanState.PARTIAL})
+
+
+def collect_behavioral_analysis_results(
+    report: SandboxBaseTaskResponse,
+) -> tuple[list[ScanState], list[BaseResponse.Error]]:
+    long_report = report.get_long_report()
+    if long_report is None:
+        return [], []
+
+    states: list[ScanState] = []
+    errors: list[BaseResponse.Error] = []
+    for artifact in long_report.artifacts:
+        for engine_result in artifact.get_sandbox_results():
+            states.append(engine_result.result.scan_state)
+            errors.extend(engine_result.result.errors)
+    return states, errors
+
+
+def has_completed_behavioral_analysis(report: SandboxBaseTaskResponse) -> bool:
+    ba_states, _ = collect_behavioral_analysis_results(report)
+    if not ba_states:
+        return True
+    return any(state in BA_SUCCEEDED_SCAN_STATES for state in ba_states)
 
 
 class ReportPoller:

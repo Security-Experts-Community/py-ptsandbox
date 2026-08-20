@@ -19,6 +19,7 @@ from ptsandbox.exceptions import (
     SandboxWaitTimeoutException,
 )
 from ptsandbox.models import (
+    BaseResponse,
     SandboxAdvancedScanTaskRequest,
     SandboxBaseScanTaskRequest,
     SandboxBaseTaskResponse,
@@ -39,8 +40,11 @@ from ptsandbox.models.api.scan import (
     SandboxScanWithSourceURLRequest,
 )
 from ptsandbox.sandbox._report_poller import (
-    NON_FULL_TERMINAL_SCAN_STATES,
+    TERMINAL_SCAN_STATES,
+    UNAVAILABLE_SCAN_STATES,
     ReportPoller,
+    collect_behavioral_analysis_results,
+    has_completed_behavioral_analysis,
 )
 from ptsandbox.sandbox.api import SandboxApi
 from ptsandbox.sandbox.ui import SandboxUI
@@ -506,9 +510,11 @@ class Sandbox:
         Raises:
             SandboxException: there is nothing to wait, because there is not even a short report
             SandboxTooManyErrorsException: if there are too many errors while waiting for the report
-            SandboxScanNotFullException: if the scan reaches a terminal state (PARTIAL/UNSCANNED/UNKNOWN)
-                without a full report — waiting any longer is pointless
-            SandboxWaitTimeoutException: if the time is exceeded, the specified waiting time is
+            SandboxScanNotFullException: if the scan reached a terminal state but behavioral analysis
+                did not complete (SANDBOX engine UNSCANNED/UNKNOWN or no full report) and waiting
+                any longer is pointless. Detached error codes (e.g. ``sandbox_run_sample``) are
+                attached to the exception when available.
+            SandboxWaitTimeoutException: if the specified waiting time is exceeded
         """
 
         short_report = base_report.get_short_report()
@@ -522,6 +528,9 @@ class Sandbox:
         scan_id = short_report.scan_id
         poller = ReportPoller(self, scan_with_source)
         error_counter = 0
+        terminal_state: ScanState | None = None
+        terminal_errors: list[BaseResponse.Error] = []
+        saw_any_progress = False
 
         for interval in ReportPoller.poll_schedule(wait_time):
             try:
@@ -533,39 +542,58 @@ class Sandbox:
 
             # intermediate results of multi-stage scans are not the final state
             if status.data.is_preflight:
+                saw_any_progress = True
                 await asyncio.sleep(interval)
                 continue
 
             terminal = status.data.result
             state = terminal.scan_state if terminal is not None else None
 
-            if state is None or state not in NON_FULL_TERMINAL_SCAN_STATES | {ScanState.FULL}:
+            if state is not None:
+                saw_any_progress = True
+
+            if state is None or state not in TERMINAL_SCAN_STATES:
                 # still running, or a state we don't recognise yet
                 await asyncio.sleep(interval)
                 continue
 
-            if state == ScanState.FULL:
-                # a full result is expected; it may propagate a moment late
-                try:
-                    check = await poller.report(scan_id)
-                except Exception as ex:
-                    error_counter = ReportPoller.count_poll_error(error_counter, error_limit, scan_id, ex)
-                    await asyncio.sleep(interval)
-                    continue
+            terminal_state = state
+            terminal_errors = list(terminal.errors) if terminal is not None else []
 
-                if check.get_long_report():
-                    return check
+            if state in UNAVAILABLE_SCAN_STATES:
+                raise SandboxScanNotFullException(
+                    scan_id=scan_id,
+                    scan_state=state,
+                    errors=terminal_errors,
+                )
 
+            try:
+                check = await poller.report(scan_id)
+            except Exception as ex:
+                error_counter = ReportPoller.count_poll_error(error_counter, error_limit, scan_id, ex)
                 await asyncio.sleep(interval)
                 continue
 
-            # terminal and finished, but no full report will ever arrive
+            if check.get_long_report() is None:
+                await asyncio.sleep(interval)
+                continue
+
+            if has_completed_behavioral_analysis(check):
+                return check
+
+            _, ba_errors = collect_behavioral_analysis_results(check)
             raise SandboxScanNotFullException(
                 scan_id=scan_id,
                 scan_state=state,
-                errors=terminal.errors if terminal is not None else [],
+                errors=ba_errors or terminal_errors,
             )
 
+        if terminal_state is not None or not saw_any_progress:
+            raise SandboxScanNotFullException(
+                scan_id=scan_id,
+                scan_state=terminal_state or ScanState.UNKNOWN,
+                errors=terminal_errors,
+            )
         raise SandboxWaitTimeoutException("Waiting time exceeded")
 
     async def check_task(self, task_id: str | UUID, allow_preflight: bool = True) -> SandboxCheckTaskResponse:
@@ -728,7 +756,7 @@ class Sandbox:
             The header file
 
         Raises:
-            SandboxException: if the file type is not supported
+            SandboxException: if the file type is not supported or the file cannot be opened
             aiohttp.client_exceptions.ClientResponseError: if the server returns an error status
             aiohttp.client_exceptions.ClientError: on connection or transport errors
         """
@@ -738,7 +766,11 @@ class Sandbox:
                 # Pass the file descriptor directly instead of reading the entire
                 # file into memory (BytesIO(fd.read())) which blocks the event loop.
                 # The file is read in chunks by _upload_bytes during the upload.
-                with open(file, "rb") as fd:
+                try:
+                    fd = open(file, "rb")
+                except OSError as e:
+                    raise SandboxException(f"Can't open file {file!r}") from e
+                with fd:
                     async for chunk in self.api.get_email_headers(fd):
                         yield chunk
                 return

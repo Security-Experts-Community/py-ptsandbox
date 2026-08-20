@@ -211,11 +211,16 @@ if (report := result.get_long_report()) is not None:
     (`FULL`, `PARTIAL`, `UNSCANNED` or `UNKNOWN`), and it polls more often nearer
     the deadline so a just-finished scan is noticed quickly.
 
-    If the scan finished but produced no full report (a terminal `PARTIAL`,
-    `UNSCANNED` or `UNKNOWN` result), waiting any longer is pointless: instead of
-    burning the whole `wait_time`, `wait_for_report` raises
-    `SandboxScanNotFullException` with the terminal `scan_state` and any scan
-    errors for you to react to.
+    A `PARTIAL` result is still returned as long as behavioral analysis ran
+    (the SANDBOX engine finished with `FULL` or `PARTIAL`), or when behavioral
+    analysis was never requested (a static-only scan) — the partial state usually
+    comes from unpack depth or static checks being exceeded.
+
+    If the scan finished but behavioral analysis did not complete (the SANDBOX
+    engine ended `UNSCANNED`/`UNKNOWN`, or no full report exists at all), waiting
+    any longer is pointless: instead of burning the whole `wait_time`,
+    `wait_for_report` raises `SandboxScanNotFullException` with the terminal
+    `scan_state` and the scan/BA error codes attached for you to react to.
 
 !!! tip "Calculating wait_time"
 

@@ -33,12 +33,14 @@ class SandboxWaitTimeoutException(SandboxException):
 
 class SandboxScanNotFullException(SandboxException):
     """
-    Raised by ``wait_for_report`` when the scan reaches a terminal state
-    without producing a full report (e.g. `PARTIAL`, `UNSCANNED` or `UNKNOWN`).
+    Raised by ``wait_for_report`` when the scan reaches a terminal state but the
+    behavioral analysis did not produce a full report.
 
-    The task is no longer running, so it is useless to keep waiting: the report
-    endpoint will never return a long report for it. The terminal state and any
-    scan errors are attached for the caller to react to.
+    This means the task is no longer running, so it is useless to keep waiting: the
+    report endpoint will never return a full (long) report for it. The terminal state
+    and any scan errors are attached for the caller to react to — the error ``type``
+    values (e.g. ``sandbox_run_sample``, ``internal``, ``max_depth_exceeded``) carry
+    the closest thing to an error code available via the public API.
     """
 
     def __init__(
