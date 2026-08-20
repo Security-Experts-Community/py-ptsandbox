@@ -42,8 +42,6 @@ from ptsandbox.models.api.scan import (
 from ptsandbox.sandbox._report_poller import (
     TERMINAL_SCAN_STATES,
     ReportPoller,
-    collect_behavioral_analysis_results,
-    has_completed_behavioral_analysis,
 )
 from ptsandbox.sandbox.api import SandboxApi
 from ptsandbox.sandbox.ui import SandboxUI
@@ -509,10 +507,9 @@ class Sandbox:
         Raises:
             SandboxException: there is nothing to wait, because there is not even a short report
             SandboxTooManyErrorsException: if there are too many errors while waiting for the report
-            SandboxScanNotFullException: if the scan reached a terminal state but behavioral analysis
-                did not complete (SANDBOX engine UNSCANNED/UNKNOWN or no full report) and waiting
-                any longer is pointless. Detached error codes (e.g. ``sandbox_run_sample``) are
-                attached to the exception when available.
+            SandboxScanNotFullException: the scan reached a terminal state (per the status
+                endpoint) but no full report arrived within ``wait_time``. Error codes
+                (e.g. ``sandbox_run_sample``) are attached when available.
             SandboxWaitTimeoutException: if the specified waiting time is exceeded
         """
 
@@ -529,7 +526,6 @@ class Sandbox:
         error_counter = 0
         terminal_state: ScanState | None = None
         terminal_errors: list[BaseResponse.Error] = []
-        saw_any_progress = False
 
         for interval in ReportPoller.poll_schedule(wait_time):
             try:
@@ -541,15 +537,11 @@ class Sandbox:
 
             # intermediate results of multi-stage scans are not the final state
             if status.data.is_preflight:
-                saw_any_progress = True
                 await asyncio.sleep(interval)
                 continue
 
             terminal = status.data.result
             state = terminal.scan_state if terminal is not None else None
-
-            if state is not None:
-                saw_any_progress = True
 
             if state in TERMINAL_SCAN_STATES:
                 terminal_state = state
@@ -562,26 +554,17 @@ class Sandbox:
                 await asyncio.sleep(interval)
                 continue
 
-            long_report = check.get_long_report()
-            if long_report is None:
+            if check.get_long_report() is None:
                 # full report not available yet — keep waiting
                 await asyncio.sleep(interval)
                 continue
 
-            if has_completed_behavioral_analysis(check):
-                return check
+            return check
 
-            _, ba_errors = collect_behavioral_analysis_results(check)
+        if terminal_state is not None:
             raise SandboxScanNotFullException(
                 scan_id=scan_id,
-                scan_state=long_report.result.scan_state,
-                errors=ba_errors or terminal_errors,
-            )
-
-        if terminal_state is not None or not saw_any_progress:
-            raise SandboxScanNotFullException(
-                scan_id=scan_id,
-                scan_state=terminal_state or ScanState.UNKNOWN,
+                scan_state=terminal_state,
                 errors=terminal_errors,
             )
         raise SandboxWaitTimeoutException("Waiting time exceeded")

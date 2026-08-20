@@ -205,30 +205,15 @@ if (report := result.get_long_report()) is not None:
     print(report.result.verdict)
 ```
 
-!!! note "A scan may finish without a full report"
+!!! note "Waiting for the report"
 
-    `wait_for_report` polls the sandbox until a full (long) report is available. A
-    `PARTIAL` result is still returned as long as behavioral analysis ran (the SANDBOX
-    engine finished with `FULL` or `PARTIAL`), or when behavioral analysis was never
-    requested (a static-only scan) — the partial state usually comes from unpack depth
-    or static checks being exceeded.
+    `wait_for_report` polls the sandbox until a full (long) report is available and
+    returns it as-is — including for retro scans (`create_rescan`), whose SANDBOX
+    engine state may be `UNKNOWN`/`UNSCANNED` since no fresh behavioral analysis runs.
 
-    The terminal scan state reported by the status endpoint is **not** treated as a
-    hard stop, because it is not always reliable:
-
-    * tasks started via `create_rescan` (retro scans) never report a terminal status
-      through the status endpoint — they keep returning no state, and the full report
-      appears through the report endpoint later;
-    * a live scan can transiently report `UNKNOWN` while its report is still being
-      produced.
-
-    So the full report is the authoritative signal: if it contains a completed
-    behavioral analysis (or no behavioral analysis was requested), `wait_for_report`
-    returns it. If the scan is over but behavioral analysis did not complete (the
-    SANDBOX engine ended `UNSCANNED`/`UNKNOWN`, or no full report exists at all),
-    waiting any longer is pointless and `wait_for_report` raises
-    `SandboxScanNotFullException` with the terminal `scan_state` and the scan/BA error
-    codes attached for you to react to.
+    If the scan reached a terminal state but no full report ever arrives within
+    `wait_time`, `wait_for_report` raises `SandboxScanNotFullException`; otherwise it
+    waits the full `wait_time` and raises `SandboxWaitTimeoutException`.
 
 !!! tip "Calculating wait_time"
 
