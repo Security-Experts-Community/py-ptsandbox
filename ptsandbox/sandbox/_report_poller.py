@@ -21,16 +21,7 @@ logger = logging.getLogger(__name__)
 _POLL_MAX_INTERVAL = 20.0
 _POLL_MIN_INTERVAL = 2.0
 
-NON_FULL_TERMINAL_SCAN_STATES = frozenset(
-    {
-        ScanState.PARTIAL,
-        ScanState.UNSCANNED,
-        ScanState.UNKNOWN,
-    }
-)
-
-UNAVAILABLE_SCAN_STATES = frozenset({ScanState.UNSCANNED, ScanState.UNKNOWN})
-TERMINAL_SCAN_STATES = NON_FULL_TERMINAL_SCAN_STATES | {ScanState.FULL}
+TERMINAL_SCAN_STATES = frozenset(ScanState)
 BA_SUCCEEDED_SCAN_STATES = frozenset({ScanState.FULL, ScanState.PARTIAL})
 
 

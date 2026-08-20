@@ -41,7 +41,6 @@ from ptsandbox.models.api.scan import (
 )
 from ptsandbox.sandbox._report_poller import (
     TERMINAL_SCAN_STATES,
-    UNAVAILABLE_SCAN_STATES,
     ReportPoller,
     collect_behavioral_analysis_results,
     has_completed_behavioral_analysis,
@@ -552,20 +551,9 @@ class Sandbox:
             if state is not None:
                 saw_any_progress = True
 
-            if state is None or state not in TERMINAL_SCAN_STATES:
-                # still running, or a state we don't recognise yet
-                await asyncio.sleep(interval)
-                continue
-
-            terminal_state = state
-            terminal_errors = list(terminal.errors) if terminal is not None else []
-
-            if state in UNAVAILABLE_SCAN_STATES:
-                raise SandboxScanNotFullException(
-                    scan_id=scan_id,
-                    scan_state=state,
-                    errors=terminal_errors,
-                )
+            if state in TERMINAL_SCAN_STATES:
+                terminal_state = state
+                terminal_errors = list(terminal.errors) if terminal is not None else []
 
             try:
                 check = await poller.report(scan_id)
@@ -574,7 +562,9 @@ class Sandbox:
                 await asyncio.sleep(interval)
                 continue
 
-            if check.get_long_report() is None:
+            long_report = check.get_long_report()
+            if long_report is None:
+                # full report not available yet — keep waiting
                 await asyncio.sleep(interval)
                 continue
 
@@ -584,7 +574,7 @@ class Sandbox:
             _, ba_errors = collect_behavioral_analysis_results(check)
             raise SandboxScanNotFullException(
                 scan_id=scan_id,
-                scan_state=state,
+                scan_state=long_report.result.scan_state,
                 errors=ba_errors or terminal_errors,
             )
 
