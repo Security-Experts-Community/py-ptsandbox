@@ -3238,15 +3238,17 @@
               <code><a class="autorefs autorefs-internal" title="SandboxScanNotFullException (ptsandbox.exceptions.SandboxScanNotFullException)" href="../exceptions/#ptsandbox.exceptions.SandboxScanNotFullException">SandboxScanNotFullException</a></code>
             –
           <div class="doc-md-description">
-            <p>if the scan reaches a terminal state (PARTIAL/UNSCANNED/UNKNOWN)
-without a full report — waiting any longer is pointless</p>
+            <p>if the scan reached a terminal state but behavioral analysis
+did not complete (SANDBOX engine UNSCANNED/UNKNOWN or no full report) and waiting
+any longer is pointless. Detached error codes (e.g. <code>sandbox_run_sample</code>) are
+attached to the exception when available.</p>
           </div>
         </li>
         <li class="doc-section-item field-body">
               <code><a class="autorefs autorefs-internal" title="SandboxWaitTimeoutException (ptsandbox.exceptions.SandboxWaitTimeoutException)" href="../exceptions/#ptsandbox.exceptions.SandboxWaitTimeoutException">SandboxWaitTimeoutException</a></code>
             –
           <div class="doc-md-description">
-            <p>if the time is exceeded, the specified waiting time is</p>
+            <p>if the specified waiting time is exceeded</p>
           </div>
         </li>
     </ul>
@@ -3786,7 +3788,7 @@ will be returned for scanning with multiple stages (for example, static + BA).</
               <code><a class="autorefs autorefs-internal" title="SandboxException (ptsandbox.exceptions.SandboxException)" href="../exceptions/#ptsandbox.exceptions.SandboxException">SandboxException</a></code>
             –
           <div class="doc-md-description">
-            <p>if the file type is not supported</p>
+            <p>if the file type is not supported or the file cannot be opened</p>
           </div>
         </li>
         <li class="doc-section-item field-body">

@@ -1684,11 +1684,13 @@ within the specified <code>wait_time</code>.</p>
               Bases: <code><a class="autorefs autorefs-internal" title="SandboxException (ptsandbox.exceptions.SandboxException)" href="#ptsandbox.exceptions.SandboxException">SandboxException</a></code></p>
 
 
-        <p>Raised by <code>wait_for_report</code> when the scan reaches a terminal state
-without producing a full report (e.g. <code>PARTIAL</code>, <code>UNSCANNED</code> or <code>UNKNOWN</code>).</p>
-<p>The task is no longer running, so it is useless to keep waiting: the report
-endpoint will never return a long report for it. The terminal state and any
-scan errors are attached for the caller to react to.</p>
+        <p>Raised by <code>wait_for_report</code> when the scan reaches a terminal state but the
+behavioral analysis did not produce a full report.</p>
+<p>This means the task is no longer running, so it is useless to keep waiting: the
+report endpoint will never return a full (long) report for it. The terminal state
+and any scan errors are attached for the caller to react to — the error <code>type</code>
+values (e.g. <code>sandbox_run_sample</code>, <code>internal</code>, <code>max_depth_exceeded</code>) carry
+the closest thing to an error code available via the public API.</p>
 
 
 
