@@ -370,6 +370,34 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../usage/detections/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Detections
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -383,10 +411,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3" >
         
           
-          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
             
   
   
@@ -404,8 +432,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_2">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -434,10 +462,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2_1" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3_1" >
         
           
-          <label class="md-nav__link" for="__nav_2_2_1" id="__nav_2_2_1_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2_3_1" id="__nav_2_3_1_label" tabindex="0">
             
   
   
@@ -455,8 +483,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_1_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_2_1">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_1">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -753,10 +781,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4" >
         
           
-          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
             
   
   
@@ -774,8 +802,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_3">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -21988,7 +22016,7 @@ without filtering at the level of correlation rules</p>
 
     <div class="doc doc-contents ">
 
-        <p>The duration of analysis the file in seconds. minimum: 10</p>
+        <p>The duration of analysis of the file in seconds. minimum: 10</p>
 
     </div>
 
@@ -22184,7 +22212,7 @@ without filtering at the level of correlation rules</p>
     <div class="doc doc-contents ">
 
         <p>The name of the file to be checked, which will be displayed in the sandbox web interface.</p>
-<p>If not specified, the hash value of the file is calculated using the SHA—256 algorithm.</p>
+<p>If not specified, the hash value of the file is calculated using the SHA-256 algorithm.</p>
 
     </div>
 
@@ -22236,7 +22264,7 @@ without filtering at the level of correlation rules</p>
     <div class="doc doc-contents ">
 
         <p>Return only the scan_id.</p>
-<p>Enabling this option may be usefull to send async requests for file checking.</p>
+<p>Enabling this option may be useful to send async requests for file checking.</p>
 <p>You can receive full report in a separate request.</p>
 
     </div>
@@ -22534,8 +22562,8 @@ or the decompression level of compressed files.</p>
 
     <div class="doc doc-contents ">
 
-        <p>Settings for marking files as dangerous. By default, we send this information because this labels are important.</p>
-<p>You can configure it by passing an object with the necessary options or pass None to disable it</p>
+        <p>Settings for marking files as dangerous. By default, we send this information because these labels are important.</p>
+<p>You can configure it by passing an object with the necessary options, or pass <code>None</code> to disable it</p>
 
     </div>
 
@@ -23632,7 +23660,7 @@ will be returned for scanning with multiple stages (for example, static + BA).</
 
 
         <p>Parameters of behavioral analysis.</p>
-<p>In the absence, the source parameters are used for analysis, which are set in the system by default.</p>
+<p>If not specified, the source parameters set by default in the system are used for analysis.</p>
 
 
 
@@ -23755,7 +23783,7 @@ will be returned for scanning with multiple stages (for example, static + BA).</
 
 
         <p>Run an advanced analysis of the uploaded file in the VM without unpacking.</p>
-<p>Provides an opportunity to fine-tuning.</p>
+<p>Provides an opportunity for fine-tuning.</p>
 <p><strong>The options are in beta, so they may change in the future.</strong></p>
 
 
@@ -25068,7 +25096,7 @@ will be returned for scanning with multiple stages (for example, static + BA).</
               Bases: <code><a class="autorefs autorefs-internal" title="BaseResponse (ptsandbox.models.core.base.BaseResponse)" href="#ptsandbox.models.BaseResponse">BaseResponse</a></code></p>
 
 
-        <p>Get information about product</p>
+        <p>Get information about the product</p>
 
 
 
@@ -25886,8 +25914,8 @@ because the API rejects requests containing <code>null</code> values.</p>
 
         <p>The path to the file (excluding the root file of the structure), including its title.</p>
 <p>For example, for the file <code>readme.txt</code> at the root of the archive
-<code>archive.zip</code> will be specified as the value of this field.
-<code>readme.txt</code>, is an empty value for the archive itself.</p>
+<code>archive.zip</code>, this field contains the value <code>readme.txt</code>. For the
+archive itself, this value is empty.</p>
 
     </div>
 
@@ -27761,7 +27789,7 @@ It is necessary for tasks with multiple sandbox images</p>
 
     <div class="doc doc-contents ">
 
-        <p>The duration of the analsysis in seconds.</p>
+        <p>The duration of the analysis in seconds.</p>
 <p>It is recorded only in the general results (in the JSON object <code>data → result</code>).</p>
 
     </div>
@@ -31204,7 +31232,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
 
-        <p>Problematic conditions on the node Problematic conditions on the node will be shown here.</p>
+        <p>Problematic conditions on the node will be shown here.</p>
 <p>Examples of conditions:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>[
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    { &quot;message&quot;: &quot;Calico is not running on this node&quot;, &quot;type&quot;: &quot;NetworkUnavailable&quot; },
@@ -33527,7 +33555,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
 
-        <p>UNIX time the time of token deletion</p>
+        <p>UNIX timestamp of the token deletion</p>
 
     </div>
 
@@ -34207,7 +34235,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
 
-        <p>UNIX time the time of token creation</p>
+        <p>UNIX timestamp of the token creation</p>
 
     </div>
 
@@ -34232,7 +34260,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
 
-        <p>UNIX time the time when the token comment was changed</p>
+        <p>UNIX timestamp of the last token comment change</p>
 
     </div>
 
@@ -34257,7 +34285,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
 
-        <p>UNIX time the time of token deletion</p>
+        <p>UNIX timestamp of the token deletion</p>
 
     </div>
 
