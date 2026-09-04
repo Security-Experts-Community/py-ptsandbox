@@ -33,7 +33,7 @@ class TasksMixin(BaseSandboxClient):
                 age < 30d AND (task.correlated.state != UNKNOWN ) ORDER BY start desc
                 ```
             limit: limit on the number of records to be returned
-            offset: the offset of the returned records. If the next Cursor is specified, the offset from the cursor is
+            offset: the offset of the returned records. If the next cursor is specified, the offset is counted from the cursor.
             utc_offset_seconds: the offset of the user's time from UTC, which will be used for the time in QL queries
             next_cursor: the value from the previous request
 

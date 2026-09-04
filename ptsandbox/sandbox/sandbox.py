@@ -49,7 +49,7 @@ from ptsandbox.sandbox.ui import SandboxUI
 
 class Sandbox:
     """
-    The main class describing interaction with the sandbox via the API
+    The main class describing interaction with the sandbox via the API.
     """
 
     api: SandboxApi
@@ -172,9 +172,9 @@ class Sandbox:
         """
         Run a retro scan to check for detects without running a behavioral analysis.
 
-        It is useful if there is a trace from a malware that can't connect to C2C.
+        It is useful if there is a trace from malware that can't connect to C2C.
 
-        Or is it necessary to check the new correlation rules on the same trace.
+        It is also useful for checking new correlation rules against the same trace.
 
         Args:
             trace: path to drakvuf-trace.log.zst or just bytes
@@ -188,7 +188,7 @@ class Sandbox:
             async_result:
                 Return only the scan_id.
 
-                Enabling this option may be usefull to send async requests for file checking.
+                Enabling this option may be useful to send async requests for file checking.
 
                 You can receive full report in a separate request.
             read_timeout: response waiting time in seconds
@@ -262,7 +262,7 @@ class Sandbox:
 
                 If possible, the name of the uploaded file will be taken as the default value.
 
-                If not specified, the hash value of the file is calculated using the SHA—256 algorithm.
+                If not specified, the hash value of the file is calculated using the SHA-256 algorithm.
             rules: if you have compiled the rules, then you can scan with them, rather than using the sandbox embedded inside
             priority: the priority of the task, between 1 and 4. The higher it is, the faster it will get to work
             short_result:
@@ -272,7 +272,7 @@ class Sandbox:
             async_result:
                 Return only the scan_id.
 
-                Enabling this option may be usefull to send async requests for file checking.
+                Enabling this option may be useful to send async requests for file checking.
 
                 You can receive full report in a separate request.
             read_timeout: response waiting time in seconds
@@ -340,7 +340,7 @@ class Sandbox:
 
                 If possible, the name of the uploaded file will be taken as the default value.
 
-                If not specified, the hash value of the file is calculated using the SHA—256 algorithm.
+                If not specified, the hash value of the file is calculated using the SHA-256 algorithm.
             rules: if you have compiled the rules, then you can scan with them, rather than using the sandbox embedded inside
             priority: the priority of the task, between 1 and 4. The higher it is, the faster it will get to work
             short_result:
@@ -350,7 +350,7 @@ class Sandbox:
             async_result:
                 Return only the scan_id.
 
-                Enabling this option may be usefull to send async requests for file checking.
+                Enabling this option may be useful to send async requests for file checking.
 
                 You can receive full report in a separate request.
             read_timeout: response waiting time in seconds
@@ -430,7 +430,7 @@ class Sandbox:
         options: SandboxBaseScanTaskRequest.Options = SandboxBaseScanTaskRequest.Options(),
     ) -> SandboxBaseTaskResponse:
         """
-        Send the url to the sandbox
+        Send the URL to the sandbox
 
         Args:
             url: the url to be sent for analysis
@@ -443,7 +443,7 @@ class Sandbox:
             async_result:
                 Return only the scan_id.
 
-                Enabling this option may be usefull to send async requests for file checking.
+                Enabling this option may be useful to send async requests for file checking.
 
                 You can receive full report in a separate request.
             read_timeout: response waiting time in seconds
@@ -487,17 +487,17 @@ class Sandbox:
         scan_with_source: bool = False,
     ) -> SandboxBaseTaskResponse:
         """
-        Waiting for a full response from the sandbox if the request was with the `async_result=True` flag
+        Wait for a full response from the sandbox when the request was made with the `async_result=True` flag.
 
         Args:
             wait_time:
-                how many seconds should I wait?
+                How long to wait for the report, in seconds.
 
-                Example of a formula for calculating a parameter:
+                Example of a formula for calculating this parameter:
 
                 ```python
                 wait_time = options.sandbox.analysis_duration * 4 + (
-                    300 if sandbox_options.sandbox.analysis_duration < 80 else 120
+                    300 if options.sandbox.analysis_duration < 80 else 120
                 )
                 ```
 
@@ -574,7 +574,7 @@ class Sandbox:
         Checking the result of a scan running with the async_result flag
 
         Args:
-            task_id: task id :)
+            task_id: ID of the task to check
             allow_preflight:
                 If this flag is set, an intermediate result with the `is_preflight` attribute
                 will be returned for scanning with multiple stages (for example, static + BA).
@@ -605,7 +605,7 @@ class Sandbox:
         Returns only the status without the full report. For the full report, use ``source_get_report``.
 
         Args:
-            task_id: task id :)
+            task_id: ID of the task to check
             allow_preflight:
                 If this flag is set, an intermediate result with the `is_preflight` attribute
                 will be returned for scanning with multiple stages (for example, static + BA).
@@ -638,7 +638,7 @@ class Sandbox:
         :warning: The results will be returned only for the key that the analysis was started with. Sandbox restrictions for now.
 
         Args:
-            task_id: task id :)
+            task_id: ID of the task to check
 
         Returns:
             The response from the sandbox is either with partial information (when using async_result), or with full information.
@@ -671,6 +671,7 @@ class Sandbox:
 
         Args:
             hash: sha256 hash of the file
+            read_timeout: response waiting time in seconds
 
         Returns:
             file data
@@ -690,6 +691,7 @@ class Sandbox:
 
         Args:
             hash: sha256 hash of the file
+            read_timeout: response waiting time in seconds
 
         Returns:
             streaming file data
@@ -783,7 +785,7 @@ class Sandbox:
 
                 If possible, the name of the uploaded file will be taken as the default value.
 
-                If not specified, the hash value of the file is calculated using the SHA—256 algorithm.
+                If not specified, the hash value of the file is calculated using the SHA-256 algorithm.
             short_result:
                 Return only the overall result of the check.
 
@@ -817,7 +819,7 @@ class Sandbox:
                 Response waiting time in seconds
 
         Raises:
-            ValueError: if passed values incorrect
+            ValueError: if passed values are incorrect
             SandboxException: if incorrect file type is passed (usually when ignoring type hints)
             aiohttp.client_exceptions.ClientResponseError: if the server returns an error status
             aiohttp.client_exceptions.ClientError: on connection or transport errors
@@ -859,7 +861,7 @@ class Sandbox:
 
         Args:
             url:
-                The file to be sent for analysis
+                The URL to be sent for analysis
             short_result:
                 Return only the overall result of the check.
 
@@ -893,7 +895,7 @@ class Sandbox:
                 Response waiting time in seconds
 
         Raises:
-            ValueError: if passed values incorrect
+            ValueError: if passed values are incorrect
             aiohttp.client_exceptions.ClientResponseError: if the server returns an error status
             aiohttp.client_exceptions.ClientError: on connection or transport errors
             pydantic.ValidationError: if the response body does not match the expected model
@@ -925,7 +927,7 @@ class Sandbox:
         """
         Get tasks listing
 
-        Warning: Unstable API (can be changed in future release)
+        Warning: Unstable API (can be changed in a future release)
 
         Args:
             query:

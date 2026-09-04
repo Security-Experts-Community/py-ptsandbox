@@ -21,7 +21,7 @@ class SandboxGetHealthStatusResponse(BaseResponse):
 
 class SandboxGetVersionResponse(BaseResponse):
     """
-    Get information about product
+    Get information about the product
     """
 
     class Data(BaseModel):

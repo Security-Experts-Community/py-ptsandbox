@@ -7,11 +7,11 @@ import asyncio
 from ptsandbox import Sandbox, SandboxKey
 
 async def main():
-    sandbox = Sandbox(...)
-    await sandbox.ui.authorize()
+    async with Sandbox(...) as sandbox:
+        await sandbox.ui.authorize()
 
-    tokens = await sandbox.ui.get_api_tokens()
-    print(tokens)
+        tokens = await sandbox.ui.get_api_tokens()
+        print(tokens)
 
 asyncio.run(main())
 ```
@@ -26,18 +26,18 @@ from ptsandbox import Sandbox, SandboxKey
 from ptsandbox.models import TokenPermissions
 
 async def main():
-    sandbox = Sandbox(...)
-    await sandbox.ui.authorize()
+    async with Sandbox(...) as sandbox:
+        await sandbox.ui.authorize()
 
-    token = await sandbox.ui.create_api_token(
-        name="test-token",
-        permissions=[
-            TokenPermissions.SCAN_WITH_EXTENDED_SETTINGS,
-            TokenPermissions.SCAN_WITH_PREDEFINED_SETTINGS,
-        ],
-        comment="test-comment",
-    )
-    print(token)
+        token = await sandbox.ui.create_api_token(
+            name="test-token",
+            permissions=[
+                TokenPermissions.SCAN_WITH_EXTENDED_SETTINGS,
+                TokenPermissions.SCAN_WITH_PREDEFINED_SETTINGS,
+            ],
+            comment="test-comment",
+        )
+        print(token)
 
 asyncio.run(main())
 ```
@@ -51,10 +51,10 @@ import asyncio
 from ptsandbox import Sandbox, SandboxKey
 
 async def main():
-    sandbox = Sandbox(...)
-    await sandbox.ui.authorize()
+    async with Sandbox(...) as sandbox:
+        await sandbox.ui.authorize()
 
-    await sandbox.ui.delete_api_token(token_id=1337)
+        await sandbox.ui.delete_api_token(token_id=1337)
 
 asyncio.run(main())
 ```

@@ -8,12 +8,12 @@ import aiofiles
 from ptsandbox import Sandbox, SandboxKey
 
 async def main():
-    sandbox = Sandbox(...)
-    await sandbox.ui.authorize()
+    async with Sandbox(...) as sandbox:
+        await sandbox.ui.authorize()
 
-    async with aiofiles.open("./tasks.csv", "wb") as fd:
-        async for chunk in sandbox.ui.get_artifacts_csv():
-            await fd.write(chunk)
+        async with aiofiles.open("./tasks.csv", "wb") as fd:
+            async for chunk in sandbox.ui.get_artifacts_csv():
+                await fd.write(chunk)
 
 asyncio.run(main())
 ```
@@ -27,11 +27,11 @@ import asyncio
 from ptsandbox import Sandbox, SandboxKey
 
 async def main():
-    sandbox = Sandbox(...)
-    await sandbox.ui.authorize()
+    async with Sandbox(...) as sandbox:
+        await sandbox.ui.authorize()
 
-    values = await sandbox.ui.get_artifacts_filter_values()
-    print(values)
+        values = await sandbox.ui.get_artifacts_filter_values()
+        print(values)
 
 asyncio.run(main())
 ```

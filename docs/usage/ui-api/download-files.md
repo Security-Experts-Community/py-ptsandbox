@@ -12,18 +12,17 @@ from ptsandbox.models import SandboxKey, StorageItem
 
 
 async def main():
-    sandbox = Sandbox(SandboxKey(...))
+    async with Sandbox(SandboxKey(...)) as sandbox:
+        await sandbox.ui.authorize()
 
-    await sandbox.ui.authorize()
+        items: list[StorageItem] = [
+            {"sha256": "..."},
+            {"sha256": "...", "name": "..."}
+        ]
 
-    items: list[StorageItem] = [
-        {"sha256": "..."},
-        {"sha256": "...", "name": "..."}
-    ]
-
-    async with aiofiles.open("./artifacts.zip", "wb") as fd:
-        async for chunk in sandbox.ui.get_files(items):
-            await fd.write(chunk)
+        async with aiofiles.open("./artifacts.zip", "wb") as fd:
+            async for chunk in sandbox.ui.get_files(items):
+                await fd.write(chunk)
 ```
 
 !!! note

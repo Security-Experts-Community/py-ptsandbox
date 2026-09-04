@@ -85,7 +85,7 @@ class SandboxClusterStatusResponse(BaseModel):
 
         conditions: list[Condition]
         """
-        Problematic conditions on the node Problematic conditions on the node will be shown here.
+        Problematic conditions on the node will be shown here.
 
         Examples of conditions:
 

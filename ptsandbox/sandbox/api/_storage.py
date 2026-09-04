@@ -90,7 +90,7 @@ class StorageMixin(BaseSandboxClient):
                 This is not the same as the temporary ``file_uri`` returned by
                 :meth:`upload_file` (``sfm:stream_v1...``), which is only valid
                 for use with scan creation endpoints.
-            read_timeout: how long should I wait for the file to download?
+            read_timeout: response waiting time in seconds
 
         Returns:
             File data
@@ -120,7 +120,7 @@ class StorageMixin(BaseSandboxClient):
                 This is not the same as the temporary ``file_uri`` returned by
                 :meth:`upload_file` (``sfm:stream_v1...``), which is only valid
                 for use with scan creation endpoints.
-            read_timeout: how long should I wait for the file to download?
+            read_timeout: response waiting time in seconds
 
         Returns:
             streaming file data

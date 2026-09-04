@@ -30,10 +30,9 @@ async def main():
         host="10.10.10.10",
     )
 
-    sandbox = Sandbox(key)
-
-    report = await sandbox.source_check_file("./malware.exe") # (1)!
-    print(report)
+    async with Sandbox(key) as sandbox:
+        report = await sandbox.source_check_file("./malware.exe") # (1)!
+        print(report)
 
 asyncio.run(main())
 ```
@@ -54,18 +53,17 @@ async def main():
         host="10.10.10.10",
     )
 
-    sandbox = Sandbox(key)
+    async with Sandbox(key) as sandbox:
+        task = await sandbox.source_check_file(
+            "./malware.elf",
+            async_result=True,
+        )
 
-    task = await sandbox.source_check_file(
-        "./malware.elf",
-        async_result=True,
-    )
-
-    report = await sandbox.wait_for_report(
-        task,
-        wait_time=100,
-        scan_with_source=True, # (1)!
-    )
+        report = await sandbox.wait_for_report(
+            task,
+            wait_time=100,
+            scan_with_source=True, # (1)!
+        )
 
 
 asyncio.run(main())
@@ -93,10 +91,9 @@ async def main():
         host="10.10.10.10",
     )
 
-    sandbox = Sandbox(key)
-
-    report = await sandbox.source_check_url("http://malware.com/file.elf") # (1)!
-    print(report)
+    async with Sandbox(key) as sandbox:
+        report = await sandbox.source_check_url("http://malware.com/file.elf") # (1)!
+        print(report)
 
 asyncio.run(main())
 ```
@@ -117,18 +114,17 @@ async def main():
         host="10.10.10.10",
     )
 
-    sandbox = Sandbox(key)
+    async with Sandbox(key) as sandbox:
+        task = await sandbox.source_check_url(
+            "http://malware.com/file.elf",
+            async_result=True,
+        )
 
-    task = await sandbox.source_check_url(
-        "http://malware.com/file.elf",
-        async_result=True,
-    )
-
-    report = await sandbox.wait_for_report(
-        task,
-        wait_time=100,
-        scan_with_source=True, # (1)!
-    )
+        report = await sandbox.wait_for_report(
+            task,
+            wait_time=100,
+            scan_with_source=True, # (1)!
+        )
 
 
 asyncio.run(main())
@@ -149,15 +145,14 @@ from uuid import UUID
 
 from ptsandbox import Sandbox, SandboxKey
 
-sandbox = Sandbox(SandboxKey(...))
+async with Sandbox(SandboxKey(...)) as sandbox:
+    # Check status of a regular scan
+    status = await sandbox.check_task(UUID("..."))
+    print(status.data.status)
 
-# Check status of a regular scan
-status = await sandbox.check_task(UUID("..."))
-print(status.data.status)
-
-# Check status of a source scan
-source_status = await sandbox.source_get_status(UUID("..."))
-print(source_status.data.status)
+    # Check status of a source scan
+    source_status = await sandbox.source_get_status(UUID("..."))
+    print(source_status.data.status)
 ```
 
 ::: ptsandbox.sandbox.sandbox.Sandbox.check_task

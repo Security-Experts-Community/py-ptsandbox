@@ -15,8 +15,8 @@ async def main():
         ),
     )
 
-    sandbox = Sandbox(key)
-    await sandbox.ui.authorize() # (1)!
+    async with Sandbox(key) as sandbox:
+        await sandbox.ui.authorize() # (1)!
 
 asyncio.run(main())
 ```
@@ -40,8 +40,8 @@ async def main():
         ),
     )
 
-    sandbox = Sandbox(key)
-    await sandbox.ui.authorize()
+    async with Sandbox(key) as sandbox:
+        await sandbox.ui.authorize()
 ```
 
 1. Just pass an empty `key` field

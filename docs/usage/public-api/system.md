@@ -5,10 +5,10 @@ from ptsandbox import Sandbox, SandboxKey
 
 async def example() -> None:
     key = SandboxKey(...)
-    sandbox = Sandbox(key)
 
-    status = await sandbox.api.get_health_status()
-    print(status)
+    async with Sandbox(key) as sandbox:
+        status = await sandbox.api.get_health_status()
+        print(status)
 ```
 
 ::: ptsandbox.sandbox.api._maintenance.MaintenanceMixin.get_health_status
@@ -20,10 +20,10 @@ from ptsandbox import Sandbox, SandboxKey
 
 async def example() -> None:
     key = SandboxKey(...)
-    sandbox = Sandbox(key)
 
-    version = await sandbox.api.get_version()
-    print(version)
+    async with Sandbox(key) as sandbox:
+        version = await sandbox.api.get_version()
+        print(version)
 ```
 
 ::: ptsandbox.sandbox.api._maintenance.MaintenanceMixin.get_version

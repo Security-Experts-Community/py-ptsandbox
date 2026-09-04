@@ -5,7 +5,7 @@ The following files are required for rescan:
 - `drakvuf-trace.log.zst` - events collected from the analysis system;
 - `tcpdump.pcap` - information about network interaction;
 
-```py title="Code example" hl_lines="16-19"
+```py title="Code example" hl_lines="15-20"
 import asyncio
 from pathlib import Path
 
@@ -19,16 +19,15 @@ async def main():
         host="10.10.10.10",
     )
 
-    sandbox = Sandbox(key)
+    async with Sandbox(key) as sandbox:
+        task = await sandbox.create_rescan(
+            Path("./drakvuf-trace.log.zst"),
+            Path("./tcpdump.pcap"),
+        )
 
-    task = await sandbox.create_rescan(
-        Path("./drakvuf-trace.log.zst"),
-        Path("./tcpdump.pcap"),
-    )
-
-    result = await sandbox.wait_for_report(task)
-    if (report := result.get_long_report()) is not None:
-        print(report.artifacts)
+        result = await sandbox.wait_for_report(task)
+        if (report := result.get_long_report()) is not None:
+            print(report.artifacts)
 
 
 asyncio.run(main())

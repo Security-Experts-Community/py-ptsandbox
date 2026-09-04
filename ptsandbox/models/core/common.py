@@ -42,7 +42,7 @@ class SandboxResult(BaseModel):
 
     duration: float
     """
-    The duration of the analsysis in seconds.
+    The duration of the analysis in seconds.
 
     It is recorded only in the general results (in the JSON object `data → result`).
     """
@@ -268,8 +268,8 @@ class Artifact(BaseModel):
         The path to the file (excluding the root file of the structure), including its title.
 
         For example, for the file `readme.txt` at the root of the archive
-        `archive.zip` will be specified as the value of this field.
-        `readme.txt `, is an empty value for the archive itself.
+        `archive.zip`, this field contains the value `readme.txt`. For the
+        archive itself, this value is empty.
         """
 
         mime_type: str

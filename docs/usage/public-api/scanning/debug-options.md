@@ -46,7 +46,7 @@ The full list of system calls:
 - Linux - [syscalls.mebeim.net](https://syscalls.mebeim.net/?table=x86/64/x64/latest)
 - Windows - [j00ru.vexillium.org](https://j00ru.vexillium.org/syscalls/nt/64/)
 
-!!! example "Usecase"
+!!! example "Use case"
 
     You need to check a unique sample, and the sandbox doesn't track the function of interest.
 
@@ -54,7 +54,7 @@ The full list of system calls:
 
 This is not well-documented, so use it with caution.
 
-format:
+Format:
 
 ```
 <FunctionName>,log,<PARAM1>:<TYPE1>,<PARAM2>:<TYPE2>
@@ -69,7 +69,7 @@ format:
     waveInOpen,log,phwi:lpvoid,uDeviceID:int,pwfx:lpvoid,dwCallback:lpvoid,dwInstance:lpvoid,fdwOpen:dword
     ```
 
-!!! example "Usecase"
+!!! example "Use case"
 
     You need to check a unique sample, and the sandbox doesn't track the function of interest.
 
@@ -92,7 +92,7 @@ To check that a regular expression is exactly right, use [regex101.com](https://
     ^\\device\\harddiskvolume\d+\\windows\\system32\\csrss\.exe$
     ```
 
-!!! example "Usecase"
+!!! example "Use case"
 
     Speeds up analysis when you need to ignore flooding processes.
 
@@ -114,6 +114,6 @@ Use regular expressions to specify files that will be ignored during extraction.
     ^.*\\windows\\prefetch\\.*$
     ```
 
-!!! example "Usecase"
+!!! example "Use case"
 
     Speeds up analysis when you need to ignore flooding files.

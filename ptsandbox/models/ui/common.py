@@ -36,7 +36,7 @@ class EntryPointToken(BaseModel):
 
     deleted: float | None = Field(default=None)
     """
-    UNIX time the time of token deletion
+    UNIX timestamp of the token deletion
     """
 
 
@@ -527,17 +527,17 @@ class Token(BaseModel):
 
     created: float
     """
-    UNIX time the time of token creation
+    UNIX timestamp of the token creation
     """
 
     modified: float | None = None
     """
-    UNIX time the time when the token comment was changed
+    UNIX timestamp of the last token comment change
     """
 
     deleted: float | None = None
     """
-    UNIX time the time of token deletion
+    UNIX timestamp of the token deletion
     """
 
     entry_point: EntryPoint | None = Field(default=None, alias="entryPoint")

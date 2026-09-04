@@ -79,17 +79,16 @@ async def main():
         host="10.10.10.10",
     )
 
-    # Initialize client
-    sandbox = Sandbox(key)
+    # The async context manager closes HTTP sessions automatically
+    async with Sandbox(key) as sandbox:
+        # Submit file for analysis
+        task = await sandbox.create_scan(Path("suspicious_file.exe"))
 
-    # Submit file for analysis
-    task = await sandbox.create_scan(Path("suspicious_file.exe"))
+        # Wait for analysis completion
+        result = await sandbox.wait_for_report(task)
 
-    # Wait for analysis completion
-    result = await sandbox.wait_for_report(task)
-
-    if (report := result.get_long_report()) is not None:
-        print(report.result.verdict)
+        if (report := result.get_long_report()) is not None:
+            print(report.result.verdict)
 
 asyncio.run(main())
 ```
@@ -107,14 +106,13 @@ async def main():
         host="10.10.10.10"
     )
 
-    sandbox = Sandbox(key)
-
     # Scan suspicious URL
-    task = await sandbox.create_url_scan("http://malware.com/malicious-file")
-    result = await sandbox.wait_for_report(task)
+    async with Sandbox(key) as sandbox:
+        task = await sandbox.create_url_scan("http://malware.com/malicious-file")
+        result = await sandbox.wait_for_report(task)
 
-    if (report := result.get_long_report()) is not None:
-        print(report.result.verdict)
+        if (report := result.get_long_report()) is not None:
+            print(report.result.verdict)
 
 asyncio.run(main())
 ```
@@ -136,18 +134,17 @@ async def main():
         )
     )
 
-    sandbox = Sandbox(key)
+    # The UI API requires authorization before use
+    async with Sandbox(key) as sandbox:
+        await sandbox.ui.authorize()
 
-    # Authorize in UI API
-    await sandbox.ui.authorize()
+        # Get system information
+        system_info = await sandbox.ui.get_system_settings()
+        print(f"System version: {system_info.data}")
 
-    # Get system information
-    system_info = await sandbox.ui.get_system_settings()
-    print(f"System version: {system_info.data}")
-
-    # Get tasks status
-    tasks = await sandbox.ui.get_tasks()
-    print(f"Active tasks: {len(tasks.tasks)}")
+        # Get tasks status
+        tasks = await sandbox.ui.get_tasks()
+        print(f"Active tasks: {len(tasks.tasks)}")
 
 asyncio.run(main())
 ```
@@ -188,21 +185,20 @@ from pathlib import Path
 from ptsandbox import Sandbox, SandboxKey
 
 async def scan_multiple_files(files: list[Path]):
-    sandbox = Sandbox(SandboxKey(...))
+    async with Sandbox(SandboxKey(...)) as sandbox:
+        # Submit all files in parallel
+        tasks = []
+        for file in files:
+            task = await sandbox.create_scan(file, async_result=True)
+            tasks.append(task)
 
-    # Submit all files in parallel
-    tasks = []
-    for file in files:
-        task = await sandbox.create_scan(file, async_result=True)
-        tasks.append(task)
+        # Wait for all tasks to complete
+        results = []
+        for task in tasks:
+            result = await sandbox.wait_for_report(task)
+            results.append(result)
 
-    # Wait for all tasks to complete
-    results = []
-    for task in tasks:
-        result = await sandbox.wait_for_report(task)
-        results.append(result)
-
-    return results
+        return results
 ```
 
 ### Custom Scan Configuration
@@ -281,10 +277,11 @@ async for header_chunk in sandbox.get_email_headers(email_file):
 ### Proxy Support
 
 ```python
-sandbox = Sandbox(
+async with Sandbox(
     key,
-    proxy="http://proxy.company.com:8080"
-)
+    proxy="http://proxy.company.com:8080",
+) as sandbox:
+    ...
 ```
 
 ### Custom Timeouts
@@ -292,24 +289,26 @@ sandbox = Sandbox(
 ```python
 from aiohttp import ClientTimeout
 
-sandbox = Sandbox(
+async with Sandbox(
     key,
     default_timeout=ClientTimeout(
         total=600,
         connect=60,
-        sock_read=300
-    )
-)
+        sock_read=300,
+    ),
+) as sandbox:
+    ...
 ```
 
 ### Upload Semaphore Control
 
 ```python
 # Limit concurrent uploads
-sandbox = Sandbox(
+async with Sandbox(
     key,
-    upload_semaphore_size=3  # Max 3 concurrent uploads
-)
+    upload_semaphore_size=3,  # Max 3 concurrent uploads
+) as sandbox:
+    ...
 ```
 
 ## 🤝 Contributing

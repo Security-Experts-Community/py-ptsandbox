@@ -57,7 +57,7 @@ class AnalysisMixin(BaseSandboxClient):
         read_timeout: int = 0,
     ) -> SandboxBaseTaskResponse:
         """
-        Send the specified file to the sandbox for analysis using advanced APi
+        Send the specified file to the sandbox for analysis using advanced API
 
         Args:
             data: sandbox parameters in model
@@ -88,9 +88,9 @@ class AnalysisMixin(BaseSandboxClient):
             timeout=timeout,
         )
 
-    async def creat_url_scan(self, data: SandboxScanURLTaskRequest, read_timeout: int = 0) -> SandboxBaseTaskResponse:
+    async def create_url_scan(self, data: SandboxScanURLTaskRequest, read_timeout: int = 0) -> SandboxBaseTaskResponse:
         """
-        Send the url to the sandbox
+        Send the URL to the sandbox
 
         Args:
             data: sandbox parameters in model
@@ -120,17 +120,12 @@ class AnalysisMixin(BaseSandboxClient):
             timeout=timeout,
         )
 
-    create_url_scan = creat_url_scan
-
     async def check_task(self, data: SandboxCheckTaskRequest) -> SandboxCheckTaskResponse:
         """
         Checking the result of a scan running with the async_result flag
 
         Args:
-            task_id: task id :)
-            allow_preflight:
-                If this flag is set, an intermediate result with the `is_preflight` attribute
-                will be returned for scanning with multiple stages (for example, static + BA).
+            data: request parameters (scan_id, allow_preflight)
 
         Returns:
             Information about the analysis status
@@ -153,7 +148,7 @@ class AnalysisMixin(BaseSandboxClient):
         Getting the full task scan report
 
         Args:
-            task_id: task id :)
+            scan_id: ID of the task to get the report for
 
         Returns:
             The response from the sandbox is either with partial information (when using async_result), or with full information.

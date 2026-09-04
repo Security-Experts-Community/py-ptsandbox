@@ -41,7 +41,7 @@ class MaintenanceMixin(BaseSandboxClient):
 
     async def get_version(self) -> SandboxGetVersionResponse:
         """
-        Get information about product
+        Get information about the product
 
         Raises:
             aiohttp.client_exceptions.ClientResponseError: if the server returns an error status

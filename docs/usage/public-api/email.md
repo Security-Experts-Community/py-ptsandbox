@@ -6,11 +6,10 @@ from pathlib import Path
 from ptsandbox import Sandbox, SandboxKey
 
 async def example() -> None:
-    sandbox = Sandbox(key=SandboxKey(...))
-
-    async with aiofiles.open("./email-headers", "wb") as fd:
-        async for chunk in sandbox.get_email_headers(Path("./email.bin")):
-            await fd.write(chunk)
+    async with Sandbox(key=SandboxKey(...)) as sandbox:
+        async with aiofiles.open("./email-headers", "wb") as fd:
+            async for chunk in sandbox.get_email_headers(Path("./email.bin")):
+                await fd.write(chunk)
 ```
 
 ::: ptsandbox.sandbox.sandbox.Sandbox.get_email_headers

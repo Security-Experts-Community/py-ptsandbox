@@ -11,11 +11,11 @@ from ptsandbox import Sandbox, SandboxKey
 
 async def example() -> None:
     key = SandboxKey(...)
-    sandbox = Sandbox(key)
 
-    result = await sandbox.get_tasks()
-    for task in result.tasks:
-        print(task.id, task.name)
+    async with Sandbox(key) as sandbox:
+        result = await sandbox.get_tasks()
+        for task in result.tasks:
+            print(task.id, task.name)
 ```
 
 ::: ptsandbox.sandbox.sandbox.Sandbox.get_tasks

@@ -8,12 +8,11 @@ from ptsandbox.models import SandboxKey
 
 
 async def main():
-    sandbox = Sandbox(SandboxKey(...))
+    async with Sandbox(SandboxKey(...)) as sandbox:
+        await sandbox.ui.authorize()
 
-    await sandbox.ui.authorize()
-
-    license = await sandbox.ui.get_license()
-    print(license)
+        license = await sandbox.ui.get_license()
+        print(license)
 
 asyncio.run(main())
 ```
@@ -30,16 +29,14 @@ asyncio.run(main())
 
     async def main():
         key = SandboxKey(...)
-        sandbox = Sandbox(key)
+        async with Sandbox(key) as sandbox:
+            await sandbox.ui.authorize()
 
-        await sandbox.ui.authorize()
-
-        response = await sandbox.ui.get_license()
-        if datetime.now(tz=timezone.utc) > response.data.license.expiration_time:
-            print("License expired")
-        else:
-            print(f"License ok, expires in: {response.data.license.expiration_time}")
-
+            response = await sandbox.ui.get_license()
+            if datetime.now(tz=timezone.utc) > response.data.license.expiration_time:
+                print("License expired")
+            else:
+                print(f"License ok, expires in: {response.data.license.expiration_time}")
 
     asyncio.run(main())
     ```

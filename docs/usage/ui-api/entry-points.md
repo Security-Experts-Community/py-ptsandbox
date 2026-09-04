@@ -14,12 +14,11 @@ from ptsandbox.models import SandboxKey
 
 
 async def main():
-    sandbox = Sandbox(SandboxKey(...))
+    async with Sandbox(SandboxKey(...)) as sandbox:
+        await sandbox.ui.authorize()
 
-    await sandbox.ui.authorize()
-
-    entry_points_types = await sandbox.ui.get_entry_points_types()
-    print(entry_points_types)
+        entry_points_types = await sandbox.ui.get_entry_points_types()
+        print(entry_points_types)
 
 asyncio.run(main())
 ```
@@ -36,12 +35,11 @@ from ptsandbox.models import SandboxKey
 
 
 async def main():
-    sandbox = Sandbox(SandboxKey(...))
+    async with Sandbox(SandboxKey(...)) as sandbox:
+        await sandbox.ui.authorize()
 
-    await sandbox.ui.authorize()
-
-    entry_points = await sandbox.ui.get_entry_points()
-    print(entry_points)
+        entry_points = await sandbox.ui.get_entry_points()
+        print(entry_points)
 
 asyncio.run(main())
 ```
@@ -69,22 +67,21 @@ from ptsandbox.models import (
 
 
 async def main():
-    sandbox = Sandbox(SandboxKey(...))
+    async with Sandbox(SandboxKey(...)) as sandbox:
+        await sandbox.ui.authorize()
 
-    await sandbox.ui.authorize()
-
-    await sandbox.ui.create_entry_point(
-        SandboxCreateEntryPointRequest(
-            name="test-source",
-            type=EntryPointType.SCAN_API,
-            settings=EntryPointSettings(
-                token=EntryPointToken(
-                    id=1337,
-                    name="test-token",
-                )
-            ),
+        await sandbox.ui.create_entry_point(
+            SandboxCreateEntryPointRequest(
+                name="test-source",
+                type=EntryPointType.SCAN_API,
+                settings=EntryPointSettings(
+                    token=EntryPointToken(
+                        id=1337,
+                        name="test-token",
+                    )
+                ),
+            )
         )
-    )
 
 asyncio.run(main())
 ```
@@ -101,12 +98,11 @@ from ptsandbox.models import SandboxKey
 
 
 async def main():
-    sandbox = Sandbox(SandboxKey(...))
+    async with Sandbox(SandboxKey(...)) as sandbox:
+        await sandbox.ui.authorize()
 
-    await sandbox.ui.authorize()
-
-    info = await sandbox.ui.get_entry_point("...")
-    print(info)
+        info = await sandbox.ui.get_entry_point("...")
+        print(info)
 
 asyncio.run(main())
 ```
@@ -121,14 +117,13 @@ asyncio.run(main())
 
 
     async def main():
-        sandbox = Sandbox(SandboxKey(...))
+        async with Sandbox(SandboxKey(...)) as sandbox:
+            await sandbox.ui.authorize()
 
-        await sandbox.ui.authorize()
-
-        entry_points = await sandbox.ui.get_entry_points()
-        for entry_point in entry_points.data:
-            info = await sandbox.ui.get_entry_point(entry_point.id)
-            print(info.data.name, info.data.enabled)
+            entry_points = await sandbox.ui.get_entry_points()
+            for entry_point in entry_points.data:
+                info = await sandbox.ui.get_entry_point(entry_point.id)
+                print(info.data.name, info.data.enabled)
 
     asyncio.run(main())
     ```
@@ -166,12 +161,11 @@ from ptsandbox.models import SandboxKey
 
 
 async def main():
-    sandbox = Sandbox(SandboxKey(...))
+    async with Sandbox(SandboxKey(...)) as sandbox:
+        await sandbox.ui.authorize()
 
-    await sandbox.ui.authorize()
-
-    tasks = await sandbox.ui.get_entry_point_tasks("....")
-    print(tasks.tasks)
+        tasks = await sandbox.ui.get_entry_point_tasks("....")
+        print(tasks.tasks)
 
 asyncio.run(main())
 ```
@@ -190,13 +184,12 @@ from ptsandbox.models import SandboxKey
 
 
 async def main():
-    sandbox = Sandbox(SandboxKey(...))
+    async with Sandbox(SandboxKey(...)) as sandbox:
+        await sandbox.ui.authorize()
 
-    await sandbox.ui.authorize()
-
-    async with aiofiles.open("./logs.zip", "wb") as fd:
-        async for chunk in sandbox.ui.get_entry_point_logs("..."): # (1)!
-            await fd.write(chunk)
+        async with aiofiles.open("./logs.zip", "wb") as fd:
+            async for chunk in sandbox.ui.get_entry_point_logs("..."): # (1)!
+                await fd.write(chunk)
 
 asyncio.run(main())
 ```

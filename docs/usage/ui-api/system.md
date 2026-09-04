@@ -7,11 +7,11 @@ import asyncio
 from ptsandbox import Sandbox, SandboxKey
 
 async def main():
-    sandbox = Sandbox(...)
-    await sandbox.ui.authorize()
+    async with Sandbox(...) as sandbox:
+        await sandbox.ui.authorize()
 
-    status = await sandbox.ui.get_system_status()
-    print(status)
+        status = await sandbox.ui.get_system_status()
+        print(status)
 
 asyncio.run(main())
 ```
@@ -25,11 +25,11 @@ import asyncio
 from ptsandbox import Sandbox, SandboxKey
 
 async def main():
-    sandbox = Sandbox(...)
-    await sandbox.ui.authorize()
+    async with Sandbox(...) as sandbox:
+        await sandbox.ui.authorize()
 
-    cluster = await sandbox.ui.get_system_cluster_status()
-    print(cluster)
+        cluster = await sandbox.ui.get_system_cluster_status()
+        print(cluster)
 
 asyncio.run(main())
 ```
@@ -43,11 +43,11 @@ import asyncio
 from ptsandbox import Sandbox, SandboxKey
 
 async def main():
-    sandbox = Sandbox(...)
-    await sandbox.ui.authorize()
+    async with Sandbox(...) as sandbox:
+        await sandbox.ui.authorize()
 
-    components = await sandbox.ui.get_system_components_status()
-    print(components)
+        components = await sandbox.ui.get_system_components_status()
+        print(components)
 
 asyncio.run(main())
 ```
@@ -63,11 +63,11 @@ import asyncio
 from ptsandbox import Sandbox, SandboxKey
 
 async def main():
-    sandbox = Sandbox(...)
-    await sandbox.ui.authorize()
+    async with Sandbox(...) as sandbox:
+        await sandbox.ui.authorize()
 
-    settings = await sandbox.ui.get_system_settings()
-    print(settings)
+        settings = await sandbox.ui.get_system_settings()
+        print(settings)
 
 asyncio.run(main())
 ```
@@ -82,16 +82,16 @@ from ptsandbox import Sandbox, SandboxKey
 from ptsandbox.models import SandboxUpdateSystemSettingsRequest
 
 async def main():
-    sandbox = Sandbox(...)
-    await sandbox.ui.authorize()
+    async with Sandbox(...) as sandbox:
+        await sandbox.ui.authorize()
 
-    await sandbox.ui.update_system_settings(
-        SandboxUpdateSystemSettingsRequest(
-            quarantine=SandboxUpdateSystemSettingsRequest.Quarantine(
-                retention_period=30000,
+        await sandbox.ui.update_system_settings(
+            SandboxUpdateSystemSettingsRequest(
+                quarantine=SandboxUpdateSystemSettingsRequest.Quarantine(
+                    retention_period=30000,
+                )
             )
         )
-    )
 
 asyncio.run(main())
 ```
@@ -105,11 +105,11 @@ import asyncio
 from ptsandbox import Sandbox, SandboxKey
 
 async def main():
-    sandbox = Sandbox(...)
-    await sandbox.ui.authorize()
+    async with Sandbox(...) as sandbox:
+        await sandbox.ui.authorize()
 
-    version = await sandbox.ui.get_system_version()
-    print(version)
+        version = await sandbox.ui.get_system_version()
+        print(version)
 
 asyncio.run(main())
 ```
@@ -124,12 +124,12 @@ import asyncio
 from ptsandbox import Sandbox, SandboxKey
 
 async def main():
-    sandbox = Sandbox(...)
-    await sandbox.ui.authorize()
+    async with Sandbox(...) as sandbox:
+        await sandbox.ui.authorize()
 
-    async with aiofiles.open("logs.zip", "wb") as fd:
-        async for chunk in sandbox.ui.get_system_logs(): # (1)!
-            await fd.write(chunk)
+        async with aiofiles.open("logs.zip", "wb") as fd:
+            async for chunk in sandbox.ui.get_system_logs(): # (1)!
+                await fd.write(chunk)
 
 asyncio.run(main())
 ```

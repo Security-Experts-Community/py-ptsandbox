@@ -5,11 +5,11 @@ import asyncio
 from ptsandbox import Sandbox, SandboxKey
 
 async def main():
-    sandbox = Sandbox(...)
-    await sandbox.ui.authorize()
+    async with Sandbox(...) as sandbox:
+        await sandbox.ui.authorize()
 
-    engines = await sandbox.ui.get_av_engines()
-    print(engines)
+        engines = await sandbox.ui.get_av_engines()
+        print(engines)
 
 asyncio.run(main())
 ```
@@ -23,11 +23,11 @@ import asyncio
 from ptsandbox import Sandbox, SandboxKey
 
 async def main():
-    sandbox = Sandbox(...)
-    await sandbox.ui.authorize()
+    async with Sandbox(...) as sandbox:
+        await sandbox.ui.authorize()
 
-    engine = await sandbox.ui.get_av_engine("clamav")
-    print(engine)
+        engine = await sandbox.ui.get_av_engine("clamav")
+        print(engine)
 
 asyncio.run(main())
 ```
@@ -41,11 +41,11 @@ import asyncio
 from ptsandbox import Sandbox, SandboxKey
 
 async def main():
-    sandbox = Sandbox(...)
-    await sandbox.ui.authorize()
+    async with Sandbox(...) as sandbox:
+        await sandbox.ui.authorize()
 
-    packs = await sandbox.ui.get_av_distribution_packs()
-    print(packs)
+        packs = await sandbox.ui.get_av_distribution_packs()
+        print(packs)
 
 asyncio.run(main())
 ```

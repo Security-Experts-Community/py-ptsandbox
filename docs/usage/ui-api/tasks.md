@@ -7,11 +7,11 @@ import asyncio
 from ptsandbox import Sandbox, SandboxKey
 
 async def main():
-    sandbox = Sandbox(...)
-    await sandbox.ui.authorize()
+    async with Sandbox(...) as sandbox:
+        await sandbox.ui.authorize()
 
-    tasks = await sandbox.ui.get_tasks()
-    print(tasks)
+        tasks = await sandbox.ui.get_tasks()
+        print(tasks)
 
 asyncio.run(main())
 ```
@@ -26,12 +26,12 @@ import aiofiles
 from ptsandbox import Sandbox, SandboxKey
 
 async def main():
-    sandbox = Sandbox(...)
-    await sandbox.ui.authorize()
+    async with Sandbox(...) as sandbox:
+        await sandbox.ui.authorize()
 
-    async with aiofiles.open("./tasks.csv", "wb") as fd:
-        async for chunk in sandbox.ui.get_tasks_csv():
-            await fd.write(chunk)
+        async with aiofiles.open("./tasks.csv", "wb") as fd:
+            async for chunk in sandbox.ui.get_tasks_csv():
+                await fd.write(chunk)
 
 asyncio.run(main())
 ```
@@ -45,11 +45,11 @@ import asyncio
 from ptsandbox import Sandbox, SandboxKey
 
 async def main():
-    sandbox = Sandbox(...)
-    await sandbox.ui.authorize()
+    async with Sandbox(...) as sandbox:
+        await sandbox.ui.authorize()
 
-    values = await sandbox.ui.get_tasks_filter_values()
-    print(values)
+        values = await sandbox.ui.get_tasks_filter_values()
+        print(values)
 
 asyncio.run(main())
 ```
@@ -66,11 +66,11 @@ from uuid import UUID
 from ptsandbox import Sandbox, SandboxKey
 
 async def main():
-    sandbox = Sandbox(...)
-    await sandbox.ui.authorize()
+    async with Sandbox(...) as sandbox:
+        await sandbox.ui.authorize()
 
-    summary = await sandbox.ui.get_task_summary(UUID("..."))
-    print(summary)
+        summary = await sandbox.ui.get_task_summary(UUID("..."))
+        print(summary)
 
 asyncio.run(main())
 ```
@@ -85,11 +85,11 @@ from uuid import UUID
 from ptsandbox import Sandbox, SandboxKey
 
 async def main():
-    sandbox = Sandbox(...)
-    await sandbox.ui.authorize()
+    async with Sandbox(...) as sandbox:
+        await sandbox.ui.authorize()
 
-    summary = await sandbox.ui.get_task_tree(UUID("..."))
-    print(summary)
+        summary = await sandbox.ui.get_task_tree(UUID("..."))
+        print(summary)
 
 asyncio.run(main())
 ```
@@ -105,12 +105,12 @@ from uuid import UUID
 from ptsandbox import Sandbox, SandboxKey
 
 async def main():
-    sandbox = Sandbox(...)
-    await sandbox.ui.authorize()
+    async with Sandbox(...) as sandbox:
+        await sandbox.ui.authorize()
 
-    async with aiofiles.open("artifacts.zip", "wb") as fd:
-        async for chunk in sandbox.ui.get_task_artifacts(UUID("...")):
-            await fd.write(chunk)
+        async with aiofiles.open("artifacts.zip", "wb") as fd:
+            async for chunk in sandbox.ui.get_task_artifacts(UUID("...")):
+                await fd.write(chunk)
 
 asyncio.run(main())
 ```
@@ -125,13 +125,13 @@ from uuid import UUID
 from ptsandbox import Sandbox, SandboxKey
 
 async def main():
-    sandbox = Sandbox(...)
-    await sandbox.ui.authorize()
+    async with Sandbox(...) as sandbox:
+        await sandbox.ui.authorize()
 
-    scan_id = UUID("...")
-    tree = await sandbox.ui.get_task_tree(scan_id)
-    for children in tree.children:
-        scan = await sandbox.ui.get_task_artifact_scans(scan_id, children.node_id)
+        scan_id = UUID("...")
+        tree = await sandbox.ui.get_task_tree(scan_id)
+        for children in tree.children:
+            scan = await sandbox.ui.get_task_artifact_scans(scan_id, children.node_id)
 
 asyncio.run(main())
 ```

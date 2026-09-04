@@ -62,7 +62,7 @@ class EntryPointsMixin(BaseSandboxClient):
 
         Args:
             parameters:
-                Parameters for request
+                Parameters for the request
 
         Raises:
             SandboxException: if not authorized or token refresh fails
@@ -146,7 +146,7 @@ class EntryPointsMixin(BaseSandboxClient):
             limit:
                 Limit on the number of records to be returned
             offset:
-                The offset of the returned records. If the next Cursor is specified, the offset from the cursor is
+                The offset of the returned records. If the next cursor is specified, the offset is counted from the cursor.
             utc_offset_seconds:
                 The offset of the user's time from UTC, which will be used for the time in QL queries
 

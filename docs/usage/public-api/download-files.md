@@ -4,11 +4,10 @@ You can download files from the sandbox using a `sha256` hash.
 from ptsandbox import Sandbox, SandboxKey
 
 async def example() -> None:
-    sandbox = Sandbox(key=SandboxKey(...))
-
-    data = await sandbox.get_file("...")
-    with open("./file", "wb") as fd:
-        fd.write(data)
+    async with Sandbox(key=SandboxKey(...)) as sandbox:
+        data = await sandbox.get_file("...")
+        with open("./file", "wb") as fd:
+            fd.write(data)
 ```
 
 Use streaming if you don't want to load the entire file into memory:
@@ -18,11 +17,10 @@ import aiofiles
 from ptsandbox import Sandbox, SandboxKey
 
 async def example() -> None:
-    sandbox = Sandbox(key=SandboxKey(...))
-
-    async with aiofiles.open("./file", "wb") as fd:
-        async for chunk in sandbox.get_file_stream("..."):
-            await fd.write(chunk)
+    async with Sandbox(key=SandboxKey(...)) as sandbox:
+        async with aiofiles.open("./file", "wb") as fd:
+            async for chunk in sandbox.get_file_stream("..."):
+                await fd.write(chunk)
 
 ```
 
@@ -37,14 +35,13 @@ Under the hood, `Sandbox.get_file` uses `download_artifact` with a `sha256:<hash
 ```py title="Direct API usage"
 from ptsandbox import Sandbox, SandboxKey
 
-sandbox = Sandbox(SandboxKey(...))
+async with Sandbox(SandboxKey(...)) as sandbox:
+    # Download as bytes
+    data = await sandbox.api.download_artifact("sha256:abc123...")
 
-# Download as bytes
-data = await sandbox.api.download_artifact("sha256:abc123...")
-
-# Or stream to avoid loading into memory
-async for chunk in sandbox.api.download_artifact_stream("sha256:abc123..."):
-    ...
+    # Or stream to avoid loading into memory
+    async for chunk in sandbox.api.download_artifact_stream("sha256:abc123..."):
+        ...
 ```
 
 ::: ptsandbox.sandbox.api._storage.StorageMixin.download_artifact
@@ -80,14 +77,17 @@ async for chunk in sandbox.api.download_artifact_stream("sha256:abc123..."):
 
 
     async def main(task_id: UUID) -> None:
-        sandbox = Sandbox(
+        async with Sandbox(
             key=SandboxKey(
                 name="test-key-1",
                 key="<TOKEN_FROM_SANDBOX>",
                 host="10.10.10.10",
             ),
-        )
+        ) as sandbox:
+            await download_artifacts(sandbox, task_id)
 
+
+    async def download_artifacts(sandbox: Sandbox, task_id: UUID) -> None:
         result = await sandbox.get_report(task_id)
         if (report := result.get_long_report()) is None:
             print("Can't get full report")
@@ -141,12 +141,11 @@ To download all files from a task, you first need the full report which contains
 from uuid import UUID
 from ptsandbox import Sandbox, SandboxKey
 
-sandbox = Sandbox(SandboxKey(...))
-
-report = await sandbox.get_report(UUID("..."))
-if (long_report := report.get_long_report()) is not None:
-    for artifact in long_report.artifacts:
-        print(artifact)
+async with Sandbox(SandboxKey(...)) as sandbox:
+    report = await sandbox.get_report(UUID("..."))
+    if (long_report := report.get_long_report()) is not None:
+        for artifact in long_report.artifacts:
+            print(artifact)
 ```
 
 ::: ptsandbox.sandbox.sandbox.Sandbox.get_report

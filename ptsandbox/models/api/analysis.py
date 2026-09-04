@@ -211,7 +211,7 @@ class SandboxBaseOptions(BaseRequest):
 
     analysis_duration: int = Field(default=120, ge=10)
     """
-    The duration of analysis the file in seconds. minimum: 10
+    The duration of analysis of the file in seconds. minimum: 10
     """
 
     bootkitmon: bool = False
@@ -244,7 +244,7 @@ class SandboxOptions(SandboxBaseOptions):
     """
     Parameters of behavioral analysis.
 
-    In the absence, the source parameters are used for analysis, which are set in the system by default.
+    If not specified, the source parameters set by default in the system are used for analysis.
     """
 
     enabled: bool = True
@@ -270,7 +270,7 @@ class SandboxOptionsAdvanced(SandboxBaseOptions):
     """
     Run an advanced analysis of the uploaded file in the VM without unpacking.
 
-    Provides an opportunity to fine-tuning.
+    Provides an opportunity for fine-tuning.
 
     **The options are in beta, so they may change in the future.**
     """
@@ -465,9 +465,9 @@ class SandboxBaseScanTaskRequest(BaseRequest):
 
         mark_dangerous_files_options: DangerousFilesOptions | None = DangerousFilesOptions()
         """
-        Settings for marking files as dangerous. By default, we send this information because this labels are important.
+        Settings for marking files as dangerous. By default, we send this information because these labels are important.
 
-        You can configure it by passing an object with the necessary options or pass None to disable it
+        You can configure it by passing an object with the necessary options, or pass `None` to disable it
         """
 
         sandbox: SandboxOptions = SandboxOptions()
@@ -479,7 +479,7 @@ class SandboxBaseScanTaskRequest(BaseRequest):
     """
     The name of the file to be checked, which will be displayed in the sandbox web interface.
 
-    If not specified, the hash value of the file is calculated using the SHA—256 algorithm.
+    If not specified, the hash value of the file is calculated using the SHA-256 algorithm.
     """
 
     short_result: bool = False
@@ -493,7 +493,7 @@ class SandboxBaseScanTaskRequest(BaseRequest):
     """
     Return only the scan_id.
 
-    Enabling this option may be usefull to send async requests for file checking.
+    Enabling this option may be useful to send async requests for file checking.
 
     You can receive full report in a separate request.
     """

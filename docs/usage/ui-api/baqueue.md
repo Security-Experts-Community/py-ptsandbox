@@ -7,12 +7,12 @@ import asyncio
 from ptsandbox import Sandbox, SandboxKey
 
 async def main():
-    sandbox = Sandbox(...)
-    await sandbox.ui.authorize()
+    async with Sandbox(...) as sandbox:
+        await sandbox.ui.authorize()
 
-    baqueue = await sandbox.ui.get_baqueue_tasks()
-    for task in baqueue.tasks:
-        print(task.object_name, task.state)
+        baqueue = await sandbox.ui.get_baqueue_tasks()
+        for task in baqueue.tasks:
+            print(task.object_name, task.state)
 
 asyncio.run(main())
 ```

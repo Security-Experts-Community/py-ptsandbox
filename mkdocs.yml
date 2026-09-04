@@ -88,29 +88,30 @@ markdown_extensions:
 nav:
   - Overview: index.md
   - Usage:
-    - Proxy: usage/proxy.md
-    - Public API:
-      - Scanning:
-          - Scan: usage/public-api/scanning/scan.md
-          - Rescan: usage/public-api/scanning/rescan.md
-          - Debug Options: usage/public-api/scanning/debug-options.md
-          - Sources: usage/public-api/scanning/source.md
-      - Get available images: usage/public-api/image-info.md
-      - Extract email headers: usage/public-api/email.md
-      - Download files: usage/public-api/download-files.md
-      - System info: usage/public-api/system.md
-      - Tasks: usage/public-api/tasks.md
-    - UI API:
-      - Authorization: usage/ui-api/authorization.md
-      - API Tokens: usage/ui-api/api-tokens.md
-      - Antiviruses: usage/ui-api/antiviruses.md
-      - Artifacts: usage/ui-api/artifacts.md
-      - BAqueue: usage/ui-api/baqueue.md
-      - Download files: usage/ui-api/download-files.md
-      - Entry Points: usage/ui-api/entry-points.md
-      - License: usage/ui-api/license.md
-      - System: usage/ui-api/system.md
-      - Tasks: usage/ui-api/tasks.md
+      - Proxy: usage/proxy.md
+      - Detections: usage/detections.md
+      - Public API:
+          - Scanning:
+              - Scan: usage/public-api/scanning/scan.md
+              - Rescan: usage/public-api/scanning/rescan.md
+              - Debug Options: usage/public-api/scanning/debug-options.md
+              - Sources: usage/public-api/scanning/source.md
+          - Get available images: usage/public-api/image-info.md
+          - Extract email headers: usage/public-api/email.md
+          - Download files: usage/public-api/download-files.md
+          - System info: usage/public-api/system.md
+          - Tasks: usage/public-api/tasks.md
+      - UI API:
+          - Authorization: usage/ui-api/authorization.md
+          - API Tokens: usage/ui-api/api-tokens.md
+          - Antiviruses: usage/ui-api/antiviruses.md
+          - Artifacts: usage/ui-api/artifacts.md
+          - BAqueue: usage/ui-api/baqueue.md
+          - Download files: usage/ui-api/download-files.md
+          - Entry Points: usage/ui-api/entry-points.md
+          - License: usage/ui-api/license.md
+          - System: usage/ui-api/system.md
+          - Tasks: usage/ui-api/tasks.md
   - API Reference:
       - ptsandbox: api-reference/ptsandbox.md
       - ptsandbox.exceptions: api-reference/exceptions.md

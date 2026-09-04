@@ -5,10 +5,10 @@ from ptsandbox import Sandbox, SandboxKey
 
 async def example() -> None:
     key = SandboxKey(...)
-    sandbox = Sandbox(key)
 
-    images = await sandbox.get_images()
-    print(images)
+    async with Sandbox(key) as sandbox:
+        images = await sandbox.get_images()
+        print(images)
 ```
 
 !!! example "Example output"

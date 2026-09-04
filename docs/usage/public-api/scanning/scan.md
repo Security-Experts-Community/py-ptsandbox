@@ -2,7 +2,7 @@
 
 Regular scanning sends files to the sandbox without fine-tuning the settings.
 
-```py title="Code example" hl_lines="17-25"
+```py title="Code example" hl_lines="16-27"
 import asyncio
 from pathlib import Path
 
@@ -17,27 +17,26 @@ async def main():
         host="10.10.10.10",
     )
 
-    sandbox = Sandbox(key)
+    async with Sandbox(key) as sandbox:
+        task = await sandbox.create_scan(
+            Path("./example.py"),
+            options=SandboxBaseScanTaskRequest.Options(
+                sandbox=SandboxOptions(
+                    image_id="ubuntu-jammy-x64",
+                    analysis_duration=30,
+                )
+            ),
+        )
 
-    task = await sandbox.create_scan(
-        Path("./example.py"),
-        options=SandboxBaseScanTaskRequest.Options(
-            sandbox=SandboxOptions(
-                image_id="ubuntu-jammy-x64",
-                analysis_duration=30,
-            )
-        ),
-    )
-
-    result = await sandbox.wait_for_report(task)
-    if (report := result.get_long_report()) is not None:
-        print(report.result.verdict)
+        result = await sandbox.wait_for_report(task)
+        if (report := result.get_long_report()) is not None:
+            print(report.result.verdict)
 
 
 asyncio.run(main())
 ```
 
-!!! example "Usecase"
+!!! example "Use case"
 
     This is useful when you need to send a file for analysis with a minimum number of options.
 
@@ -53,20 +52,19 @@ from pathlib import Path
 from ptsandbox import Sandbox, SandboxKey
 from ptsandbox.models import SandboxScanTaskRequest, SandboxOptions
 
-sandbox = Sandbox(SandboxKey(...))
+async with Sandbox(SandboxKey(...)) as sandbox:
+    # Step 1: upload the file
+    uploaded = await sandbox.api.upload_file(Path("./example.py"))
 
-# Step 1: upload the file
-uploaded = await sandbox.api.upload_file(Path("./example.py"))
-
-# Step 2: create the scan task
-scan = SandboxScanTaskRequest(
-    file_uri=uploaded.data.file_uri,
-    file_name="example.py",
-    short_result=False,
-    async_result=True,
-    priority=3,
-)
-task = await sandbox.api.create_scan(scan)
+    # Step 2: create the scan task
+    scan = SandboxScanTaskRequest(
+        file_uri=uploaded.data.file_uri,
+        file_name="example.py",
+        short_result=False,
+        async_result=True,
+        priority=3,
+    )
+    task = await sandbox.api.create_scan(scan)
 ```
 
 ::: ptsandbox.sandbox.api._storage.StorageMixin.upload_file
@@ -83,7 +81,7 @@ Options for configuring analysis parameters. You can set the scan image, custom 
 
 You can also scan URLs. The sandbox downloads the file from the URL and analyzes it.
 
-```py title="Code example" hl_lines="16-24"
+```py title="Code example" hl_lines="15-26"
 import asyncio
 
 from ptsandbox import Sandbox, SandboxKey
@@ -97,21 +95,20 @@ async def main():
         host="10.10.10.10",
     )
 
-    sandbox = Sandbox(key)
+    async with Sandbox(key) as sandbox:
+        task = await sandbox.create_url_scan(
+            "http://malware.com/malicious-file",
+            options=SandboxScanURLTaskRequest.Options(
+                sandbox=SandboxOptions(
+                    image_id="ubuntu-jammy-x64",
+                    analysis_duration=30,
+                )
+            ),
+        )
 
-    task = await sandbox.create_url_scan(
-        "http://malware.com/malicious-file",
-        options=SandboxScanURLTaskRequest.Options(
-            sandbox=SandboxOptions(
-                image_id="ubuntu-jammy-x64",
-                analysis_duration=30,
-            )
-        ),
-    )
-
-    result = await sandbox.wait_for_report(task)
-    if (report := result.get_long_report()) is not None:
-        print(report.result.verdict)
+        result = await sandbox.wait_for_report(task)
+        if (report := result.get_long_report()) is not None:
+            print(report.result.verdict)
 
 
 asyncio.run(main())
@@ -125,7 +122,7 @@ asyncio.run(main())
 
 Use advanced scanning when you need to fine-tune launch parameters or upload additional files alongside the sample.
 
-```py title="Code example" hl_lines="17-25"
+```py title="Code example" hl_lines="16-27"
 import asyncio
 from pathlib import Path
 
@@ -140,21 +137,20 @@ async def main():
         host="10.10.10.10",
     )
 
-    sandbox = Sandbox(key)
+    async with Sandbox(key) as sandbox:
+        task = await sandbox.create_advanced_scan(
+            Path("./example.elf"),
+            extra_files=[Path("./file.txt"), Path("./file.sh")], # (1)!
+            sandbox=SandboxOptionsAdvanced( # (2)!
+                image_id="ubuntu-jammy-x64",
+                analysis_duration=30,
+                disable_clicker=True,
+            ),
+        )
 
-    task = await sandbox.create_advanced_scan(
-        Path("./example.elf"),
-        extra_files=[Path("./file.txt"), Path("./file.sh")], # (1)!
-        sandbox=SandboxOptionsAdvanced( # (2)!
-            image_id="ubuntu-jammy-x64",
-            analysis_duration=30,
-            disable_clicker=True,
-        ),
-    )
-
-    result = await sandbox.wait_for_report(task)
-    if (report := result.get_long_report()) is not None:
-        print(report.result.verdict)
+        result = await sandbox.wait_for_report(task)
+        if (report := result.get_long_report()) is not None:
+            print(report.result.verdict)
 
 
 asyncio.run(main())
@@ -214,6 +210,30 @@ if (report := result.get_long_report()) is not None:
     If the scan reached a terminal state but no full report ever arrives within
     `wait_time`, `wait_for_report` raises `SandboxScanNotFullException`; otherwise it
     waits the full `wait_time` and raises `SandboxWaitTimeoutException`.
+
+```py title="Handling errors"
+from ptsandbox.exceptions import (
+    SandboxScanNotFullException,
+    SandboxTooManyErrorsException,
+    SandboxWaitTimeoutException,
+)
+
+try:
+    result = await sandbox.wait_for_report(task, wait_time=120)
+except SandboxScanNotFullException as e:
+    # The scan finished, but no full report is available.
+    # The terminal state and scan errors are attached to the exception.
+    print(e.scan_id, e.scan_state, e.errors)
+except SandboxWaitTimeoutException:
+    # The scan did not finish within wait_time — it may still be running.
+    print("timed out")
+except SandboxTooManyErrorsException:
+    # Too many consecutive polling errors (see error_limit).
+    print("too many errors")
+else:
+    if (report := result.get_long_report()) is not None:
+        print(report.result.verdict)
+```
 
 !!! tip "Calculating wait_time"
 

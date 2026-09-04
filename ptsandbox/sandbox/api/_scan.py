@@ -24,7 +24,7 @@ class ScanMixin(BaseSandboxClient):
         read_timeout: int = 240,
     ) -> SandboxBaseTaskResponse:
         """
-        Send file to the sandbox with source settings
+        Send a file to the sandbox with source settings
 
         Args:
             file:
@@ -60,7 +60,7 @@ class ScanMixin(BaseSandboxClient):
         read_timeout: int = 240,
     ) -> SandboxBaseTaskResponse:
         """
-        Send url to the sandbox with source settings
+        Send the URL to the sandbox with source settings
 
         Args:
             data:
