@@ -1482,13 +1482,14 @@ wheels = [
 
 [[package]]
 name = "ptsandbox"
-version = "5.1.5"
+version = "5.1.6"
 source = { editable = "." }
 dependencies = [
     { name = "aiohttp" },
     { name = "aiohttp-socks" },
     { name = "orjson" },
     { name = "pydantic" },
+    { name = "typing-extensions", marker = "python_full_version < '3.12'" },
 ]
 
 [package.dev-dependencies]
@@ -1516,6 +1517,7 @@ requires-dist = [
     { name = "aiohttp-socks", specifier = ">=0.12.0" },
     { name = "orjson", specifier = ">=3.11.9" },
     { name = "pydantic", specifier = ">=2.13.4" },
+    { name = "typing-extensions", marker = "python_full_version < '3.12'", specifier = ">=4.12" },
 ]
 
 [package.metadata.requires-dev]

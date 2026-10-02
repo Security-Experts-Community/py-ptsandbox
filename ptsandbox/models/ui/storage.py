@@ -1,6 +1,12 @@
 from __future__ import annotations
 
-from typing import NotRequired, TypedDict
+import sys
+from typing import NotRequired
+
+if sys.version_info < (3, 12):
+    from typing_extensions import TypedDict
+else:
+    from typing import TypedDict
 
 
 class StorageItem(TypedDict):

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import functools
 import inspect
 from collections.abc import AsyncIterator, Awaitable, Callable
@@ -25,7 +27,7 @@ def token_required(func: Callable[..., Any]) -> Callable[..., Any]:
 
         @functools.wraps(func)
         # idk how to fix mypy complains about next line
-        def wrapper_iter(self: "SandboxUI", *args: P.args, **kwargs: P.kwargs) -> Any:  # type: ignore
+        def wrapper_iter(self: SandboxUI, *args: P.args, **kwargs: P.kwargs) -> Any:  # type: ignore
             async def inner() -> Any:
                 await self._ensure_token()
                 async for chunk in func(self, *args, **kwargs):
@@ -38,7 +40,7 @@ def token_required(func: Callable[..., Any]) -> Callable[..., Any]:
 
         @functools.wraps(func)
         # idk how to fix mypy complains about next line
-        async def wrapper(self: "SandboxUI", *args: P.args, **kwargs: P.kwargs) -> Any:  # type: ignore
+        async def wrapper(self: SandboxUI, *args: P.args, **kwargs: P.kwargs) -> Any:  # type: ignore
             await self._ensure_token()
             return await func(self, *args, **kwargs)
 

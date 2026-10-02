@@ -1,7 +1,13 @@
 from __future__ import annotations
 
-from typing import NotRequired, TypedDict
+import sys
+from typing import NotRequired
 from uuid import UUID
+
+if sys.version_info < (3, 12):
+    from typing_extensions import TypedDict
+else:
+    from typing import TypedDict
 
 from pydantic import BaseModel, Field
 
