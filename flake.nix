@@ -19,7 +19,7 @@
     flake-utils,
     ...
   }:
-    flake-utils.lib.eachDefaultSystem (
+    flake-utils.lib.eachSystem (nixpkgs.lib.remove "x86_64-darwin" flake-utils.lib.defaultSystems) (
       system: let
         pkgs = nixpkgs.legacyPackages.${system};
 
