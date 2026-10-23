@@ -53,8 +53,8 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 # Install dependencies
 uv sync --all-groups
 
-# Install pre-commit hooks
-uv run pre-commit install
+# Install git hooks (prek)
+uv run prek install
 ```
 
 ### Code Style

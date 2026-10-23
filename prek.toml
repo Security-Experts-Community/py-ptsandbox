@@ -1,0 +1,37 @@
+# Configuration file for `prek`, a git hook framework written in Rust.
+# See https://prek.j178.dev for more information.
+#:schema https://www.schemastore.org/prek.json
+
+default_language_version = { python = "python3" }
+
+[[repos]]
+repo = "https://github.com/astral-sh/ruff-pre-commit"
+rev = "v0.16.1"
+hooks = [
+  {
+    id = "ruff-check",
+    files = '^ptsandbox/.*\.py$'
+  },
+  {
+    id = "ruff-format",
+    files = '^ptsandbox/.*\.py$'
+  }
+]
+
+[[repos]]
+repo = "https://github.com/pre-commit/mirrors-mypy"
+rev = "v2.3.0"
+hooks = [
+  {
+    id = "mypy",
+    args = ["--ignore-missing-imports"],
+    additional_dependencies = [
+      "pydantic",
+      "aiohttp",
+      "aiohttp-socks",
+      "orjson"
+    ],
+    files = '^ptsandbox/.*\.py$',
+    verbose = true
+  }
+]

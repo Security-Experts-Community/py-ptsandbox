@@ -114,6 +114,7 @@ dev = [
     "memray>=1.19.3",
     "psutil>=7.2.2",
     "pytest-cov>=7.1.0",
+    "prek==0.5.7",
 ]
 docs = [
     "mkdocs>=1.6.1,<2",
