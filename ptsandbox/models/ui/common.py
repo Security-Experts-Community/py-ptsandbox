@@ -548,7 +548,7 @@ class SMTPDefaultRecord(BaseModel):
     SMTP connection settings
     """
 
-    class Config(BaseModel):
+    class SMTPConfig(BaseModel):
         class Credential(BaseModel):
             login: str
             password: str
@@ -565,7 +565,7 @@ class SMTPDefaultRecord(BaseModel):
         timeout: Timeout | None = None
         credential: Credential | None = None
 
-    config: Config
+    config: SMTPConfig
 
     priority: int
     """
