@@ -3148,6 +3148,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#ptsandbox.models.SandboxModel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SandboxModel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#ptsandbox.models.Artifact" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -13081,6 +13092,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#ptsandbox.models.SandboxModel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SandboxModel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#ptsandbox.models.Artifact" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -21863,7 +21885,9 @@ without filtering at the level of correlation rules</p>
   </span>
 
 </h4>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">sandbox</span><span class="p">:</span> <span class="n">SandboxOptionsAdvanced</span> <span class="o">=</span> <span class="n">SandboxOptionsAdvanced</span><span class="p">()</span>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">sandbox</span><span class="p">:</span> <span class="n">SandboxOptionsAdvanced</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="n">default_factory</span><span class="o">=</span><span class="n">SandboxOptionsAdvanced</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="p">)</span>
 </span></code></pre></div>
 
     <div class="doc doc-contents ">
@@ -22310,7 +22334,7 @@ without filtering at the level of correlation rules</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -22557,7 +22581,7 @@ or the decompression level of compressed files.</p>
 </h5>
 <div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">mark_dangerous_files_options</span><span class="p">:</span> <span class="p">(</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="n">DangerousFilesOptions</span> <span class="o">|</span> <span class="kc">None</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="p">)</span> <span class="o">=</span> <span class="n">DangerousFilesOptions</span><span class="p">()</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="p">)</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">DangerousFilesOptions</span><span class="p">)</span>
 </span></code></pre></div>
 
     <div class="doc doc-contents ">
@@ -22583,7 +22607,9 @@ or the decompression level of compressed files.</p>
   </span>
 
 </h5>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">sandbox</span><span class="p">:</span> <span class="n">SandboxOptions</span> <span class="o">=</span> <span class="n">SandboxOptions</span><span class="p">()</span>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">sandbox</span><span class="p">:</span> <span class="n">SandboxOptions</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="n">default_factory</span><span class="o">=</span><span class="n">SandboxOptions</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="p">)</span>
 </span></code></pre></div>
 
     <div class="doc doc-contents ">
@@ -22608,7 +22634,7 @@ or the decompression level of compressed files.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>Settings for marking files as suspicious</p>
@@ -23053,7 +23079,7 @@ or the decompression level of compressed files.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>Settings for marking files as dangerous</p>
@@ -23204,7 +23230,7 @@ or the decompression level of compressed files.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -23522,7 +23548,7 @@ will be returned for scanning with multiple stages (for example, static + BA).</
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -23920,7 +23946,7 @@ will be returned for scanning with multiple stages (for example, static + BA).</
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>An additional file to be placed next to the sample</p>
@@ -24134,7 +24160,7 @@ will be returned for scanning with multiple stages (for example, static + BA).</
   </span>
 
 </h4>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">options</span><span class="p">:</span> <span class="n">Options</span> <span class="o">=</span> <span class="n">Options</span><span class="p">()</span>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">options</span><span class="p">:</span> <span class="n">Options</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">Options</span><span class="p">)</span>
 </span></code></pre></div>
 
     <div class="doc doc-contents ">
@@ -24229,7 +24255,7 @@ will be returned for scanning with multiple stages (for example, static + BA).</
   </span>
 
 </h4>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">options</span><span class="p">:</span> <span class="n">Options</span> <span class="o">=</span> <span class="n">Options</span><span class="p">()</span>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">options</span><span class="p">:</span> <span class="n">Options</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">Options</span><span class="p">)</span>
 </span></code></pre></div>
 
     <div class="doc doc-contents ">
@@ -24324,7 +24350,7 @@ will be returned for scanning with multiple stages (for example, static + BA).</
   </span>
 
 </h4>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">options</span><span class="p">:</span> <span class="n">Options</span> <span class="o">=</span> <span class="n">Options</span><span class="p">()</span>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">options</span><span class="p">:</span> <span class="n">Options</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">Options</span><span class="p">)</span>
 </span></code></pre></div>
 
     <div class="doc doc-contents ">
@@ -24358,7 +24384,7 @@ will be returned for scanning with multiple stages (for example, static + BA).</
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -24417,7 +24443,7 @@ will be returned for scanning with multiple stages (for example, static + BA).</
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>Brief information on the scan</p>
@@ -24715,7 +24741,7 @@ will be returned for scanning with multiple stages (for example, static + BA).</
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>Abstraction over the key that is used to send to the sandbox</p>
@@ -25017,7 +25043,7 @@ will be returned for scanning with multiple stages (for example, static + BA).</
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -25129,7 +25155,7 @@ will be returned for scanning with multiple stages (for example, static + BA).</
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -25447,7 +25473,7 @@ will be returned for scanning with multiple stages (for example, static + BA).</
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -25548,7 +25574,7 @@ If the analysis has not been started during this time, the file will be deleted.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>The base class for all Request models related to the sandbox.</p>
@@ -25606,7 +25632,7 @@ because the API rejects requests containing <code>null</code> values.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>The base class for all Response models related to the sandbox.</p>
@@ -25653,6 +25679,54 @@ because the API rejects requests containing <code>null</code> values.</p>
 
 
 
+<h3 id="ptsandbox.models.SandboxModel" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">SandboxModel</span>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+
+
+        <p>The base class for all models of the library.</p>
+<p>Validation schemas are built on first use rather than at import time:
+there are well over a hundred models and most programs use only a few of them,
+so building all the schemas eagerly noticeably slows down <code>import ptsandbox</code>.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
 <h3 id="ptsandbox.models.Artifact" class="doc doc-heading">
             <span class="doc doc-object-name doc-class-name">Artifact</span>
 
@@ -25662,7 +25736,7 @@ because the API rejects requests containing <code>null</code> values.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>A file, email, or other object</p>
@@ -25847,7 +25921,7 @@ because the API rejects requests containing <code>null</code> values.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>Information about the scanned file</p>
@@ -26080,7 +26154,7 @@ archive itself, this value is empty.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>The type of the nested object depends on the type value.</p>
@@ -26116,7 +26190,7 @@ archive itself, this value is empty.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>It is filled in for process memory dumps.</p>
@@ -26276,7 +26350,7 @@ archive itself, this value is empty.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -26484,7 +26558,7 @@ archive itself, this value is empty.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -26543,7 +26617,7 @@ archive itself, this value is empty.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>Detailed information about behavioral analysis (if enabled)</p>
@@ -26781,7 +26855,7 @@ archive itself, this value is empty.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>The result of a single scan stage with bootkitmon</p>
@@ -27059,7 +27133,7 @@ It is necessary for tasks with multiple sandbox images</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>Detected malware</p>
@@ -27152,7 +27226,7 @@ It is necessary for tasks with multiple sandbox images</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>Filtering a group of files by properties to send to the sandbox for analysis</p>
@@ -27197,7 +27271,7 @@ It is necessary for tasks with multiple sandbox images</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>A copy of network traffic, video recording, event logs, graph, debug files, mail headers.</p>
@@ -27314,7 +27388,7 @@ It is necessary for tasks with multiple sandbox images</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -27405,7 +27479,7 @@ It is necessary for tasks with multiple sandbox images</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>Information about the VM image</p>
@@ -27545,7 +27619,7 @@ It is necessary for tasks with multiple sandbox images</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>Information about the operating system of the virtual machine</p>
@@ -27725,7 +27799,7 @@ It is necessary for tasks with multiple sandbox images</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>File analysis result</p>
@@ -27918,7 +27992,7 @@ It is necessary for tasks with multiple sandbox images</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>The correlation rule</p>
@@ -28861,7 +28935,7 @@ It is necessary for tasks with multiple sandbox images</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -28895,7 +28969,7 @@ It is necessary for tasks with multiple sandbox images</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -28988,7 +29062,7 @@ It is necessary for tasks with multiple sandbox images</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -29081,7 +29155,7 @@ It is necessary for tasks with multiple sandbox images</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -29149,7 +29223,7 @@ It is necessary for tasks with multiple sandbox images</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -29344,7 +29418,7 @@ It is necessary for tasks with multiple sandbox images</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -29405,7 +29479,7 @@ It is necessary for tasks with multiple sandbox images</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -29550,7 +29624,7 @@ It is necessary for tasks with multiple sandbox images</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -29613,7 +29687,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -29950,7 +30024,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>Listing of issues in the BA queue</p>
@@ -30034,7 +30108,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -30886,7 +30960,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>Cluster information</p>
@@ -31072,7 +31146,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -31336,7 +31410,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>System Information: Component versions</p>
@@ -31498,7 +31572,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>Information about correlation</p>
@@ -31673,7 +31747,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>Where did the task come from</p>
@@ -31879,7 +31953,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -31964,7 +32038,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -32144,7 +32218,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -32236,7 +32310,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -32401,7 +32475,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -32559,7 +32633,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -32660,7 +32734,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -32779,7 +32853,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -32871,7 +32945,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -32964,7 +33038,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -33032,7 +33106,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -33151,7 +33225,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -33342,7 +33416,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -33468,7 +33542,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -33584,7 +33658,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -33722,7 +33796,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -33865,7 +33939,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -34005,7 +34079,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>SMTP connection settings</p>
@@ -34074,7 +34148,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -34305,7 +34379,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>The entrypoint to which the api token is linked.</p>
@@ -34408,7 +34482,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>Information about system components</p>
@@ -34444,7 +34518,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -34625,7 +34699,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -34883,7 +34957,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -35917,7 +35991,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -36040,7 +36114,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -36228,7 +36302,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -36392,7 +36466,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -36489,7 +36563,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -38133,7 +38207,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -38167,7 +38241,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -38258,7 +38332,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -38337,7 +38411,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -38588,7 +38662,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>Information about the verification source</p>
@@ -38899,7 +38973,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>Information about the verification source</p>
@@ -39237,7 +39311,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -39399,7 +39473,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -39482,7 +39556,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>Information about the last attempt to update the license</p>
@@ -39602,7 +39676,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -39948,7 +40022,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>Bandwidth by traffic type</p>
@@ -39993,7 +40067,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -40084,7 +40158,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -40223,7 +40297,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>Scan results</p>
@@ -40349,7 +40423,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -40383,7 +40457,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -40450,7 +40524,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -40617,7 +40691,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -40788,7 +40862,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -40980,7 +41054,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -41048,7 +41122,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -41115,7 +41189,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -41185,7 +41259,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -41219,7 +41293,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -41310,7 +41384,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -41344,7 +41418,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -41378,7 +41452,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -41469,7 +41543,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -41589,7 +41663,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -41709,7 +41783,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -41794,7 +41868,7 @@ New engines may appear in future API versions without library updates.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>System events are returned here with information about the current state of the system, i.e. a slice of the current state.</p>
@@ -41924,7 +41998,7 @@ This error should be interpreted roughly as: An error of the "SANDBOX" subsystem
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -42182,7 +42256,7 @@ This error should be interpreted roughly as: An error of the "SANDBOX" subsystem
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -42354,7 +42428,7 @@ This error should be interpreted roughly as: An error of the "SANDBOX" subsystem
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -42530,7 +42604,7 @@ This error should be interpreted roughly as: An error of the "SANDBOX" subsystem
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -42726,7 +42800,7 @@ This error should be interpreted roughly as: An error of the "SANDBOX" subsystem
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -42796,7 +42870,7 @@ This error should be interpreted roughly as: An error of the "SANDBOX" subsystem
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -42863,7 +42937,7 @@ This error should be interpreted roughly as: An error of the "SANDBOX" subsystem
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -42933,7 +43007,7 @@ This error should be interpreted roughly as: An error of the "SANDBOX" subsystem
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -42967,7 +43041,7 @@ This error should be interpreted roughly as: An error of the "SANDBOX" subsystem
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -43001,7 +43075,7 @@ This error should be interpreted roughly as: An error of the "SANDBOX" subsystem
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -43035,7 +43109,7 @@ This error should be interpreted roughly as: An error of the "SANDBOX" subsystem
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -43155,7 +43229,7 @@ This error should be interpreted roughly as: An error of the "SANDBOX" subsystem
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -43282,7 +43356,7 @@ This error should be interpreted roughly as: An error of the "SANDBOX" subsystem
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -43404,7 +43478,7 @@ This error should be interpreted roughly as: An error of the "SANDBOX" subsystem
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>Information about a specific task</p>
@@ -43450,7 +43524,7 @@ This error should be interpreted roughly as: An error of the "SANDBOX" subsystem
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>Tasks listing</p>
@@ -43571,7 +43645,7 @@ Indicates the data after the last record</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -43955,7 +44029,7 @@ so it is on antiviruses and the result of static analysis.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
         <p>Listing of current Public API tokens</p>
@@ -44049,7 +44123,7 @@ so it is on antiviruses and the result of static analysis.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -44416,7 +44490,7 @@ so it is on antiviruses and the result of static analysis.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -44516,7 +44590,7 @@ so it is on antiviruses and the result of static analysis.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -44584,7 +44658,7 @@ so it is on antiviruses and the result of static analysis.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -44958,7 +45032,7 @@ so it is on antiviruses and the result of static analysis.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -45102,7 +45176,7 @@ so it is on antiviruses and the result of static analysis.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -45160,7 +45234,7 @@ so it is on antiviruses and the result of static analysis.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -45288,7 +45362,7 @@ so it is on antiviruses and the result of static analysis.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -45355,7 +45429,7 @@ so it is on antiviruses and the result of static analysis.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -45496,7 +45570,7 @@ so it is on antiviruses and the result of static analysis.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -45636,7 +45710,7 @@ so it is on antiviruses and the result of static analysis.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -45670,7 +45744,7 @@ so it is on antiviruses and the result of static analysis.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -45796,7 +45870,7 @@ so it is on antiviruses and the result of static analysis.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -45913,7 +45987,7 @@ so it is on antiviruses and the result of static analysis.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -46029,7 +46103,7 @@ so it is on antiviruses and the result of static analysis.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 
@@ -46120,7 +46194,7 @@ so it is on antiviruses and the result of static analysis.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="SandboxModel (ptsandbox.models.core.base.SandboxModel)" href="#ptsandbox.models.SandboxModel">SandboxModel</a></code></p>
 
 
 

@@ -1484,7 +1484,7 @@
               (<code><span title="str">str</span> | <span title="pathlib.Path">Path</span> | <span title="bytes">bytes</span> | <span title="typing.BinaryIO">BinaryIO</span></code>)
           –
           <div class="doc-md-description">
-            <p>path to .eml file or just binary data</p>
+            <p>path to .eml file, its content or a binary stream</p>
           </div>
         </li>
     </ul>
@@ -1544,7 +1544,9 @@
   </span>
 
 </h2>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">get_email_headers</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">BinaryIO</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">get_email_headers</span><span class="p">(</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="n">data</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="n">BinaryIO</span><span class="p">,</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span>
 </span></code></pre></div>
 
     <div class="doc doc-contents first">
@@ -1556,10 +1558,10 @@
     <ul>
         <li class="doc-section-item field-body">
             <b><code>data</code></b>
-              (<code><span title="typing.BinaryIO">BinaryIO</span></code>)
+              (<code><span title="str">str</span> | <span title="pathlib.Path">Path</span> | <span title="bytes">bytes</span> | <span title="typing.BinaryIO">BinaryIO</span></code>)
           –
           <div class="doc-md-description">
-            <p>file data</p>
+            <p>path to .eml file, its content or a binary stream</p>
           </div>
         </li>
     </ul>

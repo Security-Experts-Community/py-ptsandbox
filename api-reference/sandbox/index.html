@@ -2027,8 +2027,9 @@
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">short_result</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="n">async_result</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 </span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="n">read_timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="n">options</span><span class="p">:</span> <span class="n">Options</span> <span class="o">=</span> <span class="n">SandboxBaseScanTaskRequest</span><span class="o">.</span><span class="n">Options</span><span class="p">(),</span>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SandboxBaseTaskResponse</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="n">upload_timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">options</span><span class="p">:</span> <span class="n">Options</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SandboxBaseTaskResponse</span>
 </span></code></pre></div>
 
     <div class="doc doc-contents ">
@@ -2110,9 +2111,19 @@
           </div>
         </li>
         <li class="doc-section-item field-body">
+            <b><code>upload_timeout</code></b>
+              (<code><span title="float">float</span></code>, default:
+                  <code>300</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>if a large enough file is being uploaded, increase timeout (in seconds).</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
             <b><code>options</code></b>
-              (<code><a class="autorefs autorefs-internal" title="Options (ptsandbox.models.SandboxBaseScanTaskRequest.Options)" href="../models/#ptsandbox.models.SandboxBaseScanTaskRequest.Options">Options</a></code>, default:
-                  <code><a class="autorefs autorefs-internal" title="Options (ptsandbox.models.SandboxBaseScanTaskRequest.Options)" href="../models/#ptsandbox.models.SandboxBaseScanTaskRequest.Options">Options</a>()</code>
+              (<code><a class="autorefs autorefs-internal" title="Options (ptsandbox.models.SandboxBaseScanTaskRequest.Options)" href="../models/#ptsandbox.models.SandboxBaseScanTaskRequest.Options">Options</a> | None</code>, default:
+                  <code>None</code>
 )
           –
           <div class="doc-md-description">
@@ -2194,7 +2205,7 @@
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="n">async_result</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 </span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="n">read_timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span>
 </span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="n">upload_timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">options</span><span class="p">:</span> <span class="n">Options</span> <span class="o">=</span> <span class="n">SandboxBaseScanTaskRequest</span><span class="o">.</span><span class="n">Options</span><span class="p">(),</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">options</span><span class="p">:</span> <span class="n">Options</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 </span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SandboxBaseTaskResponse</span>
 </span></code></pre></div>
 
@@ -2290,8 +2301,8 @@
         </li>
         <li class="doc-section-item field-body">
             <b><code>options</code></b>
-              (<code><a class="autorefs autorefs-internal" title="Options (ptsandbox.models.SandboxBaseScanTaskRequest.Options)" href="../models/#ptsandbox.models.SandboxBaseScanTaskRequest.Options">Options</a></code>, default:
-                  <code><a class="autorefs autorefs-internal" title="Options (ptsandbox.models.SandboxBaseScanTaskRequest.Options)" href="../models/#ptsandbox.models.SandboxBaseScanTaskRequest.Options">Options</a>()</code>
+              (<code><a class="autorefs autorefs-internal" title="Options (ptsandbox.models.SandboxBaseScanTaskRequest.Options)" href="../models/#ptsandbox.models.SandboxBaseScanTaskRequest.Options">Options</a> | None</code>, default:
+                  <code>None</code>
 )
           –
           <div class="doc-md-description">
@@ -2368,16 +2379,17 @@
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="o">*</span><span class="p">,</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">file_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">rules</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="n">BytesIO</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">extra_files</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">BinaryIO</span><span class="p">,</span> <span class="n">FileName</span><span class="p">]]</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="n">short_result</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="n">async_result</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">read_timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="n">upload_timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="n">priority</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="n">sandbox</span><span class="p">:</span> <span class="n">SandboxOptionsAdvanced</span> <span class="o">=</span> <span class="n">SandboxOptionsAdvanced</span><span class="p">(),</span>
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SandboxBaseTaskResponse</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">extra_files</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">BinaryIO</span><span class="p">,</span> <span class="n">FileName</span><span class="p">]</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="p">]</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="n">short_result</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">async_result</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="n">read_timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="n">upload_timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="n">priority</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="n">sandbox</span><span class="p">:</span> <span class="n">SandboxOptionsAdvanced</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SandboxBaseTaskResponse</span>
 </span></code></pre></div>
 
     <div class="doc doc-contents ">
@@ -2416,6 +2428,18 @@
           –
           <div class="doc-md-description">
             <p>if you have compiled the rules, then you can scan with them, rather than using the sandbox embedded inside</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+            <b><code>extra_files</code></b>
+              (<code><span title="collections.abc.Sequence">Sequence</span>[<span title="str">str</span> | <span title="pathlib.Path">Path</span> | <span title="tuple">tuple</span>[<span title="typing.BinaryIO">BinaryIO</span>, <span title="ptsandbox.sandbox.sandbox.Sandbox.FileName">FileName</span>]] | None</code>, default:
+                  <code>None</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>Additional files to be placed next to the sample in the VM.</p>
+<p>For paths the base name of the file is used as the name in the VM (<code>/tmp/x/rules.txt</code> -&gt; <code>rules.txt</code>),
+for <code>(data, name)</code> tuples the given name is used. Names must be unique.</p>
           </div>
         </li>
         <li class="doc-section-item field-body">
@@ -2473,8 +2497,8 @@
         </li>
         <li class="doc-section-item field-body">
             <b><code>sandbox</code></b>
-              (<code><a class="autorefs autorefs-internal" title="SandboxOptionsAdvanced (ptsandbox.models.SandboxOptionsAdvanced)" href="../models/#ptsandbox.models.SandboxOptionsAdvanced">SandboxOptionsAdvanced</a></code>, default:
-                  <code><a class="autorefs autorefs-internal" title="SandboxOptionsAdvanced (ptsandbox.models.SandboxOptionsAdvanced)" href="../models/#ptsandbox.models.SandboxOptionsAdvanced">SandboxOptionsAdvanced</a>()</code>
+              (<code><a class="autorefs autorefs-internal" title="SandboxOptionsAdvanced (ptsandbox.models.SandboxOptionsAdvanced)" href="../models/#ptsandbox.models.SandboxOptionsAdvanced">SandboxOptionsAdvanced</a> | None</code>, default:
+                  <code>None</code>
 )
           –
           <div class="doc-md-description">
@@ -2554,8 +2578,9 @@
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">short_result</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">async_result</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="n">read_timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="n">options</span><span class="p">:</span> <span class="n">Options</span> <span class="o">=</span> <span class="n">SandboxBaseScanTaskRequest</span><span class="o">.</span><span class="n">Options</span><span class="p">(),</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SandboxBaseTaskResponse</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="n">upload_timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="n">options</span><span class="p">:</span> <span class="n">Options</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SandboxBaseTaskResponse</span>
 </span></code></pre></div>
 
     <div class="doc doc-contents ">
@@ -2627,9 +2652,19 @@
           </div>
         </li>
         <li class="doc-section-item field-body">
+            <b><code>upload_timeout</code></b>
+              (<code><span title="float">float</span></code>, default:
+                  <code>300</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>if large enough rules are being uploaded, increase timeout (in seconds).</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
             <b><code>options</code></b>
-              (<code><a class="autorefs autorefs-internal" title="Options (ptsandbox.models.SandboxBaseScanTaskRequest.Options)" href="../models/#ptsandbox.models.SandboxBaseScanTaskRequest.Options">Options</a></code>, default:
-                  <code><a class="autorefs autorefs-internal" title="Options (ptsandbox.models.SandboxBaseScanTaskRequest.Options)" href="../models/#ptsandbox.models.SandboxBaseScanTaskRequest.Options">Options</a>()</code>
+              (<code><a class="autorefs autorefs-internal" title="Options (ptsandbox.models.SandboxBaseScanTaskRequest.Options)" href="../models/#ptsandbox.models.SandboxBaseScanTaskRequest.Options">Options</a> | None</code>, default:
+                  <code>None</code>
 )
           –
           <div class="doc-md-description">
@@ -3311,7 +3346,7 @@ will be returned for scanning with multiple stages (for example, static + BA).</
               (<code><span title="str">str</span> | <span title="pathlib.Path">Path</span> | <span title="bytes">bytes</span> | <span title="typing.BinaryIO">BinaryIO</span></code>)
           –
           <div class="doc-md-description">
-            <p>path to .eml file or just binary data</p>
+            <p>path to .eml file, its content or a binary stream</p>
           </div>
         </li>
     </ul>

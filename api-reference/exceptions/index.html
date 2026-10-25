@@ -1280,6 +1280,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#ptsandbox.exceptions.SandboxApiError" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SandboxApiError
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#ptsandbox.exceptions.SandboxUploadException" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1478,6 +1489,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#ptsandbox.exceptions.SandboxApiError" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SandboxApiError
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#ptsandbox.exceptions.SandboxUploadException" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1602,6 +1624,54 @@
 
 
 
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="ptsandbox.exceptions.SandboxApiError" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">SandboxApiError</span>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="aiohttp.ClientResponseError">ClientResponseError</span></code>, <code><a class="autorefs autorefs-internal" title="SandboxException (ptsandbox.exceptions.SandboxException)" href="#ptsandbox.exceptions.SandboxException">SandboxException</a></code></p>
+
+
+        <p>Raised when the sandbox responds with an HTTP error status.</p>
+<p>It is a <code>ClientResponseError</code>, so existing handlers keep working, but it also
+carries what the sandbox said about the failure: the <code>errors</code> list from the
+JSON body (if any) and the raw <code>body</code> text.</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
 
     </div>
 
