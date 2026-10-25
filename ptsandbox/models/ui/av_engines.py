@@ -2,15 +2,15 @@ from __future__ import annotations
 
 from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import Field
 
-from ptsandbox.models.core.base import BaseResponse
+from ptsandbox.models.core.base import BaseResponse, SandboxModel
 
 
 class SandboxAVEnginesResponse(BaseResponse):
-    class Data(BaseModel):
-        class Engine(BaseModel):
-            class Error(BaseModel):
+    class Data(SandboxModel):
+        class Engine(SandboxModel):
+            class Error(SandboxModel):
                 code: str
                 message: str
 
@@ -84,14 +84,11 @@ class SandboxAVEnginesResponse(BaseResponse):
     data: Data
 
 
-SandboxAVEnginesResponse.model_rebuild()
-
-
 class SandboxAVEngineSettingsResponse(BaseResponse):
     """Response from ``/av-engines/{item_id}`` — settings of a specific AV engine."""
 
-    class Data(BaseModel):
-        class License(BaseModel):
+    class Data(SandboxModel):
+        class License(SandboxModel):
             content: str | None = None
             """License file content"""
 
@@ -124,28 +121,25 @@ class SandboxAVEngineSettingsResponse(BaseResponse):
     data: Data
 
 
-SandboxAVEngineSettingsResponse.model_rebuild()
-
-
 class SandboxAVDistributionPacksResponse(BaseResponse):
     """Response from ``/av-distribution-packs`` — list of AV distributions available for installation."""
 
-    class Data(BaseModel):
-        class License(BaseModel):
+    class Data(SandboxModel):
+        class License(SandboxModel):
             extensions: list[str] = Field(default_factory=list[str])
             """Possible file extensions for the license"""
 
             multiple: bool = False
             """Whether multiple license files are allowed"""
 
-        class Requirements(BaseModel):
+        class Requirements(SandboxModel):
             os: str | None = None
             """Required OS"""
 
             bit: str | None = None
             """Required architecture"""
 
-        class Installer(BaseModel):
+        class Installer(SandboxModel):
             name: str | None = None
             """Installer file/package name"""
 
@@ -153,10 +147,10 @@ class SandboxAVDistributionPacksResponse(BaseResponse):
 
             requirements: SandboxAVDistributionPacksResponse.Data.Requirements | None = None
 
-        class Files(BaseModel):
+        class Files(SandboxModel):
             installer: SandboxAVDistributionPacksResponse.Data.Installer | None = None
 
-        class DistributionPack(BaseModel):
+        class DistributionPack(SandboxModel):
             engine_code_name: str = Field(alias="engineCodeName")
             """AV engine code name"""
 
@@ -176,6 +170,3 @@ class SandboxAVDistributionPacksResponse(BaseResponse):
         distribution_packs: list[DistributionPack] = Field(alias="distributionPacks")
 
     data: Data
-
-
-SandboxAVDistributionPacksResponse.model_rebuild()

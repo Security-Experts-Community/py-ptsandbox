@@ -1,8 +1,9 @@
 from collections.abc import AsyncIterator
+from pathlib import Path
 from typing import Any, BinaryIO
 from uuid import UUID
 
-import attr
+import aiohttp
 
 from ptsandbox.models import (
     SandboxAdvancedScanTaskRequest,
@@ -14,10 +15,17 @@ from ptsandbox.models import (
     SandboxScanURLTaskRequest,
 )
 from ptsandbox.models.api.analysis import SandboxTasksResponse
+from ptsandbox.sandbox._payload import Payload
 from ptsandbox.sandbox.base import BaseSandboxClient
 
 
 class AnalysisMixin(BaseSandboxClient):
+    def _analysis_timeout(self, analysis_duration: int, read_timeout: int) -> aiohttp.ClientTimeout:
+        """Time to wait for a synchronous scan response: the analysis itself plus the sandbox overhead."""
+        return self._timeout(
+            sock_read=analysis_duration * 4 + (300 if analysis_duration < 80 else 120) + read_timeout,
+        )
+
     async def create_scan(self, data: SandboxScanTaskRequest, read_timeout: int = 0) -> SandboxBaseTaskResponse:
         """
         Send the specified file to the sandbox for analysis
@@ -35,13 +43,7 @@ class AnalysisMixin(BaseSandboxClient):
             pydantic.ValidationError: if the response body does not match the expected model
         """
 
-        # compute default timeout
-        timeout = attr.evolve(
-            self.default_timeout,
-            sock_read=data.options.sandbox.analysis_duration * 4
-            + (300 if data.options.sandbox.analysis_duration < 80 else 120)
-            + read_timeout,
-        )
+        timeout = self._analysis_timeout(data.options.sandbox.analysis_duration, read_timeout)
 
         return await self._request(
             "POST",
@@ -72,13 +74,7 @@ class AnalysisMixin(BaseSandboxClient):
             pydantic.ValidationError: if the response body does not match the expected model
         """
 
-        # compute default timeout
-        timeout = attr.evolve(
-            self.default_timeout,
-            sock_read=data.sandbox.analysis_duration * 4
-            + (300 if data.sandbox.analysis_duration < 80 else 120)
-            + read_timeout,
-        )
+        timeout = self._analysis_timeout(data.sandbox.analysis_duration, read_timeout)
 
         return await self._request(
             "POST",
@@ -105,12 +101,7 @@ class AnalysisMixin(BaseSandboxClient):
             pydantic.ValidationError: if the response body does not match the expected model
         """
 
-        timeout = attr.evolve(
-            self.default_timeout,
-            sock_read=data.options.sandbox.analysis_duration * 4
-            + (300 if data.options.sandbox.analysis_duration < 80 else 120)
-            + read_timeout,
-        )
+        timeout = self._analysis_timeout(data.options.sandbox.analysis_duration, read_timeout)
 
         return await self._request(
             "POST",
@@ -141,6 +132,7 @@ class AnalysisMixin(BaseSandboxClient):
             f"{self.key.url}/analysis/checkTask",
             response_model=SandboxCheckTaskResponse,
             json=data.dict(),
+            retry=True,
         )
 
     async def get_report(self, scan_id: UUID) -> SandboxBaseTaskResponse:
@@ -164,6 +156,7 @@ class AnalysisMixin(BaseSandboxClient):
             f"{self.key.url}/analysis/report",
             response_model=SandboxBaseTaskResponse,
             json={"scan_id": str(scan_id)},
+            retry=True,
         )
 
     async def create_rescan(self, data: SandboxRescanTaskRequest, read_timeout: int = 300) -> SandboxBaseTaskResponse:
@@ -184,8 +177,7 @@ class AnalysisMixin(BaseSandboxClient):
         """
 
         # compute default timeout
-        timeout = attr.evolve(
-            self.default_timeout,
+        timeout = self._timeout(
             sock_read=(
                 round(data.options.sandbox.analysis_duration * 1.5)
                 if data.options.sandbox.analysis_duration > 70
@@ -198,16 +190,16 @@ class AnalysisMixin(BaseSandboxClient):
             "POST",
             f"{self.key.url}/analysis/createRetroTask",
             response_model=SandboxBaseTaskResponse,
-            data=data.json(),
+            json=data.dict(),
             timeout=timeout,
         )
 
-    async def get_email_headers(self, data: BinaryIO) -> AsyncIterator[bytes]:
+    async def get_email_headers(self, data: str | Path | bytes | BinaryIO) -> AsyncIterator[bytes]:
         """
         Upload an email to receive headers
 
         Args:
-            data: file data
+            data: path to .eml file, its content or a binary stream
 
         Returns:
             The header file
@@ -217,9 +209,11 @@ class AnalysisMixin(BaseSandboxClient):
             aiohttp.client_exceptions.ClientError: on connection or transport errors
         """
 
-        payload = self._upload_bytes(data)  # type: ignore[attr-defined]
-
-        async with self.http_client.post(f"{self.key.debug_url}/analysis/getHeaders", data=payload) as response:
+        async with self.http_client.post(
+            f"{self.key.debug_url}/analysis/getHeaders",
+            payload=Payload(data),
+            retry=True,
+        ) as response:
             async for chunk in self._iter_chunks(response):
                 yield chunk
 
@@ -238,4 +232,5 @@ class AnalysisMixin(BaseSandboxClient):
             f"{self.key.url}/analysis/listTasks",
             response_model=SandboxTasksResponse,
             json=data,
+            retry=True,
         )

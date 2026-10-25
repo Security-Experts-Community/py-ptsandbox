@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from pydantic import BaseModel, Field
+from pydantic import Field
 
 from ptsandbox.models.core import (
     BlacklistStatus,
@@ -21,6 +21,7 @@ from ptsandbox.models.core import (
     TreeEngineName,
     TreeNodeType,
 )
+from ptsandbox.models.core.base import SandboxModel
 from ptsandbox.models.ui.common import (
     CorrelationInfo,
     DetectionUI,
@@ -30,15 +31,15 @@ from ptsandbox.models.ui.common import (
 )
 
 
-class ScanArtifact(BaseModel):
+class ScanArtifact(SandboxModel):
     name: str
     sha256: str
     size: int
     type: ScanArtifactType | None = None
 
 
-class SandboxInfo(BaseModel):
-    class MSDNError(BaseModel):
+class SandboxInfo(SandboxModel):
+    class MSDNError(SandboxModel):
         name: str
         """
         MSDN name of the image initialization error
@@ -49,7 +50,7 @@ class SandboxInfo(BaseModel):
         The MSDN number of the image initialization error
         """
 
-    class Network(BaseModel):
+    class Network(SandboxModel):
         database_time: int | None = Field(default=None, alias="databaseTime")
 
         database_version: str = Field(alias="databaseVersion")
@@ -136,11 +137,11 @@ class SandboxInfo(BaseModel):
     result: CorrelationInfo | None = None
 
 
-class TreeNode(BaseModel):
-    class ArchiveInfo(BaseModel):
+class TreeNode(SandboxModel):
+    class ArchiveInfo(SandboxModel):
         password: str
 
-    class Info(BaseModel):
+    class Info(SandboxModel):
         type: FileInfoTypes
 
         name: str
@@ -154,22 +155,22 @@ class TreeNode(BaseModel):
         file_type: str = Field(alias="fileType")
         properties: list[FileInfoProperties]
 
-    class EmailInfo(BaseModel):
+    class EmailInfo(SandboxModel):
         subject: str
         from_: str | None = Field(default=None, alias="from")
         to: list[str]
         cc: list[str]
         bcc: list[str]
 
-    class UrlInfo(BaseModel):
-        class Redirect(BaseModel):
+    class UrlInfo(SandboxModel):
+        class Redirect(SandboxModel):
             url: str | None = None
             status: int | None = None
 
         url: str | None = None
         redirects: list[Redirect] | None = None
 
-    class SandboxDropInfo(BaseModel):
+    class SandboxDropInfo(SandboxModel):
         process_id: int = Field(alias="processId")
         process_name: str = Field(alias="processName")
         create_time: int = Field(alias="createTime")
@@ -194,11 +195,11 @@ class TreeNode(BaseModel):
         ID of the node in the BA graph
         """
 
-    class SandboxCorrelatedInfo(BaseModel):
+    class SandboxCorrelatedInfo(SandboxModel):
         result: CorrelationInfo
 
-    class HTTPInfo(BaseModel):
-        class Request(BaseModel):
+    class HTTPInfo(SandboxModel):
+        class Request(SandboxModel):
             method: str
             url: str
             host: str
@@ -220,7 +221,7 @@ class TreeNode(BaseModel):
 
             content_type: str = Field(alias="contentType")
 
-        class Response(BaseModel):
+        class Response(SandboxModel):
             code: int
             reason: str
             server: str
@@ -236,7 +237,7 @@ class TreeNode(BaseModel):
 
         response: Response | None = None
 
-    class UnpackerInfo(BaseModel):
+    class UnpackerInfo(SandboxModel):
         state: ScanState
         """
         Unpacking status
@@ -244,7 +245,7 @@ class TreeNode(BaseModel):
 
         errors: list[ErrorWithLimit] = Field(default_factory=list[ErrorWithLimit])
 
-    class DownloadUrlInfo(BaseModel):
+    class DownloadUrlInfo(SandboxModel):
         state: ScanState
         """
         Url loading status
@@ -267,7 +268,7 @@ class TreeNode(BaseModel):
         The reason for the code from the HTTP Status Line
         """
 
-    class BwListsInfo(BaseModel):
+    class BwListsInfo(SandboxModel):
         state: ScanState
         """
         Check status in WB lists
@@ -288,8 +289,8 @@ class TreeNode(BaseModel):
         Errors in checking by WB lists
         """
 
-    class CategorizerInfo(BaseModel):
-        class Engine(BaseModel):
+    class CategorizerInfo(SandboxModel):
+        class Engine(SandboxModel):
             name: TreeEngineName
 
             database_time: datetime | None = Field(default=None, alias="databaseTime")
@@ -298,7 +299,7 @@ class TreeNode(BaseModel):
 
             errors: list[Error] = Field(default_factory=list[Error])
 
-        class Result(BaseModel):
+        class Result(SandboxModel):
             state: ScanState
             """
             Check status in PTCategorizer
@@ -318,7 +319,7 @@ class TreeNode(BaseModel):
 
         result: Result | None = None
 
-    class CacheInfo(BaseModel):
+    class CacheInfo(SandboxModel):
         source_scan_id: str | int = Field(alias="sourceScanId")
         """
         The original task ID
@@ -334,7 +335,7 @@ class TreeNode(BaseModel):
         The time of creation of the initial task (UNIX timestamp)
         """
 
-    class NetworkObject(BaseModel):
+    class NetworkObject(SandboxModel):
         type: NetworkObjectType
         """
         Type of network object
@@ -350,7 +351,7 @@ class TreeNode(BaseModel):
         Has the network artifact been scanned?
         """
 
-    class ParentObjectInfo(BaseModel):
+    class ParentObjectInfo(SandboxModel):
         type: FileInfoTypes
         """
         The type of artifact that the current node was derived from.
@@ -361,7 +362,7 @@ class TreeNode(BaseModel):
         The name of the artifact from which the current node was derived.
         """
 
-    class ContextCrawlerInfo(BaseModel):
+    class ContextCrawlerInfo(SandboxModel):
         url: str
         """
         The URL from which the file was received
@@ -478,7 +479,7 @@ class TreeNode(BaseModel):
     """
 
 
-class SandboxTreeResponse(BaseModel):
+class SandboxTreeResponse(SandboxModel):
     children: list[TreeNode]
 
     has_more: bool = Field(default=False, alias="hasMore")

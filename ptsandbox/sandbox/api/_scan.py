@@ -2,8 +2,6 @@ from pathlib import Path
 from typing import BinaryIO
 from uuid import UUID
 
-import attr
-
 from ptsandbox.models import (
     SandboxBaseTaskResponse,
     SandboxCheckTaskRequest,
@@ -13,6 +11,7 @@ from ptsandbox.models.api.scan import (
     SandboxScanWithSourceFileRequest,
     SandboxScanWithSourceURLRequest,
 )
+from ptsandbox.sandbox._payload import Payload
 from ptsandbox.sandbox.base import BaseSandboxClient
 
 
@@ -41,18 +40,18 @@ class ScanMixin(BaseSandboxClient):
             pydantic.ValidationError: if the response body does not match the expected model
         """
 
-        timeout = attr.evolve(self.default_timeout, total=read_timeout)
+        # sock_read, not total: the upload of a large file must not eat into the response waiting time
+        timeout = self._timeout(sock_read=read_timeout)
 
-        with self._file_payload(file) as payload:  # type: ignore[attr-defined]
-            return await self._request(
-                "POST",
-                f"{self.key.url}/scan/checkFile",
-                response_model=SandboxBaseTaskResponse,
-                params=data.dict(),
-                headers=data.get_headers(),
-                data=payload,
-                timeout=timeout,
-            )
+        return await self._request(
+            "POST",
+            f"{self.key.url}/scan/checkFile",
+            response_model=SandboxBaseTaskResponse,
+            params=data.dict(),
+            headers=data.get_headers(),
+            payload=Payload(file),
+            timeout=timeout,
+        )
 
     async def source_check_url(
         self,
@@ -74,7 +73,7 @@ class ScanMixin(BaseSandboxClient):
             pydantic.ValidationError: if the response body does not match the expected model
         """
 
-        timeout = attr.evolve(self.default_timeout, total=read_timeout)
+        timeout = self._timeout(total=read_timeout)
 
         return await self._request(
             "POST",
@@ -108,6 +107,7 @@ class ScanMixin(BaseSandboxClient):
             f"{self.key.url}/scan/getStatus",
             response_model=SandboxCheckTaskResponse,
             json=data.dict(),
+            retry=True,
         )
 
     async def source_get_report(self, scan_id: UUID) -> SandboxBaseTaskResponse:
@@ -131,4 +131,5 @@ class ScanMixin(BaseSandboxClient):
             f"{self.key.url}/scan/getFullReport",
             response_model=SandboxBaseTaskResponse,
             json={"scan_id": str(scan_id)},
+            retry=True,
         )

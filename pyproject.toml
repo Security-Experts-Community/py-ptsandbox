@@ -12,7 +12,7 @@ authors = [
 dependencies = [
     "pydantic>=2.13.4",
     "aiohttp>=3.14.3",
-    "orjson>=3.11.9",
+    "orjson>=3.12.0",
     "aiohttp-socks>=0.12.0",
     "typing-extensions>=4.12; python_version < '3.12'",
 ]
@@ -93,13 +93,15 @@ lint.select = [
 ]
 lint.ignore = [
     "E501", # line too long, handled by black
-    "B008", # do not perform function calls in argument defaults
     "W191", # indentation contains tabs
 ]
 line-length = 120
 target-version = "py311"
 format.quote-style = "double"
 format.indent-style = "space"
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["aiohttp.ClientTimeout", "datetime.timedelta"]
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401", "F403"]

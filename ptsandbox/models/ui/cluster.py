@@ -1,19 +1,21 @@
 from __future__ import annotations
 
-from pydantic import BaseModel, Field
+from pydantic import Field
+
+from ptsandbox.models.core.base import SandboxModel
 
 
-class SandboxClusterStatusResponse(BaseModel):
+class SandboxClusterStatusResponse(SandboxModel):
     """
     Cluster information
     """
 
-    class Node(BaseModel):
-        class Condition(BaseModel):
+    class Node(SandboxModel):
+        class Condition(SandboxModel):
             type: str
             message: str
 
-        class Info(BaseModel):
+        class Info(SandboxModel):
             """
             System Information: Component versions
             """
@@ -46,8 +48,8 @@ class SandboxClusterStatusResponse(BaseModel):
             The amount of RAM allocated for the BA in Bytes
             """
 
-        class IPs(BaseModel):
-            class IP(BaseModel):
+        class IPs(SandboxModel):
+            class IP(SandboxModel):
                 type: str
                 ip: str
 

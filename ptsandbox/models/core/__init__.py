@@ -1,6 +1,7 @@
 from ptsandbox.models.core.base import (
     BaseRequest,
     BaseResponse,
+    SandboxModel,
 )
 from ptsandbox.models.core.common import (
     Artifact,
@@ -100,6 +101,7 @@ __all__ = [
     "QuarantineState",
     "SandboxImageInfo",
     "SandboxImageType",
+    "SandboxModel",
     "SandboxResult",
     "ScanArtifactType",
     "ScanState",

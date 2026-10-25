@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 import asyncio
-from collections.abc import AsyncIterator
+from collections.abc import AsyncIterator, Sequence
 from io import BytesIO
 from pathlib import Path
-from typing import Any, BinaryIO, Self, TypeAlias
+from typing import TYPE_CHECKING, Any, BinaryIO, Self, TypeAlias
 from uuid import UUID
 
 import aiohttp
@@ -44,7 +44,9 @@ from ptsandbox.sandbox._report_poller import (
     ReportPoller,
 )
 from ptsandbox.sandbox.api import SandboxApi
-from ptsandbox.sandbox.ui import SandboxUI
+
+if TYPE_CHECKING:
+    from ptsandbox.sandbox.ui import SandboxUI
 
 
 class Sandbox:
@@ -77,16 +79,17 @@ class Sandbox:
             connection_retries=connection_retries,
         )
 
-        self._ui = (
-            SandboxUI(
+        self._ui = None
+        if key.ui is not None:
+            # the UI API is rarely used and its models are slow to import, so load it only when needed
+            from ptsandbox.sandbox.ui import SandboxUI
+
+            self._ui = SandboxUI(
                 key,
                 default_timeout=default_timeout,
                 proxy=proxy,
                 connection_retries=connection_retries,
             )
-            if key.ui is not None
-            else None
-        )
 
     @property
     def ui(self) -> SandboxUI:
@@ -118,12 +121,13 @@ class Sandbox:
         file: str | Path | bytes | BinaryIO,
         file_name: str | None,
     ) -> str | None:
-        """Determine the upload file name, falling back to the path for str/Path inputs."""
+        """Determine the upload file name, falling back to the base name for str/Path inputs."""
         if file_name:
             return file_name
         match file:
             case str() | Path():
-                return str(file)
+                # only the base name: a full local path is meaningless (and breaks VM setup) on the sandbox side
+                return Path(file).name
             case _:
                 return None
 
@@ -167,7 +171,8 @@ class Sandbox:
         short_result: bool = False,
         async_result: bool = True,
         read_timeout: int = 300,
-        options: SandboxBaseScanTaskRequest.Options = SandboxBaseScanTaskRequest.Options(),
+        upload_timeout: float = 300,
+        options: SandboxBaseScanTaskRequest.Options | None = None,
     ) -> SandboxBaseTaskResponse:
         """
         Run a retro scan to check for detects without running a behavioral analysis.
@@ -192,6 +197,7 @@ class Sandbox:
 
                 You can receive full report in a separate request.
             read_timeout: response waiting time in seconds
+            upload_timeout: if a large enough file is being uploaded, increase timeout (in seconds).
             options: additional sandbox options
 
         Returns:
@@ -204,14 +210,17 @@ class Sandbox:
             pydantic.ValidationError: if the response body does not match the expected model
         """
 
+        if options is None:
+            options = SandboxBaseScanTaskRequest.Options()
+
         try:
             async with asyncio.TaskGroup() as tg:
-                task_dummy = tg.create_task(self.api.upload_file(file=config.FAKE_PDF))
-                task_trace = tg.create_task(self.api.upload_file(file=trace))
-                task_network = tg.create_task(self.api.upload_file(file=network))
+                task_dummy = tg.create_task(self.api.upload_file(file=config.FAKE_PDF, upload_timeout=upload_timeout))
+                task_trace = tg.create_task(self.api.upload_file(file=trace, upload_timeout=upload_timeout))
+                task_network = tg.create_task(self.api.upload_file(file=network, upload_timeout=upload_timeout))
 
                 if rules is not None:
-                    task_rules = tg.create_task(self.api.upload_file(file=rules))
+                    task_rules = tg.create_task(self.api.upload_file(file=rules, upload_timeout=upload_timeout))
                 else:
                     task_rules = None
         except ExceptionGroup as e:
@@ -223,6 +232,8 @@ class Sandbox:
 
         if task_rules is not None:
             uploaded_rules = task_rules.result()
+            # don't mutate the caller's object
+            options = options.model_copy(deep=True)
             options.sandbox.debug_options["rules_url"] = uploaded_rules.data.file_uri
 
         scan = SandboxRescanTaskRequest(
@@ -250,7 +261,7 @@ class Sandbox:
         async_result: bool = True,
         read_timeout: int = 300,
         upload_timeout: float = 300,
-        options: SandboxBaseScanTaskRequest.Options = SandboxBaseScanTaskRequest.Options(),
+        options: SandboxBaseScanTaskRequest.Options | None = None,
     ) -> SandboxBaseTaskResponse:
         """
         Send the specified file to the sandbox for analysis
@@ -289,6 +300,9 @@ class Sandbox:
             pydantic.ValidationError: if the response body does not match the expected model
         """
 
+        if options is None:
+            options = SandboxBaseScanTaskRequest.Options()
+
         upload_name = self._resolve_upload_name(file, file_name)
 
         uploaded_file, uploaded_rules = await self._upload_file_and_rules(
@@ -298,6 +312,8 @@ class Sandbox:
         )
 
         if uploaded_rules is not None:
+            # don't mutate the caller's object
+            options = options.model_copy(deep=True)
             options.sandbox.debug_options["rules_url"] = uploaded_rules.data.file_uri
 
         scan = SandboxScanTaskRequest(
@@ -320,13 +336,13 @@ class Sandbox:
         *,
         file_name: str | None = None,
         rules: str | Path | bytes | BytesIO | None = None,
-        extra_files: list[Path] | list[tuple[BinaryIO, FileName]] | None = None,
+        extra_files: Sequence[str | Path | tuple[BinaryIO, FileName]] | None = None,
         short_result: bool = False,
         async_result: bool = True,
         read_timeout: int = 300,
         upload_timeout: float = 300,
         priority: int = 3,
-        sandbox: SandboxOptionsAdvanced = SandboxOptionsAdvanced(),
+        sandbox: SandboxOptionsAdvanced | None = None,
     ) -> SandboxBaseTaskResponse:
         """
         Send the specified file to the sandbox for analysis using advanced API
@@ -342,6 +358,11 @@ class Sandbox:
 
                 If not specified, the hash value of the file is calculated using the SHA-256 algorithm.
             rules: if you have compiled the rules, then you can scan with them, rather than using the sandbox embedded inside
+            extra_files:
+                Additional files to be placed next to the sample in the VM.
+
+                For paths the base name of the file is used as the name in the VM (`/tmp/x/rules.txt` -> `rules.txt`),
+                for `(data, name)` tuples the given name is used. Names must be unique.
             priority: the priority of the task, between 1 and 4. The higher it is, the faster it will get to work
             short_result:
                 Return only the overall result of the check.
@@ -369,6 +390,14 @@ class Sandbox:
 
         upload_name = self._resolve_upload_name(file, file_name)
 
+        # the name is where the file will be placed in the VM, so only the base name of a local path is used
+        extra_files_with_names = [
+            (item[0], item[1]) if isinstance(item, tuple) else (item, Path(item).name) for item in extra_files or []
+        ]
+        names = [name for _, name in extra_files_with_names]
+        if len(names) != len(set(names)):
+            raise SandboxException(f"Extra files must have unique names, got: {names}")
+
         try:
             async with asyncio.TaskGroup() as tg:
                 task_file = tg.create_task(self.api.upload_file(file=file, upload_timeout=upload_timeout))
@@ -377,30 +406,24 @@ class Sandbox:
                 else:
                     task_rules = None
 
-                if extra_files is not None:
-
-                    def _get_filename(item: Path | tuple[BinaryIO, str]) -> str:
-                        if isinstance(item, tuple):
-                            return item[1]
-                        return str(item)
-
-                    tasks_extra_files = {
-                        _get_filename(file): tg.create_task(
-                            self.api.upload_file(file[0] if isinstance(file, tuple) else file)
-                        )
-                        for file in extra_files
-                    }
-                else:
-                    tasks_extra_files = None
+                tasks_extra_files = [
+                    (
+                        name,
+                        tg.create_task(self.api.upload_file(file=data, upload_timeout=upload_timeout)),
+                    )
+                    for data, name in extra_files_with_names
+                ]
         except ExceptionGroup as e:
             raise SandboxUploadException("Can't upload files to server") from e
 
         uploaded_file = task_file.result()
 
-        if tasks_extra_files is not None:
-            for name, task in tasks_extra_files.items():
-                uri = task.result().data.file_uri
-                sandbox.extra_files.append(SandboxOptionsAdvanced.ExtraFile(name=name, uri=uri))
+        # don't mutate the caller's object
+        sandbox = sandbox.model_copy(deep=True) if sandbox is not None else SandboxOptionsAdvanced()
+
+        for name, task in tasks_extra_files:
+            uri = task.result().data.file_uri
+            sandbox.extra_files.append(SandboxOptionsAdvanced.ExtraFile(name=name, uri=uri))
 
         if task_rules is not None:
             uploaded_rules = task_rules.result()
@@ -427,7 +450,8 @@ class Sandbox:
         short_result: bool = False,
         async_result: bool = True,
         read_timeout: int = 300,
-        options: SandboxBaseScanTaskRequest.Options = SandboxBaseScanTaskRequest.Options(),
+        upload_timeout: float = 300,
+        options: SandboxBaseScanTaskRequest.Options | None = None,
     ) -> SandboxBaseTaskResponse:
         """
         Send the URL to the sandbox
@@ -447,6 +471,7 @@ class Sandbox:
 
                 You can receive full report in a separate request.
             read_timeout: response waiting time in seconds
+            upload_timeout: if large enough rules are being uploaded, increase timeout (in seconds).
             options: additional sandbox options
 
         Returns:
@@ -459,12 +484,17 @@ class Sandbox:
             pydantic.ValidationError: if the response body does not match the expected model
         """
 
+        if options is None:
+            options = SandboxBaseScanTaskRequest.Options()
+
         if rules is not None:
             try:
-                uploaded_rules = await self.api.upload_file(file=rules)
+                uploaded_rules = await self.api.upload_file(file=rules, upload_timeout=upload_timeout)
             except aiohttp.client_exceptions.ClientResponseError as e:
                 raise SandboxUploadException("Can't upload rules to server") from e
 
+            # don't mutate the caller's object
+            options = options.model_copy(deep=True)
             options.sandbox.debug_options["rules_url"] = uploaded_rules.data.file_uri
 
         scan = SandboxScanURLTaskRequest(
@@ -534,6 +564,9 @@ class Sandbox:
                 error_counter = ReportPoller.count_poll_error(error_counter, error_limit, scan_id, ex)
                 await asyncio.sleep(interval)
                 continue
+
+            # error_limit is about errors in a row: a single glitch now and then must not abort a long wait
+            error_counter = 0
 
             # intermediate results of multi-stage scans are not the final state
             if status.data.is_preflight:
@@ -725,7 +758,7 @@ class Sandbox:
         Upload an email to receive headers
 
         Args:
-            file: path to .eml file or just binary data
+            file: path to .eml file, its content or a binary stream
 
         Returns:
             The header file
@@ -736,27 +769,7 @@ class Sandbox:
             aiohttp.client_exceptions.ClientError: on connection or transport errors
         """
 
-        match file:
-            case str() | Path():
-                # Pass the file descriptor directly instead of reading the entire
-                # file into memory (BytesIO(fd.read())) which blocks the event loop.
-                # The file is read in chunks by _upload_bytes during the upload.
-                try:
-                    fd = open(file, "rb")
-                except OSError as e:
-                    raise SandboxException(f"Can't open file {file!r}") from e
-                with fd:
-                    async for chunk in self.api.get_email_headers(fd):
-                        yield chunk
-                return
-            case bytes():
-                iterator = self.api.get_email_headers(BytesIO(file))
-            case BinaryIO():
-                iterator = self.api.get_email_headers(file)
-            case _:
-                raise SandboxException(f"Unsupported type: {type(file)}")
-
-        async for chunk in iterator:
+        async for chunk in self.api.get_email_headers(file):
             yield chunk
 
     async def source_check_file(

@@ -1,8 +1,6 @@
 from __future__ import annotations
 
-from pydantic import BaseModel
-
-from ptsandbox.models.core.base import BaseResponse
+from ptsandbox.models.core.base import BaseResponse, SandboxModel
 
 
 class SandboxUploadScanFileResponse(BaseResponse):
@@ -12,7 +10,7 @@ class SandboxUploadScanFileResponse(BaseResponse):
     `<URL>/storage/uploadScanFile`
     """
 
-    class Data(BaseModel):
+    class Data(SandboxModel):
         file_uri: str
         """
         The ID of the uploaded file, used to create the analysis task.

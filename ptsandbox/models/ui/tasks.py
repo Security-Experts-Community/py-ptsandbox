@@ -3,13 +3,14 @@ from __future__ import annotations
 from datetime import datetime
 from uuid import UUID
 
-from pydantic import BaseModel, Field
+from pydantic import Field
 
 from ptsandbox.models.core import FileInfoTypes
+from ptsandbox.models.core.base import SandboxModel
 from ptsandbox.models.ui.common import CorrelationInfo, EntryPoint, FilterValues
 
 
-class Task(BaseModel):
+class Task(SandboxModel):
     id: UUID
     """
     Task ID
@@ -62,7 +63,7 @@ class Task(BaseModel):
     """
 
 
-class SandboxUITasksResponse(BaseModel):
+class SandboxUITasksResponse(SandboxModel):
     """
     Tasks listing
 
@@ -96,7 +97,7 @@ class SandboxTasksFilterValuesResponse(FilterValues):
     ...
 
 
-class SandboxTasksSummaryResponse(BaseModel):
+class SandboxTasksSummaryResponse(SandboxModel):
     """
     Information about a specific task
 

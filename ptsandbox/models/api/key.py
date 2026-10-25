@@ -2,17 +2,19 @@ from __future__ import annotations
 
 from enum import IntEnum
 
-from pydantic import BaseModel, ConfigDict, Field, SecretStr
+from pydantic import ConfigDict, Field, SecretStr
+
+from ptsandbox.models.core.base import SandboxModel
 
 
-class SandboxKey(BaseModel):
+class SandboxKey(SandboxModel):
     """
     Abstraction over the key that is used to send to the sandbox
     """
 
     model_config = ConfigDict(frozen=True)
 
-    class UI(BaseModel):
+    class UI(SandboxModel):
         model_config = ConfigDict(use_enum_values=True, frozen=True)
 
         class AuthType(IntEnum):

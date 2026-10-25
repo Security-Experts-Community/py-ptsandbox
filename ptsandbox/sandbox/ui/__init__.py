@@ -73,6 +73,7 @@ class SandboxUI(
         async with self.http_client.post(
             f"{self.key.ui_url}/auth/token",
             json={"fingerprint": self.fingerprint},
+            retry=True,
         ) as response:
             token = await response.json()
 

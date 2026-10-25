@@ -5,9 +5,9 @@ from __future__ import annotations
 from collections.abc import Iterable
 from datetime import datetime
 
-from pydantic import AliasChoices, BaseModel, Field
+from pydantic import AliasChoices, Field
 
-from ptsandbox.models.core.base import BaseResponse
+from ptsandbox.models.core.base import BaseResponse, SandboxModel
 from ptsandbox.models.core.enum import (
     ArtifactType,
     EngineSubsystem,
@@ -20,7 +20,7 @@ from ptsandbox.models.core.enum import (
 )
 
 
-class FilterProperties(BaseModel):
+class FilterProperties(SandboxModel):
     """
     Filtering a group of files by properties to send to the sandbox for analysis
     """
@@ -30,7 +30,7 @@ class FilterProperties(BaseModel):
     office: list[FileInfoProperties] = Field(default_factory=list[FileInfoProperties])
 
 
-class SandboxResult(BaseModel):
+class SandboxResult(SandboxModel):
     """
     File analysis result
     """
@@ -68,7 +68,7 @@ class SandboxResult(BaseModel):
     """
 
 
-class NetworkObject(BaseModel):
+class NetworkObject(SandboxModel):
     type: NetworkObjectType
     """
     Type of network object
@@ -80,7 +80,7 @@ class NetworkObject(BaseModel):
     """
 
 
-class SuspiciousBehaviors(BaseModel):
+class SuspiciousBehaviors(SandboxModel):
     """
     The correlation rule
     """
@@ -114,7 +114,7 @@ class SuspiciousBehaviors(BaseModel):
     description: str | None = None
 
 
-class Detection(BaseModel):
+class Detection(SandboxModel):
     """
     Detected malware
     """
@@ -130,7 +130,7 @@ class Detection(BaseModel):
     """
 
 
-class Log(BaseModel):
+class Log(SandboxModel):
     """
     A copy of network traffic, video recording, event logs, graph, debug files, mail headers.
     """
@@ -151,12 +151,12 @@ class Log(BaseModel):
     """
 
 
-class SandboxImageInfo(BaseModel):
+class SandboxImageInfo(SandboxModel):
     """
     Information about the VM image
     """
 
-    class OS(BaseModel):
+    class OS(SandboxModel):
         """
         Information about the operating system of the virtual machine
         """
@@ -212,24 +212,24 @@ class SandboxImageInfo(BaseModel):
     """
 
 
-class Artifact(BaseModel):
+class Artifact(SandboxModel):
     """
     A file, email, or other object
     """
 
-    class FileInfo(BaseModel):
+    class FileInfo(SandboxModel):
         """
         Information about the scanned file
 
         Filled in for binary objects
         """
 
-        class FileInfoDetails(BaseModel):
+        class FileInfoDetails(SandboxModel):
             """
             The type of the nested object depends on the type value.
             """
 
-            class ProcessDump(BaseModel):
+            class ProcessDump(SandboxModel):
                 """
                 It is filled in for process memory dumps.
 
@@ -304,14 +304,14 @@ class Artifact(BaseModel):
 
         details: FileInfoDetails | None = None
 
-    class EngineResult(BaseModel):
-        class Details(BaseModel):
-            class Sandbox(BaseModel):
+    class EngineResult(SandboxModel):
+        class Details(SandboxModel):
+            class Sandbox(SandboxModel):
                 """
                 Detailed information about behavioral analysis (if enabled)
                 """
 
-                class Stage(BaseModel):
+                class Stage(SandboxModel):
                     """
                     The result of a single scan stage with bootkitmon
                     """
@@ -502,8 +502,3 @@ class Artifact(BaseModel):
                 if result.engine_subsystem == EngineSubsystem.STATIC:
                     return result
         return None
-
-
-# Solving the problem of nesting models into each other
-Artifact.model_rebuild()
-Artifact.EngineResult.Details.Sandbox.model_rebuild()

@@ -21,6 +21,7 @@ class MaintenanceMixin(BaseSandboxClient):
             "POST",
             f"{self.key.url}/engines/sandbox/getImages",
             response_model=SandboxGetImagesResponse,
+            retry=True,
         )
 
     async def get_health_status(self) -> SandboxGetHealthStatusResponse:

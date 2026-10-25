@@ -1,46 +1,15 @@
 import asyncio
-from collections.abc import AsyncIterator, Generator
-from contextlib import contextmanager
-from io import BytesIO
+from collections.abc import AsyncIterator
 from pathlib import Path
-from typing import Any, BinaryIO
+from typing import BinaryIO
 
-import attr
-
-from ptsandbox.exceptions import SandboxException
 from ptsandbox.models import SandboxUploadScanFileResponse
+from ptsandbox.sandbox._payload import Payload
 from ptsandbox.sandbox.base import BaseSandboxClient
 
 
 class StorageMixin(BaseSandboxClient):
     upload_semaphore: asyncio.Semaphore
-
-    async def _upload_bytes(self, file: BinaryIO) -> AsyncIterator[bytes]:
-        while chunk := file.read(1024 * 1024):
-            yield chunk
-
-    @contextmanager
-    def _file_payload(self, file: str | Path | bytes | BinaryIO) -> Generator[Any, None, None]:
-        """
-        Convert a file argument into a data payload suitable for aiohttp POST.
-
-        For str/Path the file is opened and closed automatically; for bytes
-        the raw bytes are yielded; for BytesIO/BinaryIO a chunked async
-        generator is yielded.
-        """
-        match file:
-            case str() | Path():
-                # we can't use aiofiles here, because aiohttp try use chunked encoding
-                # sandbox (or maybe aiohttp) can't correctly handle chunked encoding
-                # so we need this clunky code
-                with open(file, "rb") as fd:
-                    yield fd
-            case bytes():
-                yield file
-            case BytesIO():
-                yield self._upload_bytes(file)
-            case _:
-                raise SandboxException(f"Specified file type doesn't supported {type(file)}!")
 
     async def upload_file(
         self,
@@ -65,19 +34,22 @@ class StorageMixin(BaseSandboxClient):
         """
 
         # update default timeout
-        timeout = attr.evolve(self.default_timeout, total=upload_timeout)
+        timeout = self._timeout(total=upload_timeout)
 
         url = f"{self.key.url}/storage/uploadScanFile"
 
+        payload = Payload(file)
+
         async with self.upload_semaphore:
-            with self._file_payload(file) as payload:
-                return await self._request(
-                    "POST",
-                    url,
-                    response_model=SandboxUploadScanFileResponse,
-                    data=payload,
-                    timeout=timeout,
-                )
+            # an upload only puts the file into temporary storage, so it's safe to resend
+            return await self._request(
+                "POST",
+                url,
+                response_model=SandboxUploadScanFileResponse,
+                payload=payload,
+                retry=True,
+                timeout=timeout,
+            )
 
     async def download_artifact(self, file_uri: str, read_timeout: int = 120) -> bytes:
         """
@@ -100,11 +72,12 @@ class StorageMixin(BaseSandboxClient):
             aiohttp.client_exceptions.ClientError: on connection or transport errors
         """
 
-        timeout = attr.evolve(self.default_timeout, sock_read=read_timeout)
+        timeout = self._timeout(sock_read=read_timeout)
 
         async with self.http_client.post(
             f"{self.key.url}/storage/downloadArtifact",
             json={"file_uri": file_uri},
+            retry=True,
             timeout=timeout,
         ) as response:
             return await response.read()
@@ -130,11 +103,12 @@ class StorageMixin(BaseSandboxClient):
             aiohttp.client_exceptions.ClientError: on connection or transport errors
         """
 
-        timeout = attr.evolve(self.default_timeout, sock_read=read_timeout)
+        timeout = self._timeout(sock_read=read_timeout)
 
         async with self.http_client.post(
             f"{self.key.url}/storage/downloadArtifact",
             json={"file_uri": file_uri},
+            retry=True,
             timeout=timeout,
         ) as response:
             async for chunk in self._iter_chunks(response):

@@ -4,13 +4,42 @@ from collections.abc import Iterable
 from typing import TYPE_CHECKING
 from uuid import UUID
 
+import aiohttp
+
 if TYPE_CHECKING:
+    from multidict import MultiMapping
+
     from ptsandbox.models.core.base import BaseResponse
     from ptsandbox.models.core.enum import ScanState
 
 
 class SandboxException(Exception):
     """Base exception for all custom errors raised by the library."""
+
+
+class SandboxApiError(aiohttp.ClientResponseError, SandboxException):
+    """
+    Raised when the sandbox responds with an HTTP error status.
+
+    It is a ``ClientResponseError``, so existing handlers keep working, but it also
+    carries what the sandbox said about the failure: the ``errors`` list from the
+    JSON body (if any) and the raw ``body`` text.
+    """
+
+    def __init__(
+        self,
+        request_info: aiohttp.RequestInfo,
+        history: tuple[aiohttp.ClientResponse, ...],
+        *,
+        status: int,
+        message: str,
+        headers: MultiMapping[str] | None = None,
+        errors: Iterable[BaseResponse.Error] = (),
+        body: str = "",
+    ) -> None:
+        super().__init__(request_info, history, status=status, message=message, headers=headers)
+        self.errors = list(errors)
+        self.body = body
 
 
 class SandboxUploadException(SandboxException):

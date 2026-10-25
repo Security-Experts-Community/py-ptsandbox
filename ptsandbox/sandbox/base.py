@@ -36,7 +36,8 @@ class BaseSandboxClient:
         connection_retries: int = 3,
         **session_kwargs: Any,
     ) -> None:
-        assert connection_retries > 0, "Connection retries must be greater than 0"
+        if connection_retries < 1:
+            raise ValueError("Connection retries must be greater than 0")
 
         self.key = key
         self.default_timeout = default_timeout
@@ -61,6 +62,19 @@ class BaseSandboxClient:
             retries=connection_retries,
         )
 
+    def _timeout(self, **overrides: float | None) -> aiohttp.ClientTimeout:
+        """Return the default timeout with the given fields replaced."""
+        default = self.default_timeout
+        fields: dict[str, Any] = {
+            "total": default.total,
+            "connect": default.connect,
+            "sock_read": default.sock_read,
+            "sock_connect": default.sock_connect,
+            "ceil_threshold": default.ceil_threshold,
+        }
+        fields.update(overrides)
+        return aiohttp.ClientTimeout(**fields)
+
     async def close(self) -> None:
         """Close the underlying aiohttp session."""
         if not self.session.closed:
@@ -77,11 +91,13 @@ class BaseSandboxClient:
         """
         Send an HTTP request, raise on error, and parse the response.
 
-        Calls ``raise_for_status()`` and parses the JSON body into the given
+        Raises on error statuses and parses the JSON body into the given
         ``response_model``. The underlying response is released automatically.
         """
         async with self.http_client.request(method, url, **kwargs) as response:
-            return response_model.model_validate(await response.json())
+            # parsing the raw bytes in pydantic-core is faster than json.loads + model_validate
+            # and doesn't build an intermediate dict for large reports
+            return response_model.model_validate_json(await response.read())
 
     @staticmethod
     async def _iter_chunks(response: aiohttp.ClientResponse) -> AsyncIterator[bytes]:

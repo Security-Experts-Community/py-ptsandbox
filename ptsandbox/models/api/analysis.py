@@ -9,7 +9,7 @@ if sys.version_info < (3, 12):
 else:
     from typing import TypedDict
 
-from pydantic import BaseModel, Field
+from pydantic import Field
 
 from ptsandbox.exceptions import SandboxException
 from ptsandbox.models.core import (
@@ -20,6 +20,7 @@ from ptsandbox.models.core import (
     SandboxResult,
     VNCMode,
 )
+from ptsandbox.models.core.base import SandboxModel
 from ptsandbox.models.core.enum import ScanState, Verdict
 
 
@@ -281,7 +282,7 @@ class SandboxOptionsAdvanced(SandboxBaseOptions):
     **The options are in beta, so they may change in the future.**
     """
 
-    class ExtraFile(BaseModel):
+    class ExtraFile(SandboxModel):
         """
         An additional file to be placed next to the sample
         """
@@ -324,8 +325,8 @@ class SandboxBaseScanTaskRequest(BaseRequest):
     Base class for all scan requests
     """
 
-    class Options(BaseModel):
-        class SuspiciousFilesOptions(BaseModel):
+    class Options(SandboxModel):
+        class SuspiciousFilesOptions(SandboxModel):
             """
             Settings for marking files as suspicious
             """
@@ -410,7 +411,7 @@ class SandboxBaseScanTaskRequest(BaseRequest):
             Protected PDF file
             """
 
-        class DangerousFilesOptions(BaseModel):
+        class DangerousFilesOptions(SandboxModel):
             """
             Settings for marking files as dangerous
             """
@@ -469,14 +470,14 @@ class SandboxBaseScanTaskRequest(BaseRequest):
         You can configure it by passing an object with the necessary options.
         """
 
-        mark_dangerous_files_options: DangerousFilesOptions | None = DangerousFilesOptions()
+        mark_dangerous_files_options: DangerousFilesOptions | None = Field(default_factory=DangerousFilesOptions)
         """
         Settings for marking files as dangerous. By default, we send this information because these labels are important.
 
         You can configure it by passing an object with the necessary options, or pass `None` to disable it
         """
 
-        sandbox: SandboxOptions = SandboxOptions()
+        sandbox: SandboxOptions = Field(default_factory=SandboxOptions)
         """
         Behavioral Analysis Parameters
         """
@@ -522,7 +523,7 @@ class SandboxScanTaskRequest(SandboxBaseScanTaskRequest):
     The file URI received when uploading the file
     """
 
-    options: SandboxBaseScanTaskRequest.Options = SandboxBaseScanTaskRequest.Options()
+    options: SandboxBaseScanTaskRequest.Options = Field(default_factory=SandboxBaseScanTaskRequest.Options)
     """
     Additional scanning options
     """
@@ -540,7 +541,7 @@ class SandboxAdvancedScanTaskRequest(SandboxBaseScanTaskRequest):
     The file URI received when uploading the file
     """
 
-    sandbox: SandboxOptionsAdvanced = SandboxOptionsAdvanced()
+    sandbox: SandboxOptionsAdvanced = Field(default_factory=SandboxOptionsAdvanced)
     """
     Additional advanced scanning options
     """
@@ -570,7 +571,7 @@ class SandboxRescanTaskRequest(SandboxBaseScanTaskRequest):
     Temporary URI of the network file
     """
 
-    options: SandboxBaseScanTaskRequest.Options = SandboxBaseScanTaskRequest.Options()
+    options: SandboxBaseScanTaskRequest.Options = Field(default_factory=SandboxBaseScanTaskRequest.Options)
     """
     Additional scanning options
     """
@@ -588,7 +589,7 @@ class SandboxScanURLTaskRequest(SandboxBaseScanTaskRequest):
     URL address for analysis
     """
 
-    options: SandboxBaseScanTaskRequest.Options = SandboxBaseScanTaskRequest.Options()
+    options: SandboxBaseScanTaskRequest.Options = Field(default_factory=SandboxBaseScanTaskRequest.Options)
     """
     Additional scanning options
     """
@@ -599,7 +600,7 @@ class SandboxBaseTaskResponse(BaseResponse):
     Base class for all scan responses
     """
 
-    class ShortReport(BaseModel):
+    class ShortReport(SandboxModel):
         scan_id: UUID
         """
         ID of the created task
@@ -668,7 +669,7 @@ class SandboxCheckTaskRequest(BaseRequest):
 
 
 class SandboxCheckTaskResponse(BaseResponse):
-    class Data(BaseModel):
+    class Data(SandboxModel):
         scan_id: UUID
         """
         ID of the created task
@@ -691,8 +692,8 @@ class SandboxCheckTaskResponse(BaseResponse):
     data: Data
 
 
-class SandboxTasksResponse(BaseModel):
-    class Task(BaseModel):
+class SandboxTasksResponse(SandboxModel):
+    class Task(SandboxModel):
         """
         Brief information on the scan
         """

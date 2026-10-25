@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import Field
 
 from ptsandbox.models.core import (
     Action,
@@ -20,10 +20,11 @@ from ptsandbox.models.core import (
     TreeEngineName,
     Verdict,
 )
+from ptsandbox.models.core.base import SandboxModel
 from ptsandbox.models.core.enum import ErrorType, QuarantineState, TokenPermissions
 
 
-class EntryPointToken(BaseModel):
+class EntryPointToken(SandboxModel):
     id: int
     """
     ID of the token in the Postgres database
@@ -40,7 +41,7 @@ class EntryPointToken(BaseModel):
     """
 
 
-class CorrelationInfo(BaseModel):
+class CorrelationInfo(SandboxModel):
     """
     Information about correlation
     """
@@ -71,7 +72,7 @@ class CorrelationInfo(BaseModel):
     """
 
 
-class MailResult(BaseModel):
+class MailResult(SandboxModel):
     recipient: str
     action: Action
     email_type: EmailType = Field(alias="emailType")
@@ -80,7 +81,7 @@ class MailResult(BaseModel):
     server_port: int = Field(alias="serverPort")
 
 
-class HTTPDescription(BaseModel):
+class HTTPDescription(SandboxModel):
     referer: str
     """
     The value of the HTTP 'Referer' header, from which page the request was sent
@@ -102,13 +103,13 @@ class HTTPDescription(BaseModel):
     """
 
 
-class EntryPoint(BaseModel):
+class EntryPoint(SandboxModel):
     """
     Where did the task come from
     """
 
-    class Quarantine(BaseModel):
-        class QuarantineEvent(BaseModel):
+    class Quarantine(SandboxModel):
+        class QuarantineEvent(SandboxModel):
             type: QuarantineEventType
 
             time: int
@@ -146,7 +147,7 @@ class EntryPoint(BaseModel):
         List of quarantine events. Filled in only in API /summary, there is no such field in the listing.
         """
 
-    class CheckMe(BaseModel):
+    class CheckMe(SandboxModel):
         from_address: str = Field(alias="fromAddress")
         """
         The sender received from the SMTP session (the 'MAIL FROM' command)
@@ -157,7 +158,7 @@ class EntryPoint(BaseModel):
         The list of recipients received from the SMTP session (the 'RCPT TO' command)
         """
 
-    class ICAP(BaseModel):
+    class ICAP(SandboxModel):
         method: str
         """
         ICAP method (RESPMOD, REQMOD)
@@ -183,8 +184,8 @@ class EntryPoint(BaseModel):
         ICAP header value: 'X-Client-Username'
         """
 
-    class DPI(BaseModel):
-        class SMTP(BaseModel):
+    class DPI(SandboxModel):
+        class SMTP(SandboxModel):
             message_id: str = Field(default=..., alias="messageId")
             """
             The EML value of the 'Message-Id' header
@@ -226,7 +227,7 @@ class EntryPoint(BaseModel):
 
         smtp: SMTP | None = None
 
-    class MailAgent(BaseModel):
+    class MailAgent(SandboxModel):
         from_address: str = Field(alias="fromAddress")
         """
         The sender received from the SMTP session (the 'MAIL FROM' command)
@@ -242,7 +243,7 @@ class EntryPoint(BaseModel):
         The results are sent by mail. Filled in only in API /summary, there is no such field in the listing.
         """
 
-    class MailBcc(BaseModel):
+    class MailBcc(SandboxModel):
         from_address: str = Field(alias="fromAddress")
         """
         The sender received from the SMTP session (the 'MAIL FROM' command)
@@ -253,7 +254,7 @@ class EntryPoint(BaseModel):
         The list of recipients received from the SMTP session (the 'RCPT TO' command)
         """
 
-    class FileInbox(BaseModel):
+    class FileInbox(SandboxModel):
         src_path: str = Field(alias="srcPath")
         """
         The original path to the file
@@ -264,13 +265,13 @@ class EntryPoint(BaseModel):
         The path where the file was moved
         """
 
-    class FileMonitor(BaseModel):
+    class FileMonitor(SandboxModel):
         src_path: str = Field(alias="srcPath")
         """
         The original path to the file
         """
 
-    class MailGateway(BaseModel):
+    class MailGateway(SandboxModel):
         from_address: str = Field(alias="fromAddress")
         """
         The sender received from the SMTP session (the 'MAIL FROM' command)
@@ -286,7 +287,7 @@ class EntryPoint(BaseModel):
         The results are sent by mail. Filled in only in API /summary, there is no such field in the listing.
         """
 
-    class PTNAD(BaseModel):
+    class PTNAD(SandboxModel):
         src_ip: str = Field(alias="srcIp")
         """
         The IP address where the object was sent from
@@ -319,7 +320,7 @@ class EntryPoint(BaseModel):
 
         http: HTTPDescription | None = None
 
-    class ClientWebInfo(BaseModel):
+    class ClientWebInfo(SandboxModel):
         user_agent: str = Field(alias="userAgent")
         """
         The value of the HTTP header 'User-Agent'
@@ -413,14 +414,14 @@ class EntryPoint(BaseModel):
     interactive_analysis: ClientFullWebInfo | None = Field(default=None, alias="interactiveAnalysis")
 
 
-class DetectionUI(BaseModel):
+class DetectionUI(SandboxModel):
     name: str
     threat_classification: ThreatClassification = Field(alias="threatClassification")
     id: str | None = None
     description: str | None = None
 
 
-class Error(BaseModel):
+class Error(SandboxModel):
     type: ErrorType
 
     duration: int | None = None
@@ -436,8 +437,8 @@ class ErrorWithLimit(Error):
     """
 
 
-class Scan(BaseModel):
-    class Engine(BaseModel):
+class Scan(SandboxModel):
+    class Engine(SandboxModel):
         name: TreeEngineName
 
         database_time: datetime | None = Field(default=None, alias="databaseTime")
@@ -453,8 +454,8 @@ class Scan(BaseModel):
     result: CorrelationInfo | None = None
 
 
-class FilterValues(BaseModel):
-    class EntryPoint(BaseModel):
+class FilterValues(SandboxModel):
+    class EntryPoint(SandboxModel):
         name: str
         id: str
         type: EntryPointType
@@ -480,8 +481,8 @@ class FilterValues(BaseModel):
     """
 
 
-class Token(BaseModel):
-    class EntryPoint(BaseModel):
+class Token(SandboxModel):
+    class EntryPoint(SandboxModel):
         """
         The entrypoint to which the api token is linked.
 
@@ -543,18 +544,18 @@ class Token(BaseModel):
     entry_point: EntryPoint | None = Field(default=None, alias="entryPoint")
 
 
-class SMTPDefaultRecord(BaseModel):
+class SMTPDefaultRecord(SandboxModel):
     """
     SMTP connection settings
     """
 
-    class SMTPConfig(BaseModel):
-        class Credential(BaseModel):
+    class SMTPConfig(SandboxModel):
+        class Credential(SandboxModel):
             login: str
             password: str
             id: str
 
-        class Timeout(BaseModel):
+        class Timeout(SandboxModel):
             connect: int
             execute: int
 

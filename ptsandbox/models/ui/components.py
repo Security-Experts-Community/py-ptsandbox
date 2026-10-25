@@ -1,17 +1,18 @@
 from __future__ import annotations
 
-from pydantic import BaseModel, Field
+from pydantic import Field
 
 from ptsandbox.models import ComponentStatus, ComponentType
+from ptsandbox.models.core.base import SandboxModel
 
 
-class SandboxComponentsResponse(BaseModel):
+class SandboxComponentsResponse(SandboxModel):
     """
     Information about system components
     """
 
-    class Component(BaseModel):
-        class Pod(BaseModel):
+    class Component(SandboxModel):
+        class Pod(SandboxModel):
             name: str
 
             component_name: str = Field(alias="componentName")

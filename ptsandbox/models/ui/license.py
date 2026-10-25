@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import AwareDatetime, BaseModel, Field
+from pydantic import AwareDatetime, Field
 
 from ptsandbox.models import (
     LicenseAvEngine,
@@ -11,7 +11,7 @@ from ptsandbox.models import (
     LicenseStatus,
     LicenseUpdateError,
 )
-from ptsandbox.models.core.base import BaseResponse
+from ptsandbox.models.core.base import BaseResponse, SandboxModel
 
 
 class SandboxLicenseResponse(BaseResponse):
@@ -19,8 +19,8 @@ class SandboxLicenseResponse(BaseResponse):
     License status and details
     """
 
-    class Data(BaseModel):
-        class UpdateStatus(BaseModel):
+    class Data(SandboxModel):
+        class UpdateStatus(SandboxModel):
             """
             Information about the last attempt to update the license
             """
@@ -46,13 +46,13 @@ class SandboxLicenseResponse(BaseResponse):
             Product type
             """
 
-        class License(BaseModel):
-            class NodesLimit(BaseModel):
+        class License(SandboxModel):
+            class NodesLimit(SandboxModel):
                 multiscanner: int = Field(alias="multiScanner")
                 sandbox_high_performance: int = Field(alias="sandboxHighPerformance")
                 sandbox_low_performance: int = Field(alias="sandboxLowPerformance")
 
-            class Performance(BaseModel):
+            class Performance(SandboxModel):
                 """
                 Bandwidth by traffic type
                 """
@@ -60,7 +60,7 @@ class SandboxLicenseResponse(BaseResponse):
                 type: LicensePerformanceType
                 limit: int
 
-            class Sandbox(BaseModel):
+            class Sandbox(SandboxModel):
                 enabled: bool
                 """
                 Is behavioral analysis allowed?
@@ -71,7 +71,7 @@ class SandboxLicenseResponse(BaseResponse):
                 Images that can be used in behavioral analysis
                 """
 
-            class Telemetry(BaseModel):
+            class Telemetry(SandboxModel):
                 enabled: bool
                 """
                 Is telemetry enabled
@@ -163,7 +163,7 @@ class SandboxLicenseUpdateResponse(BaseResponse):
     License update attempt status
     """
 
-    class Data(BaseModel):
+    class Data(SandboxModel):
         status: Literal["SUCCESS", "FAILED"]
 
         error: LicenseUpdateError

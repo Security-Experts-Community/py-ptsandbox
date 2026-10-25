@@ -1,8 +1,6 @@
 from __future__ import annotations
 
-from pydantic import BaseModel
-
-from ptsandbox.models.core.base import BaseResponse
+from ptsandbox.models.core.base import BaseResponse, SandboxModel
 
 
 class SandboxGetHealthStatusResponse(BaseResponse):
@@ -10,7 +8,7 @@ class SandboxGetHealthStatusResponse(BaseResponse):
     Healthcheck results
     """
 
-    class Data(BaseModel):
+    class Data(SandboxModel):
         status: str
         """
         Health status
@@ -24,7 +22,7 @@ class SandboxGetVersionResponse(BaseResponse):
     Get information about the product
     """
 
-    class Data(BaseModel):
+    class Data(SandboxModel):
         version: str
         """
         Product version, for example '5.11.0.12345'

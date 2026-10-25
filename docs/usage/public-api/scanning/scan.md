@@ -156,7 +156,7 @@ async def main():
 asyncio.run(main())
 ```
 
-1. The library does not check the existence of files
+1. Files are placed next to the sample under their base names (`file.txt`, `file.sh`). To use another name, pass a `(stream, "name")` tuple instead of a path. Names must be unique
 2. We specify `SandboxOptionsAdvanced` instead of `SandboxOptions`
 
 !!! tip "Tip - enable manual analysis"

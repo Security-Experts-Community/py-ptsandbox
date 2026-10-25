@@ -2,16 +2,16 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import Field
 
 from ptsandbox.models.core import FilterProperties
-from ptsandbox.models.core.base import BaseRequest, BaseResponse
+from ptsandbox.models.core.base import BaseRequest, BaseResponse, SandboxModel
 from ptsandbox.models.core.enum import EntryPointType
 from ptsandbox.models.ui.common import EntryPointToken, SMTPDefaultRecord
 
 
-class EntryPointRules(BaseModel):
-    class _SandboxInternal(BaseModel):
+class EntryPointRules(SandboxModel):
+    class _SandboxInternal(SandboxModel):
         enabled: bool
         """
         Turn on the sandbox
@@ -64,9 +64,9 @@ class EntryPointRules(BaseModel):
         A set of BA images for auto-selection
         """
 
-    class ScanConfig(BaseModel):
-        class _BaseRule(BaseModel):
-            class Detect(BaseModel):
+    class ScanConfig(SandboxModel):
+        class _BaseRule(SandboxModel):
+            class Detect(SandboxModel):
                 classification: str
                 name: str
 
@@ -90,7 +90,7 @@ class EntryPointRules(BaseModel):
             A custom rule for detecting files
             """
 
-            class File(BaseModel):
+            class File(SandboxModel):
                 types: list[str]
                 """
                 List of file extensions to detect
@@ -121,7 +121,7 @@ class EntryPointRules(BaseModel):
             Inverse user rule for file detection
             """
 
-            class FileInverse(BaseModel):
+            class FileInverse(SandboxModel):
                 types: list[str]
                 """
                 List of file extensions to detect
@@ -144,7 +144,7 @@ class EntryPointRules(BaseModel):
             Custom rule for link detection
             """
 
-            class URL(BaseModel):
+            class URL(SandboxModel):
                 categories_list: list[list[str]] = Field(alias="categoriesList")
                 """
                 List of lists by link category
@@ -330,9 +330,9 @@ class EntryPointRules(BaseModel):
     """
 
 
-class EntryPointSettings(BaseModel):
-    class SMTPSettings(BaseModel):
-        class Route(BaseModel):
+class EntryPointSettings(SandboxModel):
+    class SMTPSettings(SandboxModel):
+        class Route(SandboxModel):
             enabled: bool
             """
             On/Off Route
@@ -343,7 +343,7 @@ class EntryPointSettings(BaseModel):
             The template for the domain
             """
 
-        class Resolver(BaseModel):
+        class Resolver(SandboxModel):
             type: Literal["static", "dynamic"]
 
             records: list[SMTPDefaultRecord] = Field(default_factory=list[SMTPDefaultRecord])
@@ -353,7 +353,7 @@ class EntryPointSettings(BaseModel):
 
         routes: list[Route] = Field(default_factory=list[Route])
 
-    class ExtraBCCAddresses(BaseModel):
+    class ExtraBCCAddresses(SandboxModel):
         enabled: bool
         """
         Enable email forwarding to additional recipient addresses
@@ -690,7 +690,7 @@ class SandboxEntryPointsTypesResponse(BaseResponse):
     List of possible sources to check
     """
 
-    class EntryPoint(BaseModel):
+    class EntryPoint(SandboxModel):
         allow_blocking: bool = Field(alias="allowBlocking")
         """
         Blocking mode
@@ -714,7 +714,7 @@ class SandboxEntryPointsTypesResponse(BaseResponse):
 
 
 class SandboxEntryPointsResponse(BaseResponse):
-    class EntryPoint(BaseModel):
+    class EntryPoint(SandboxModel):
         """
         Information about the verification source
         """
@@ -773,7 +773,7 @@ class SandboxEntryPointsResponse(BaseResponse):
 
 
 class SandboxEntryPointResponse(BaseResponse):
-    class EntryPoint(BaseModel):
+    class EntryPoint(SandboxModel):
         """
         Information about the verification source
         """
@@ -844,6 +844,6 @@ class SandboxCreateEntryPointRequest(BaseRequest):
     Type of the source
     """
 
-    settings: EntryPointSettings = EntryPointSettings()
+    settings: EntryPointSettings = Field(default_factory=EntryPointSettings)
 
-    rules: EntryPointRules = EntryPointRules()
+    rules: EntryPointRules = Field(default_factory=EntryPointRules)

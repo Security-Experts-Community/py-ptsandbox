@@ -1,16 +1,17 @@
 from __future__ import annotations
 
-from pydantic import BaseModel, Field
+from pydantic import Field
 
+from ptsandbox.models.core.base import SandboxModel
 from ptsandbox.models.core.enum import BaqueueState, EntryPointType
 
 
-class SandboxBaqueueTasksResponse(BaseModel):
+class SandboxBaqueueTasksResponse(SandboxModel):
     """
     Listing of issues in the BA queue
     """
 
-    class Task(BaseModel):
+    class Task(SandboxModel):
         task_id: str = Field(alias="taskId")
 
         correlation_id: str = Field(alias="correlationId")

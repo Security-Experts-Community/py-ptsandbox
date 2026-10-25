@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from typing import Any, Literal
 
-from pydantic import BaseModel, Field
+from pydantic import Field
 
-from ptsandbox.models.core.base import BaseRequest, BaseResponse
+from ptsandbox.models.core.base import BaseRequest, BaseResponse, SandboxModel
 from ptsandbox.models.core.enum import (
     EOSStatus,
     SystemCode,
@@ -14,7 +14,7 @@ from ptsandbox.models.core.enum import (
 from ptsandbox.models.ui.common import SMTPDefaultRecord
 
 
-class SandboxSystemStatusResponse(BaseModel):
+class SandboxSystemStatusResponse(SandboxModel):
     """
     System events are returned here with information about the current state of the system, i.e. a slice of the current state.
 
@@ -105,7 +105,7 @@ class SandboxSystemStatusResponse(BaseModel):
     ```
     """
 
-    class Event(BaseModel):
+    class Event(SandboxModel):
         group: SystemGroup
         """
         Group (subsystem)
@@ -149,8 +149,8 @@ class SandboxSystemSettingsResponse(BaseResponse):
     System Settings
     """
 
-    class Data(BaseModel):
-        class Telemetry(BaseModel):
+    class Data(SandboxModel):
+        class Telemetry(SandboxModel):
             enabled: bool
             """
             Telemetry status
@@ -158,7 +158,7 @@ class SandboxSystemSettingsResponse(BaseResponse):
 
             send_events: bool = Field(alias="sendEvents")
 
-        class SIEMNotifier(BaseModel):
+        class SIEMNotifier(SandboxModel):
             enabled: bool
             """
             Status of event collection and analysis
@@ -184,7 +184,7 @@ class SandboxSystemSettingsResponse(BaseResponse):
             Send audit events to the system log
             """
 
-        class CybsiNotifier(BaseModel):
+        class CybsiNotifier(SandboxModel):
             enabled: bool
             """
             Enabling/disabling sending reports to Cybsi
@@ -210,7 +210,7 @@ class SandboxSystemSettingsResponse(BaseResponse):
             The rule for uploading artifacts
             """
 
-        class EmailNotifier(BaseModel):
+        class EmailNotifier(SandboxModel):
             enabled: bool
             """
             Enabling/disabling the sending of notifications by mail
@@ -241,26 +241,26 @@ class SandboxSystemSettingsResponse(BaseResponse):
             List of mail servers
             """
 
-        class Authentication(BaseModel):
+        class Authentication(SandboxModel):
             anonymous_deny: bool = Field(alias="anonymousDeny")
             """
             Anonymous analysis is prohibited
             """
 
-        class Unpacker(BaseModel):
+        class Unpacker(SandboxModel):
             passwords: list[str]
             """
             List of passwords for unpacking password-protected archives
             """
 
-        class EventCombiner(BaseModel):
+        class EventCombiner(SandboxModel):
             events_eviction_days: int = Field(alias="eventsEvictionDays")
             """
             Retention period of the verification history
             """
 
-        class Storage(BaseModel):
-            class Settings(BaseModel):
+        class Storage(SandboxModel):
+            class Settings(SandboxModel):
                 bytes: int
                 """
                 Size in bytes
@@ -271,9 +271,9 @@ class SandboxSystemSettingsResponse(BaseResponse):
                 Number of files
                 """
 
-            class Components(BaseModel):
-                class Component(BaseModel):
-                    class Settings(BaseModel):
+            class Components(SandboxModel):
+                class Component(SandboxModel):
+                    class Settings(SandboxModel):
                         bytes: int
                         """
                         Size in bytes
@@ -284,7 +284,7 @@ class SandboxSystemSettingsResponse(BaseResponse):
                         Number of files
                         """
 
-                    class Threshold(BaseModel):
+                    class Threshold(SandboxModel):
                         bytes_percent: int = Field(alias="bytesPercent")
                         """
                         Percentage of threshold in bytes
@@ -317,7 +317,7 @@ class SandboxSystemSettingsResponse(BaseResponse):
 
             components: Components
 
-        class Quarantine(BaseModel):
+        class Quarantine(SandboxModel):
             retention_period: int = Field(alias="retentionPeriod")
             """
             Storage period in quarantine
@@ -333,7 +333,7 @@ class SandboxSystemSettingsResponse(BaseResponse):
             List of mail servers
             """
 
-        class Retro(BaseModel):
+        class Retro(SandboxModel):
             enabled: bool
             """
             The status of the retro check
@@ -363,7 +363,7 @@ class SandboxSystemSettingsResponse(BaseResponse):
 
 
 class SandboxUpdateSystemSettingsRequest(BaseRequest):
-    class SIEMNotifier(BaseModel):
+    class SIEMNotifier(SandboxModel):
         enabled: bool | None = None
         """
         Status of event collection and analysis
@@ -389,7 +389,7 @@ class SandboxUpdateSystemSettingsRequest(BaseRequest):
         Send audit events to the system log
         """
 
-    class CybsiNotifier(BaseModel):
+    class CybsiNotifier(SandboxModel):
         enabled: bool | None = None
         """
         Enabling/disabling sending reports to Cybsi
@@ -417,7 +417,7 @@ class SandboxUpdateSystemSettingsRequest(BaseRequest):
         The rule for uploading artifacts
         """
 
-    class EmailNotifier(BaseModel):
+    class EmailNotifier(SandboxModel):
         enabled: bool
         """
         Enabling/disabling the sending of notifications by mail
@@ -448,28 +448,28 @@ class SandboxUpdateSystemSettingsRequest(BaseRequest):
         List of mail servers
         """
 
-    class Authentication(BaseModel):
+    class Authentication(SandboxModel):
         anonymous_deny: bool = Field(serialization_alias="anonymousDeny")
         """
         Anonymous analysis is prohibited
         """
 
-    class Unpacker(BaseModel):
+    class Unpacker(SandboxModel):
         passwords: list[str]
         """
         List of passwords for unpacking password-protected archives
         """
 
-    class EventCombiner(BaseModel):
+    class EventCombiner(SandboxModel):
         events_eviction_days: int = Field(serialization_alias="eventsEvictionDays")
         """
         Retention period of the verification history
         """
 
-    class Storage(BaseModel):
-        class Components(BaseModel):
-            class Component(BaseModel):
-                class Settings(BaseModel):
+    class Storage(SandboxModel):
+        class Components(SandboxModel):
+            class Component(SandboxModel):
+                class Settings(SandboxModel):
                     bytes: int | None = None
                     """
                     Size in bytes
@@ -488,7 +488,7 @@ class SandboxUpdateSystemSettingsRequest(BaseRequest):
 
         components: Components
 
-    class Quarantine(BaseModel):
+    class Quarantine(SandboxModel):
         retention_period: int | None = Field(default=None, serialization_alias="retentionPeriod")
         """
         Storage period in quarantine
@@ -506,7 +506,7 @@ class SandboxUpdateSystemSettingsRequest(BaseRequest):
         List of mail servers
         """
 
-    class Retro(BaseModel):
+    class Retro(SandboxModel):
         enabled: bool
         """
         The status of the retro check
@@ -532,7 +532,7 @@ class SandboxUpdateSystemSettingsRequest(BaseRequest):
 
 
 class SandboxSystemVersionResponse(BaseResponse):
-    class Data(BaseModel):
+    class Data(SandboxModel):
         version: str
 
         eos_ts: int = Field(alias="eosTs")

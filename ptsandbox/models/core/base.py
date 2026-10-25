@@ -5,7 +5,19 @@ from typing import Any
 from pydantic import BaseModel, ConfigDict, Field
 
 
-class BaseRequest(BaseModel):
+class SandboxModel(BaseModel):
+    """
+    The base class for all models of the library.
+
+    Validation schemas are built on first use rather than at import time:
+    there are well over a hundred models and most programs use only a few of them,
+    so building all the schemas eagerly noticeably slows down ``import ptsandbox``.
+    """
+
+    model_config = ConfigDict(defer_build=True)
+
+
+class BaseRequest(SandboxModel):
     """
     The base class for all Request models related to the sandbox.
 
@@ -33,7 +45,7 @@ class BaseRequest(BaseModel):
         return super().model_dump_json(exclude_none=exclude_none, by_alias=by_alias, **kwargs)
 
 
-class BaseResponse(BaseModel):
+class BaseResponse(SandboxModel):
     """
     The base class for all Response models related to the sandbox.
 
@@ -45,7 +57,7 @@ class BaseResponse(BaseModel):
           responses will use aliases by default via ``model_config``.
     """
 
-    class Error(BaseModel):
+    class Error(SandboxModel):
         message: str
 
         type: str

@@ -1,11 +1,12 @@
 from __future__ import annotations
 
-from pydantic import BaseModel, Field
+from pydantic import Field
 
+from ptsandbox.models.core.base import SandboxModel
 from ptsandbox.models.ui.common import Token
 
 
-class SandboxTokensResponse(BaseModel):
+class SandboxTokensResponse(SandboxModel):
     """
     Listing of current Public API tokens
     """
