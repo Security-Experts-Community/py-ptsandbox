@@ -1,0 +1,3340 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://security-experts-community.github.io/py-ptsandbox/api-reference/public-api/">
+      
+      
+      
+        <link rel="prev" href="../sandbox/">
+      
+      
+        <link rel="next" href="../ui-api/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/main_logo_no_text.svg">
+      <meta name="generator" content="zensical-0.1.0">
+    
+    
+      
+        <title>Public API client - ptsandbox</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.4ab2de0c.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/modern/palette.b60ce83d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-hidden="true"></label>
+    <div data-md-component="skip">
+      <a href="#__skip" class="md-skip">
+        Skip to content
+      </a>
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ptsandbox" class="md-header__button md-logo" aria-label="ptsandbox" data-md-component="logo">
+      
+  <img src="../../assets/main_logo_no_text.svg" alt="ptsandbox">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+      <span class="md-visually-hidden">Navigation</span>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ptsandbox
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Public API client
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Light"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Light" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5M7 15a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Dark"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Dark" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+          <span class="md-visually-hidden">Search</span>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Search">
+  <button type="button" class="md-search__button">
+    Search
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+        <a href="https://github.com/Security-Experts-Community/py-ptsandbox" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M216.5 362.5c-66-8-112.5-55.5-112.5-117 0-25 9-52 24-70-6.5-16.5-5.5-51.5 2-66 20-2.5 47 8 63 22.5 19-6 39-9 63.5-9s44.5 3 62.5 8.5c15.5-14 43-24.5 63-22 7 13.5 8 48.5 1.5 65.5 16 19 24.5 44.5 24.5 70.5 0 61.5-46.5 108-113.5 116.5 17 11 28.5 35 28.5 62.5v52c0 15 12.5 23.5 27.5 17.5C441 459.5 512 369 512 257 512 115.5 397 0 255.5 0S0 115.5 0 257c0 111 70.5 203 165.5 237.5 13.5 5 26.5-4 26.5-17.5v-40c-7 3-16 5-24 5-33 0-52.5-18-66.5-51.5-5.5-13.5-11.5-21.5-23-23-6-.5-8-3-8-6 0-6 10-10.5 20-10.5 14.5 0 27 9 40 27.5 10 14.5 20.5 21 33 21s20.5-4.5 32-16c8.5-8.5 15-16 21-21"/></svg>
+  </div>
+  <div class="md-source__repository">
+    py-ptsandbox
+  </div>
+</a>
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ptsandbox" class="md-nav__button md-logo" aria-label="ptsandbox" data-md-component="logo">
+      
+  <img src="../../assets/main_logo_no_text.svg" alt="ptsandbox">
+
+    </a>
+    ptsandbox
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Security-Experts-Community/py-ptsandbox" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M216.5 362.5c-66-8-112.5-55.5-112.5-117 0-25 9-52 24-70-6.5-16.5-5.5-51.5 2-66 20-2.5 47 8 63 22.5 19-6 39-9 63.5-9s44.5 3 62.5 8.5c15.5-14 43-24.5 63-22 7 13.5 8 48.5 1.5 65.5 16 19 24.5 44.5 24.5 70.5 0 61.5-46.5 108-113.5 116.5 17 11 28.5 35 28.5 62.5v52c0 15 12.5 23.5 27.5 17.5C441 459.5 512 369 512 257 512 115.5 397 0 255.5 0S0 115.5 0 257c0 111 70.5 203 165.5 237.5 13.5 5 26.5-4 26.5-17.5v-40c-7 3-16 5-24 5-33 0-52.5-18-66.5-51.5-5.5-13.5-11.5-21.5-23-23-6-.5-8-3-8-6 0-6 10-10.5 20-10.5 14.5 0 27 9 40 27.5 10 14.5 20.5 21 33 21s20.5-4.5 32-16c8.5-8.5 15-16 21-21"/></svg>
+  </div>
+  <div class="md-source__repository">
+    py-ptsandbox
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Overview
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Usage
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Usage
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/proxy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Proxy
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/detections/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Detections
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Public API
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_2_3">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Public API
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_1" id="__nav_2_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Scanning
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_1_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_2_3_1">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Scanning
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/public-api/scanning/scan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Scan
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/public-api/scanning/rescan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Rescan
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/public-api/scanning/debug-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Debug Options
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/public-api/scanning/source/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Sources
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/public-api/image-info/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Get available images
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/public-api/email/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Extract email headers
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/public-api/download-files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Download files
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/public-api/system/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  System info
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/public-api/tasks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Tasks
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  UI API
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_2_4">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  UI API
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/ui-api/authorization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Authorization
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/ui-api/api-tokens/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  API Tokens
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/ui-api/antiviruses/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Antiviruses
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/ui-api/artifacts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Artifacts
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/ui-api/baqueue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  BAqueue
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/ui-api/download-files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Download files
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/ui-api/entry-points/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Entry Points
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/ui-api/license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  License
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/ui-api/system/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  System
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/ui-api/tasks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Tasks
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  API Reference
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+            <label class="md-nav__title" for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  API Reference
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ptsandbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  ptsandbox
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exceptions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  ptsandbox.exceptions
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  ptsandbox.models
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  ptsandbox.sandbox
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Public API client
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Public API client
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        SandboxApi
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SandboxApi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.close" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        close
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.get_images" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        get_images
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.get_health_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        get_health_status
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.get_version" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        get_version
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.source_check_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        source_check_file
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.source_check_url" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        source_check_url
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.source_get_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        source_get_status
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.source_get_report" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        source_get_report
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.create_scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        create_scan
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.create_advanced_scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        create_advanced_scan
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.create_url_scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        create_url_scan
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.check_task" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        check_task
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.get_report" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        get_report
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.create_rescan" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        create_rescan
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.get_email_headers" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        get_email_headers
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.get_tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        get_tasks
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.upload_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        upload_file
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.download_artifact" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        download_artifact
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.download_artifact_stream" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        download_artifact_stream
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ui-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  UI API client
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  ptsandbox.utils
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        SandboxApi
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SandboxApi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.close" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        close
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.get_images" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        get_images
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.get_health_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        get_health_status
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.get_version" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        get_version
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.source_check_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        source_check_file
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.source_check_url" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        source_check_url
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.source_get_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        source_get_status
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.source_get_report" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        source_get_report
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.create_scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        create_scan
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.create_advanced_scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        create_advanced_scan
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.create_url_scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        create_url_scan
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.check_task" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        check_task
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.get_report" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        get_report
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.create_rescan" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        create_rescan
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.get_email_headers" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        get_email_headers
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.get_tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        get_tasks
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.upload_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        upload_file
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.download_artifact" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        download_artifact
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptsandbox.sandbox.api.SandboxApi.download_artifact_stream" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        download_artifact_stream
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                <a id="__skip" tabindex="-1"></a>
+                
+                  
+
+  
+  
+
+
+<h1 id="public-api-client">Public API client</h1>
+<p>Access this client through <code>sandbox.api</code>. It uses the API token from <code>SandboxKey</code>.
+Methods inherited from the storage, analysis, scanning, and maintenance mixins
+are listed below.</p>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="ptsandbox.sandbox.api.SandboxApi" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">ptsandbox.sandbox.api.SandboxApi</span>
+
+
+</h2>
+
+
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="ptsandbox.sandbox.api._storage.StorageMixin">StorageMixin</span></code>, <code><span title="ptsandbox.sandbox.api._analysis.AnalysisMixin">AnalysisMixin</span></code>, <code><span title="ptsandbox.sandbox.api._scan.ScanMixin">ScanMixin</span></code>, <code><span title="ptsandbox.sandbox.api._maintenance.MaintenanceMixin">MaintenanceMixin</span></code></p>
+
+
+        <p>Using raw queries to sandbox API</p>
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ptsandbox.sandbox.api.SandboxApi.close" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">close</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">close</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Close the underlying aiohttp session.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ptsandbox.sandbox.api.SandboxApi.get_images" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">get_images</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">get_images</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">SandboxGetImagesResponse</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Get a list of available images in the sandbox</p>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientResponseError">ClientResponseError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the server returns an error status</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientError">ClientError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>on connection or transport errors</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="pydantic.ValidationError">ValidationError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the response body does not match the expected model</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ptsandbox.sandbox.api.SandboxApi.get_health_status" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">get_health_status</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">get_health_status</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">SandboxGetHealthStatusResponse</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Checking the API status</p>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientResponseError">ClientResponseError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the server returns an error status</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientError">ClientError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>on connection or transport errors</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="pydantic.ValidationError">ValidationError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the response body does not match the expected model</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ptsandbox.sandbox.api.SandboxApi.get_version" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">get_version</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">get_version</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">SandboxGetVersionResponse</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Get information about the product</p>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientResponseError">ClientResponseError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the server returns an error status</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientError">ClientError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>on connection or transport errors</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="pydantic.ValidationError">ValidationError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the response body does not match the expected model</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ptsandbox.sandbox.api.SandboxApi.source_check_file" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">source_check_file</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">source_check_file</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="n">BinaryIO</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">SandboxScanWithSourceFileRequest</span><span class="p">,</span> <span class="n">read_timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">240</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SandboxBaseTaskResponse</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Send a file to the sandbox with source settings</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+            <b><code>file</code></b>
+              (<code><span title="str">str</span> | <span title="pathlib.Path">Path</span> | <span title="bytes">bytes</span> | <span title="typing.BinaryIO">BinaryIO</span></code>)
+          –
+          <div class="doc-md-description">
+            <p>The file to be sent for analysis</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+            <b><code>data</code></b>
+              (<code><a class="autorefs autorefs-internal" title="SandboxScanWithSourceFileRequest (ptsandbox.models.api.scan.SandboxScanWithSourceFileRequest)" href="../models/#ptsandbox.models.SandboxScanWithSourceFileRequest">SandboxScanWithSourceFileRequest</a></code>)
+          –
+          <div class="doc-md-description">
+            <p>Request parameters in model</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+            <b><code>read_timeout</code></b>
+              (<code><span title="int">int</span></code>, default:
+                  <code>240</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>Response waiting time in seconds</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><span title="SandboxException">SandboxException</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if incorrect arguments are passed (usually when ignoring type hints)</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientResponseError">ClientResponseError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the server returns an error status</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientError">ClientError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>on connection or transport errors</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="pydantic.ValidationError">ValidationError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the response body does not match the expected model</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ptsandbox.sandbox.api.SandboxApi.source_check_url" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">source_check_url</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">source_check_url</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">SandboxScanWithSourceURLRequest</span><span class="p">,</span> <span class="n">read_timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">240</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SandboxBaseTaskResponse</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Send the URL to the sandbox with source settings</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+            <b><code>data</code></b>
+              (<code><a class="autorefs autorefs-internal" title="SandboxScanWithSourceURLRequest (ptsandbox.models.api.scan.SandboxScanWithSourceURLRequest)" href="../models/#ptsandbox.models.SandboxScanWithSourceURLRequest">SandboxScanWithSourceURLRequest</a></code>)
+          –
+          <div class="doc-md-description">
+            <p>Request parameters in model</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+            <b><code>read_timeout</code></b>
+              (<code><span title="int">int</span></code>, default:
+                  <code>240</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>Response waiting time in seconds</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientResponseError">ClientResponseError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the server returns an error status</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientError">ClientError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>on connection or transport errors</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="pydantic.ValidationError">ValidationError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the response body does not match the expected model</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ptsandbox.sandbox.api.SandboxApi.source_get_status" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">source_get_status</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">source_get_status</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">SandboxCheckTaskRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SandboxCheckTaskResponse</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Check the status of a scan started via the source API (source_check_file / source_check_url).</p>
+<p>Returns only the status without the full report. For the full report, use <code>source_get_report</code>.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+            <b><code>data</code></b>
+              (<code><a class="autorefs autorefs-internal" title="SandboxCheckTaskRequest (ptsandbox.models.SandboxCheckTaskRequest)" href="../models/#ptsandbox.models.SandboxCheckTaskRequest">SandboxCheckTaskRequest</a></code>)
+          –
+          <div class="doc-md-description">
+            <p>request parameters (scan_id and allow_preflight)</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-internal" title="SandboxCheckTaskResponse (ptsandbox.models.SandboxCheckTaskResponse)" href="../models/#ptsandbox.models.SandboxCheckTaskResponse">SandboxCheckTaskResponse</a></code>
+          –
+          <div class="doc-md-description">
+            <p>Information about the analysis status</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientResponseError">ClientResponseError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the server returns an error status</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientError">ClientError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>on connection or transport errors</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="pydantic.ValidationError">ValidationError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the response body does not match the expected model</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ptsandbox.sandbox.api.SandboxApi.source_get_report" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">source_get_report</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">source_get_report</span><span class="p">(</span><span class="n">scan_id</span><span class="p">:</span> <span class="n">UUID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SandboxBaseTaskResponse</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Get the full scan report created using the source settings</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+            <b><code>scan_id</code></b>
+              (<code><span title="uuid.UUID">UUID</span></code>)
+          –
+          <div class="doc-md-description">
+            <p>task id</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-internal" title="SandboxBaseTaskResponse (ptsandbox.models.SandboxBaseTaskResponse)" href="../models/#ptsandbox.models.SandboxBaseTaskResponse">SandboxBaseTaskResponse</a></code>
+          –
+          <div class="doc-md-description">
+            <p>The response from the sandbox is either with partial information (when using async_result), or with full information.</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientResponseError">ClientResponseError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the server returns an error status</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientError">ClientError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>on connection or transport errors</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="pydantic.ValidationError">ValidationError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the response body does not match the expected model</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ptsandbox.sandbox.api.SandboxApi.create_scan" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">create_scan</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">create_scan</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">SandboxScanTaskRequest</span><span class="p">,</span> <span class="n">read_timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SandboxBaseTaskResponse</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Send the specified file to the sandbox for analysis</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+            <b><code>data</code></b>
+              (<code><a class="autorefs autorefs-internal" title="SandboxScanTaskRequest (ptsandbox.models.SandboxScanTaskRequest)" href="../models/#ptsandbox.models.SandboxScanTaskRequest">SandboxScanTaskRequest</a></code>)
+          –
+          <div class="doc-md-description">
+            <p>sandbox parameters in model</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+            <b><code>read_timeout</code></b>
+              (<code><span title="int">int</span></code>, default:
+                  <code>0</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>response waiting time in seconds</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-internal" title="SandboxBaseTaskResponse (ptsandbox.models.SandboxBaseTaskResponse)" href="../models/#ptsandbox.models.SandboxBaseTaskResponse">SandboxBaseTaskResponse</a></code>
+          –
+          <div class="doc-md-description">
+            <p>The response from the sandbox is either with partial information (when using async_result), or with full information.</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientResponseError">ClientResponseError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the server returns an error status</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientError">ClientError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>on connection or transport errors</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="pydantic.ValidationError">ValidationError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the response body does not match the expected model</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ptsandbox.sandbox.api.SandboxApi.create_advanced_scan" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">create_advanced_scan</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">create_advanced_scan</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">SandboxAdvancedScanTaskRequest</span><span class="p">,</span> <span class="n">read_timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SandboxBaseTaskResponse</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Send the specified file to the sandbox for analysis using advanced API</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+            <b><code>data</code></b>
+              (<code><a class="autorefs autorefs-internal" title="SandboxAdvancedScanTaskRequest (ptsandbox.models.SandboxAdvancedScanTaskRequest)" href="../models/#ptsandbox.models.SandboxAdvancedScanTaskRequest">SandboxAdvancedScanTaskRequest</a></code>)
+          –
+          <div class="doc-md-description">
+            <p>sandbox parameters in model</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+            <b><code>read_timeout</code></b>
+              (<code><span title="int">int</span></code>, default:
+                  <code>0</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>response waiting time in seconds</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-internal" title="SandboxBaseTaskResponse (ptsandbox.models.SandboxBaseTaskResponse)" href="../models/#ptsandbox.models.SandboxBaseTaskResponse">SandboxBaseTaskResponse</a></code>
+          –
+          <div class="doc-md-description">
+            <p>The response from the sandbox is either with partial information (when using async_result), or with full information.</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientResponseError">ClientResponseError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the server returns an error status</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientError">ClientError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>on connection or transport errors</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="pydantic.ValidationError">ValidationError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the response body does not match the expected model</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ptsandbox.sandbox.api.SandboxApi.create_url_scan" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">create_url_scan</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">create_url_scan</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">SandboxScanURLTaskRequest</span><span class="p">,</span> <span class="n">read_timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SandboxBaseTaskResponse</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Send the URL to the sandbox</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+            <b><code>data</code></b>
+              (<code><a class="autorefs autorefs-internal" title="SandboxScanURLTaskRequest (ptsandbox.models.SandboxScanURLTaskRequest)" href="../models/#ptsandbox.models.SandboxScanURLTaskRequest">SandboxScanURLTaskRequest</a></code>)
+          –
+          <div class="doc-md-description">
+            <p>sandbox parameters in model</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+            <b><code>read_timeout</code></b>
+              (<code><span title="int">int</span></code>, default:
+                  <code>0</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>response waiting time in seconds</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-internal" title="SandboxBaseTaskResponse (ptsandbox.models.SandboxBaseTaskResponse)" href="../models/#ptsandbox.models.SandboxBaseTaskResponse">SandboxBaseTaskResponse</a></code>
+          –
+          <div class="doc-md-description">
+            <p>The response from the sandbox is either with partial information (when using async_result), or with full information.</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientResponseError">ClientResponseError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the server returns an error status</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientError">ClientError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>on connection or transport errors</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="pydantic.ValidationError">ValidationError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the response body does not match the expected model</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ptsandbox.sandbox.api.SandboxApi.check_task" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">check_task</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">check_task</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">SandboxCheckTaskRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SandboxCheckTaskResponse</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Checking the result of a scan running with the async_result flag</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+            <b><code>data</code></b>
+              (<code><a class="autorefs autorefs-internal" title="SandboxCheckTaskRequest (ptsandbox.models.SandboxCheckTaskRequest)" href="../models/#ptsandbox.models.SandboxCheckTaskRequest">SandboxCheckTaskRequest</a></code>)
+          –
+          <div class="doc-md-description">
+            <p>request parameters (scan_id, allow_preflight)</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-internal" title="SandboxCheckTaskResponse (ptsandbox.models.SandboxCheckTaskResponse)" href="../models/#ptsandbox.models.SandboxCheckTaskResponse">SandboxCheckTaskResponse</a></code>
+          –
+          <div class="doc-md-description">
+            <p>Information about the analysis status</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientResponseError">ClientResponseError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the server returns an error status</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientError">ClientError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>on connection or transport errors</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="pydantic.ValidationError">ValidationError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the response body does not match the expected model</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ptsandbox.sandbox.api.SandboxApi.get_report" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">get_report</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">get_report</span><span class="p">(</span><span class="n">scan_id</span><span class="p">:</span> <span class="n">UUID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SandboxBaseTaskResponse</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Getting the full task scan report</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+            <b><code>scan_id</code></b>
+              (<code><span title="uuid.UUID">UUID</span></code>)
+          –
+          <div class="doc-md-description">
+            <p>ID of the task to get the report for</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-internal" title="SandboxBaseTaskResponse (ptsandbox.models.SandboxBaseTaskResponse)" href="../models/#ptsandbox.models.SandboxBaseTaskResponse">SandboxBaseTaskResponse</a></code>
+          –
+          <div class="doc-md-description">
+            <p>The response from the sandbox is either with partial information (when using async_result), or with full information.</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientResponseError">ClientResponseError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the server returns an error status</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientError">ClientError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>on connection or transport errors</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="pydantic.ValidationError">ValidationError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the response body does not match the expected model</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ptsandbox.sandbox.api.SandboxApi.create_rescan" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">create_rescan</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">create_rescan</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">SandboxRescanTaskRequest</span><span class="p">,</span> <span class="n">read_timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">300</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SandboxBaseTaskResponse</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Run a retro scan to check for detects without running a behavioral analysis.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+            <b><code>data</code></b>
+              (<code><a class="autorefs autorefs-internal" title="SandboxRescanTaskRequest (ptsandbox.models.SandboxRescanTaskRequest)" href="../models/#ptsandbox.models.SandboxRescanTaskRequest">SandboxRescanTaskRequest</a></code>)
+          –
+          <div class="doc-md-description">
+            <p>sandbox parameters in model</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+            <b><code>read_timeout</code></b>
+              (<code><span title="int">int</span></code>, default:
+                  <code>300</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>response waiting time in seconds</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-internal" title="SandboxBaseTaskResponse (ptsandbox.models.SandboxBaseTaskResponse)" href="../models/#ptsandbox.models.SandboxBaseTaskResponse">SandboxBaseTaskResponse</a></code>
+          –
+          <div class="doc-md-description">
+            <p>The response from the sandbox is either with partial information (when using async_result), or with full information.</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientResponseError">ClientResponseError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the server returns an error status</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientError">ClientError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>on connection or transport errors</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="pydantic.ValidationError">ValidationError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the response body does not match the expected model</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ptsandbox.sandbox.api.SandboxApi.get_email_headers" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">get_email_headers</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">get_email_headers</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="n">BinaryIO</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Upload an email to receive headers</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+            <b><code>data</code></b>
+              (<code><span title="str">str</span> | <span title="pathlib.Path">Path</span> | <span title="bytes">bytes</span> | <span title="typing.BinaryIO">BinaryIO</span></code>)
+          –
+          <div class="doc-md-description">
+            <p>path to .eml file, its content or a binary stream</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><span title="collections.abc.AsyncIterator">AsyncIterator</span>[<span title="bytes">bytes</span>]</code>
+          –
+          <div class="doc-md-description">
+            <p>The header file</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientResponseError">ClientResponseError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the server returns an error status</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientError">ClientError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>on connection or transport errors</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ptsandbox.sandbox.api.SandboxApi.get_tasks" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">get_tasks</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">get_tasks</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">SandboxTasksResponse</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Get tasks listing</p>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientResponseError">ClientResponseError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the server returns an error status</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientError">ClientError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>on connection or transport errors</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="pydantic.ValidationError">ValidationError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the response body does not match the expected model</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ptsandbox.sandbox.api.SandboxApi.upload_file" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">upload_file</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">upload_file</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="n">BinaryIO</span><span class="p">,</span> <span class="n">upload_timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">300</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SandboxUploadScanFileResponse</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Uploads the file to the sandbox</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+            <b><code>file</code></b>
+              (<code><span title="str">str</span> | <span title="pathlib.Path">Path</span> | <span title="bytes">bytes</span> | <span title="typing.BinaryIO">BinaryIO</span></code>)
+          –
+          <div class="doc-md-description">
+            <p>a path in the form of a string, either a Path object or binary data</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+            <b><code>upload_timeout</code></b>
+              (<code><span title="float">float</span></code>, default:
+                  <code>300</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>if a large enough file is being uploaded, increase timeout (in seconds).</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-internal" title="SandboxUploadScanFileResponse (ptsandbox.models.SandboxUploadScanFileResponse)" href="../models/#ptsandbox.models.SandboxUploadScanFileResponse">SandboxUploadScanFileResponse</a></code>
+          –
+          <div class="doc-md-description">
+            <p>The link to the file in the temporary storage and the lifetime of this file are returned, or an exception is thrown.</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><span title="SandboxException">SandboxException</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if incorrect arguments are passed (usually when ignoring type hints)</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientResponseError">ClientResponseError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the server returns an error status</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientError">ClientError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>on connection or transport errors</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="pydantic.ValidationError">ValidationError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the response body does not match the expected model</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ptsandbox.sandbox.api.SandboxApi.download_artifact" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">download_artifact</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">download_artifact</span><span class="p">(</span><span class="n">file_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">read_timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">120</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Download file from the sandbox by hash</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+            <b><code>file_uri</code></b>
+              (<code><span title="str">str</span></code>)
+          –
+          <div class="doc-md-description">
+            <p>Permanent file identifier in the <code>sha256:&lt;sha256_hex&gt;</code> format.</p>
+<p>This is not the same as the temporary <code>file_uri</code> returned by
+:meth:<code>upload_file</code> (<code>sfm:stream_v1...</code>), which is only valid
+for use with scan creation endpoints.</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+            <b><code>read_timeout</code></b>
+              (<code><span title="int">int</span></code>, default:
+                  <code>120</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>response waiting time in seconds</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><span title="bytes">bytes</span></code>
+          –
+          <div class="doc-md-description">
+            <p>File data</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientResponseError">ClientResponseError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the server returns an error status (404 if the file is not found)</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientError">ClientError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>on connection or transport errors</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="ptsandbox.sandbox.api.SandboxApi.download_artifact_stream" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">download_artifact_stream</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">download_artifact_stream</span><span class="p">(</span><span class="n">file_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">read_timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">120</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Download file from the sandbox by hash</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+            <b><code>file_uri</code></b>
+              (<code><span title="str">str</span></code>)
+          –
+          <div class="doc-md-description">
+            <p>Permanent file identifier in the <code>sha256:&lt;sha256_hex&gt;</code> format.</p>
+<p>This is not the same as the temporary <code>file_uri</code> returned by
+:meth:<code>upload_file</code> (<code>sfm:stream_v1...</code>), which is only valid
+for use with scan creation endpoints.</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+            <b><code>read_timeout</code></b>
+              (<code><span title="int">int</span></code>, default:
+                  <code>120</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>response waiting time in seconds</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><span title="collections.abc.AsyncIterator">AsyncIterator</span>[<span title="bytes">bytes</span>]</code>
+          –
+          <div class="doc-md-description">
+            <p>streaming file data</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientResponseError">ClientResponseError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>if the server returns an error status (404 if the file is not found)</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+              <code><span title="aiohttp.client_exceptions.ClientError">ClientError</span></code>
+            –
+          <div class="doc-md-description">
+            <p>on connection or transport errors</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog" role="status" aria-atomic="true">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      
+        
+        
+          
+        
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["content.code.copy","content.code.annotate","content.tabs.link","navigation.instant","navigation.expand","navigation.sections","navigation.top"],"redirect":"../../redirect.json","search":"../../assets/javascripts/workers/search.719e0d91.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","clipboard.error":"Could not copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d31f0ffa.min.js"></script>
+      
+    
+  </body>
+</html>
