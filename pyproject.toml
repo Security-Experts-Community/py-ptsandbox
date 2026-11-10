@@ -11,10 +11,10 @@ authors = [
 ]
 dependencies = [
     "pydantic>=2.13.4",
-    "aiohttp>=3.14.3",
+    "aiohttp>=3.14.5",
     "orjson>=3.12.0",
     "aiohttp-socks>=0.12.0",
-    "typing-extensions>=4.12; python_version < '3.12'",
+    "typing-extensions>=4.16.0; python_version < '3.12'",
 ]
 license = "MIT"
 license-files = ["LICENSE"]
