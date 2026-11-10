@@ -1,3 +1,5 @@
+# System
+
 You can get information about system components, including cluster status and component health.
 
 ## Status
@@ -118,8 +120,7 @@ asyncio.run(main())
 
 ## System Logs
 
-```py title="Code example" hl_lines="9-11"
-import aiofiles
+```py title="Code example"
 import asyncio
 from ptsandbox import Sandbox, SandboxKey
 
@@ -127,14 +128,14 @@ async def main():
     async with Sandbox(...) as sandbox:
         await sandbox.ui.authorize()
 
-        async with aiofiles.open("logs.zip", "wb") as fd:
+        with open("logs.zip", "wb") as fd:
             async for chunk in sandbox.ui.get_system_logs(): # (1)!
-                await fd.write(chunk)
+                await asyncio.to_thread(fd.write, chunk)
 
 asyncio.run(main())
 ```
 
-1. :warning: Without parameters, all logs will be downloaded. This can be several gigabytes.
+1. Without parameters, all logs will be downloaded. This can be several gigabytes.
 
 ::: ptsandbox.sandbox.ui._system.SystemMixin.get_system_logs
 

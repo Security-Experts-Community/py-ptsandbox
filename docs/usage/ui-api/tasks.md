@@ -1,3 +1,5 @@
+# Tasks
+
 List tasks, export them to CSV, get task summaries, and browse artifact trees.
 
 ## Get all tasks
@@ -20,18 +22,17 @@ asyncio.run(main())
 
 ## Export in csv
 
-```py title="Code example" hl_lines="9-11"
+```py title="Code example"
 import asyncio
-import aiofiles
 from ptsandbox import Sandbox, SandboxKey
 
 async def main():
     async with Sandbox(...) as sandbox:
         await sandbox.ui.authorize()
 
-        async with aiofiles.open("./tasks.csv", "wb") as fd:
+        with open("./tasks.csv", "wb") as fd:
             async for chunk in sandbox.ui.get_tasks_csv():
-                await fd.write(chunk)
+                await asyncio.to_thread(fd.write, chunk)
 
 asyncio.run(main())
 ```
@@ -98,9 +99,8 @@ asyncio.run(main())
 
 ### Download all the artifacts of the task
 
-```py title="Code example" hl_lines="10-12"
+```py title="Code example"
 import asyncio
-import aiofiles
 from uuid import UUID
 from ptsandbox import Sandbox, SandboxKey
 
@@ -108,9 +108,9 @@ async def main():
     async with Sandbox(...) as sandbox:
         await sandbox.ui.authorize()
 
-        async with aiofiles.open("artifacts.zip", "wb") as fd:
+        with open("artifacts.zip", "wb") as fd:
             async for chunk in sandbox.ui.get_task_artifacts(UUID("...")):
-                await fd.write(chunk)
+                await asyncio.to_thread(fd.write, chunk)
 
 asyncio.run(main())
 ```

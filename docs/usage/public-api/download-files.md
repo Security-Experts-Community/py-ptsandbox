@@ -1,3 +1,5 @@
+# Download files
+
 You can download files from the sandbox using a `sha256` hash.
 
 ```py title="Code example" hl_lines="6"
@@ -12,15 +14,15 @@ async def example() -> None:
 
 Use streaming if you don't want to load the entire file into memory:
 
-```py title="Code example" hl_lines="8"
-import aiofiles
+```py title="Code example"
+import asyncio
 from ptsandbox import Sandbox, SandboxKey
 
 async def example() -> None:
     async with Sandbox(key=SandboxKey(...)) as sandbox:
-        async with aiofiles.open("./file", "wb") as fd:
+        with open("./file", "wb") as fd:
             async for chunk in sandbox.get_file_stream("..."):
-                await fd.write(chunk)
+                await asyncio.to_thread(fd.write, chunk)
 
 ```
 
@@ -57,7 +59,6 @@ async with Sandbox(SandboxKey(...)) as sandbox:
     from typing import Any, Coroutine
     from uuid import UUID
 
-    import aiofiles
 
     from ptsandbox import Sandbox, SandboxKey
     from ptsandbox.models import ArtifactType
@@ -69,9 +70,9 @@ async with Sandbox(SandboxKey(...)) as sandbox:
         file.parent.mkdir(parents=True, exist_ok=True)
 
         async with semaphore:
-            async with aiofiles.open(f"{file}.{hash}", "wb") as fd:
+            with open(f"{file}.{hash}", "wb") as fd:
                 async for chunk in sandbox.get_file_stream(hash):
-                    await fd.write(chunk)
+                    await asyncio.to_thread(fd.write, chunk)
 
         print(f"saved {file}")
 

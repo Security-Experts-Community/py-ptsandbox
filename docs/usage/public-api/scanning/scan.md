@@ -1,3 +1,5 @@
+# Scan
+
 ## Default scan
 
 Regular scanning sends files to the sandbox without fine-tuning the settings.

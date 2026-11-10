@@ -1,3 +1,5 @@
+# Detections
+
 The library ships a small helper for parsing detects from a raw drakvuf trace (JSON lines).
 
 It is useful when comparing traces: for example, to see which detects appear or disappear after updating correlation rules and running a rescan on the same trace.

@@ -6,12 +6,20 @@ on:
     paths:
       - 'docs/**'
       - 'ptsandbox/**'
-      - 'mkdocs.yml'
+      - 'zensical.toml'
+      - 'pyproject.toml'
+      - 'uv.lock'
+      - '.github/workflows/docs.yml'
     tags:
       - 'v*'
+  workflow_dispatch:
 
 permissions:
   contents: write
+
+concurrency:
+  group: docs-deploy
+  cancel-in-progress: false
 
 jobs:
   deploy:
@@ -31,7 +39,13 @@ jobs:
           python-version-file: "pyproject.toml"
 
       - name: Sync docs dependencies
-        run: uv sync --no-group dev --group docs
+        run: uv sync --locked --no-group dev --group docs
 
-      - name: Deploy mkdocs to GitHub Pages
-        run: uv run mkdocs gh-deploy --config-file ./mkdocs.yml --force
+      - name: Build documentation with Zensical
+        run: uv run --no-sync zensical build --clean
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site

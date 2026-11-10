@@ -1,3 +1,5 @@
+# Rescan
+
 The sandbox can re-scan collected logs without the original sample (retro tasks). In the web interface, these appear as analysis results.
 
 The following files are required for rescan:

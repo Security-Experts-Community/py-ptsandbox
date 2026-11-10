@@ -110,8 +110,21 @@ uv run mypy ptsandbox/
 To build and serve documentation locally:
 ```bash
 uv sync --group docs
-uv run mkdocs serve
+uv run --group docs zensical serve
 ```
+
+To generate the static site in `site/`:
+```bash
+uv run --group docs zensical build --clean
+```
+
+Documentation settings are in `zensical.toml`. API reference pages are generated
+from Python docstrings using `mkdocstrings`. GitHub Actions builds the site with
+Zensical and publishes it to the `gh-pages` branch used by GitHub Pages.
+The docs dependency group contains Zensical and the Python API documentation
+handler. MkDocs remains a transitive dependency of `mkdocstrings`; it is not used
+to build or deploy the site. Examples use the Python standard library for saving
+download streams, so they do not require `aiofiles`.
 
 ## Getting Help
 
@@ -127,4 +140,4 @@ By contributing, you agree that your contributions will be licensed under the MI
 
 ---
 
-Thank you for contributing! 🎉 
+Thank you for contributing! 🎉

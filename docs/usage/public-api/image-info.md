@@ -1,3 +1,5 @@
+# Get available images
+
 Getting a list of installed images in the sandbox:
 
 ```py title="Code example" hl_lines="7"

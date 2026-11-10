@@ -1,3 +1,5 @@
+# Proxy
+
 In some environments, you can't access the internet directly. You can use a proxy:
 
 ```py title="Code example" hl_lines="5-9"

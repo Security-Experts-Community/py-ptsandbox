@@ -1,3 +1,5 @@
+# License
+
 ## Get information about the license
 
 ```py title="Code example" hl_lines="12"
@@ -53,12 +55,11 @@ from ptsandbox.models import SandboxKey
 
 
 async def main():
-    sandbox = Sandbox(SandboxKey(...))
+    async with Sandbox(SandboxKey(...)) as sandbox:
+        await sandbox.ui.authorize()
 
-    await sandbox.ui.authorize()
-
-    update_result = await sandbox.ui.update_license()
-    print(update_result)
+        update_result = await sandbox.ui.update_license()
+        print(update_result)
 
 asyncio.run(main())
 ```

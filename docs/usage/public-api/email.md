@@ -1,15 +1,17 @@
+# Extract email headers
+
 Upload an email and get its headers.
 
-```py title="Code example" hl_lines="8"
-import aiofiles
+```py title="Code example"
+import asyncio
 from pathlib import Path
 from ptsandbox import Sandbox, SandboxKey
 
 async def example() -> None:
     async with Sandbox(key=SandboxKey(...)) as sandbox:
-        async with aiofiles.open("./email-headers", "wb") as fd:
+        with open("./email-headers", "wb") as fd:
             async for chunk in sandbox.get_email_headers(Path("./email.bin")):
-                await fd.write(chunk)
+                await asyncio.to_thread(fd.write, chunk)
 ```
 
 ::: ptsandbox.sandbox.sandbox.Sandbox.get_email_headers

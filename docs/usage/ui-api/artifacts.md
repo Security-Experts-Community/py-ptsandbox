@@ -1,19 +1,20 @@
+# Artifacts
+
 Export artifacts data and get filter values for artifact queries.
 
 ## Export in csv
 
-```py title="Code example" hl_lines="9-11"
+```py title="Code example"
 import asyncio
-import aiofiles
 from ptsandbox import Sandbox, SandboxKey
 
 async def main():
     async with Sandbox(...) as sandbox:
         await sandbox.ui.authorize()
 
-        async with aiofiles.open("./tasks.csv", "wb") as fd:
+        with open("./artifacts.csv", "wb") as fd:
             async for chunk in sandbox.ui.get_artifacts_csv():
-                await fd.write(chunk)
+                await asyncio.to_thread(fd.write, chunk)
 
 asyncio.run(main())
 ```

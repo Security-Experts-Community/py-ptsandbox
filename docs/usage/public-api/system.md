@@ -1,3 +1,5 @@
+# System info
+
 ## Check API Status
 
 ```py title="Code example" hl_lines="7"

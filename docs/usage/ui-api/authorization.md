@@ -1,3 +1,5 @@
+# Authorization
+
 The Public API doesn't expose all useful functions. The UI API connector fills this gap.
 
 ```py title="Code example" hl_lines="16"

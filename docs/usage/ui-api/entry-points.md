@@ -1,3 +1,5 @@
+# Entry Points
+
 You can manage sources using the API.
 
 !!! note "Note"
@@ -140,11 +142,10 @@ from ptsandbox.models import SandboxKey
 
 
 async def main():
-    sandbox = Sandbox(SandboxKey(...))
+    async with Sandbox(SandboxKey(...)) as sandbox:
+        await sandbox.ui.authorize()
 
-    await sandbox.ui.authorize()
-
-    await sandbox.ui.delete_entry_point("...")
+        await sandbox.ui.delete_entry_point("...")
 
 asyncio.run(main())
 ```
@@ -174,10 +175,9 @@ asyncio.run(main())
 
 ### Download logs from the source
 
-```py title="Code example" hl_lines="12-14"
+```py title="Code example"
 import asyncio
 
-import aiofiles
 
 from ptsandbox import Sandbox
 from ptsandbox.models import SandboxKey
@@ -187,9 +187,9 @@ async def main():
     async with Sandbox(SandboxKey(...)) as sandbox:
         await sandbox.ui.authorize()
 
-        async with aiofiles.open("./logs.zip", "wb") as fd:
+        with open("./logs.zip", "wb") as fd:
             async for chunk in sandbox.ui.get_entry_point_logs("..."): # (1)!
-                await fd.write(chunk)
+                await asyncio.to_thread(fd.write, chunk)
 
 asyncio.run(main())
 ```
